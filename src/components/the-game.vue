@@ -4,7 +4,8 @@
             <h2>{{ quest.id }}</h2>
             <ul>
                 <li v-for="(node, index) in quest['nodes']" :key="index">
-                    <pre>{{ node }}</pre>
+                    <pre>{{ node[1].id }}</pre>
+                    <p>{{ node[1].description }}</p>
                 </li>
             </ul>
         </li>

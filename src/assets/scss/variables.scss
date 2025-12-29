@@ -1,48 +1,32 @@
-// Typography
 @import url('https://fonts.googleapis.com/css2?family=Oleo+Script+Swash+Caps:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
-// Sheet
-@import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
-
 :root {
+    // Typography
     --display: 'Oleo Script Swash Caps', serif;
     --body: 'Arvo', serif;
-}
 
-// Colors & Shadows
-:root {
-    // Core
-    --primary-light: #dde0d2;
-    --primary: #717854;
-    --primary-alt: #5c614b;
-    --background: #edeae3; // Background
-    --surface: #ded9cf; // For cards, modals, or containers
-    --surface-border: #c4bfb2; // For borders, dividers, or outlines
-    --surface-alt: #a5998d; // For cards, modals, or containers that need to be more prominent
-    --text: #000000; // Text color
-    --overlay: rgba(0, 0, 0, 0.05); // For overlays, modals, or dark backgrounds
-
-    // Additional
-    --danger: #7a2727; // Used for danger states, alerts
-    --danger-alt: #4b1313; // Used for danger states, alerts
-
-    // Utility
-    --error: #f03e3e; // Used for error states, alerts
-
-    // Theme colors
-    --color-forest: #717854; // Gameplay
-    --color-blood: #7a2727; // Combat
-    --color-gold: #ab8450; // Adventurers
-    --color-mud: #826262; // Exploration
-    --color-bone: #7a6c63; // Monsters
-    --color-tapestry: #4f3d61; // Story kits
+    // Colors
+    --color-theme: #154973; // primary actions and interactive elements like buttons and checkboxes
+    --color-theme-strong: #0e324f; // dark shade of theme color
+    --color-theme-weak: #cddde9; // light shade of theme color
+    --color-theme-faint: #f7fafd; // subtle accents and backgrounds
+    --color-accent: #face00; // highlighting or emphasis
+    --color-base: #dodoce; // base color for informational messages
+    --color-base-weak: #ededed; // base background color for informational messages
+    --color-ink: #1b1b1b; // default non-text, non-surface elements on a light background
+    --color-ink-reverse: #f5f5f5; // default non-text, non-surface elements on a dark background
+    --color-text: #1b1b1b; // default text color on surface or surface-raised
+    --color-text-weak: #4a4d4f; // secondary text color on surface or surface-raised
+    --color-link: #004dd1; // hyperlinks
+    --color-link-strong: #0031a7; // strong hyperlinks
+    --color-text-reverse: #f5f5f5; // default text color on dark surfaces
+    --color-text-reverse-weak: #d0d0ce; // secondary text color on dark surfaces
+    --color-surface: #ffffff; // default surface color
+    --color-surface-raised: #f5f5f5; // raised surface
+    --color-surface-reverse: #1b1b1b; // dark surface
 
     // Shadows
-    --shadow-sm: rgba(0, 0, 0, 0.1) 0px 1px 3px;
-    --shadow-md: rgba(0, 0, 0, 0.4) 0px 2px 12px;
-    --shadow-lg: rgba(0, 0, 0, 0.4) 0px 10px 15px;
-    --shadow-text: rgba(0, 0, 0, 0.4) 2px 2px 2px;
+    --shadow-raised: rgba(0, 0, 0, 0.1) 0px 1px 3px;
+    --shadow-overlay: rgba(0, 0, 0, 0.4) 0px 10px 15px;
 }
