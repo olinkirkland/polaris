@@ -1,0 +1,99 @@
+[
+    {
+        "id": "quest_001",
+        "nodes": [
+            {
+                "id": "start",
+                "description": "A villager asks for your help.",
+                "type": "or",
+                "options": [
+                    { "text": "Rescue the village dog", "next": "rescueDog" },
+                    { "text": "Help villagers escape the bandits", "next": "rescueVillagers" }
+                ]
+            },
+            {
+                "id": "rescueDog",
+                "description": "You need to find the village dog in the forest.",
+                "options": [
+                    { "text": "Go into the forest", "next": "dogFound" },
+                    { "text": "Ignore it", "next": "questEndFail" }
+                ]
+            },
+            {
+                "id": "dogFound",
+                "description": "You found the dog! Return it to the villager.",
+                "options": [{ "text": "Return the dog", "next": "questEndSuccess" }]
+            },
+            {
+                "id": "rescueVillagers",
+                "description": "Two villagers are trapped by bandits.",
+                "type": "and",
+                "subNodes": [
+                    {
+                        "id": "rescueVillager1",
+                        "description": "Rescue Villager 1",
+                        "options": [{ "text": "Free Villager 1", "next": "rescueVillager2" }]
+                    },
+                    {
+                        "id": "rescueVillager2",
+                        "description": "Rescue Villager 2",
+                        "options": [{ "text": "Free Villager 2", "next": "questEndSuccess" }]
+                    }
+                ]
+            },
+            {
+                "id": "questEndSuccess",
+                "description": "Quest completed successfully!"
+            },
+            {
+                "id": "questEndFail",
+                "description": "You failed the quest."
+            }
+        ]
+    },
+    {
+        "id": "quest_002",
+        "nodes": [
+            {
+                "id": "treasure_start",
+                "description": "A mysterious map leads you to a hidden cave.",
+                "type": "or",
+                "options": [
+                    { "text": "Enter the cave", "next": "exploreCave" },
+                    { "text": "Ignore the map", "next": "questEndFail" }
+                ]
+            },
+            {
+                "id": "exploreCave",
+                "description": "Inside the cave, you find two passages.",
+                "type": "and",
+                "subNodes": [
+                    {
+                        "id": "leftPassage",
+                        "description": "The left passage contains a riddle guarding a treasure chest.",
+                        "options": [
+                            { "text": "Solve the riddle", "next": "treasureFound" },
+                            { "text": "Skip it", "next": "questEndFail" }
+                        ]
+                    },
+                    {
+                        "id": "rightPassage",
+                        "description": "The right passage has a trap that must be disarmed.",
+                        "options": [
+                            { "text": "Disarm the trap", "next": "treasureFound" },
+                            { "text": "Ignore it", "next": "questEndFail" }
+                        ]
+                    }
+                ]
+            },
+            {
+                "id": "treasureFound",
+                "description": "You successfully navigate both passages and claim the treasure!"
+            },
+            {
+                "id": "questEndFail",
+                "description": "The quest fails. You leave empty-handed."
+            }
+        ]
+    }
+]
