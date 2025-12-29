@@ -13,12 +13,6 @@ Stage I
 			- Conversation
 - Sequence
 
-
-
-
-
-
-
 Items
 
 Stage I

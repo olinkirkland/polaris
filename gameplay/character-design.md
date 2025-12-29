@@ -1,3 +1,0 @@
-Characters earn Experience from participating in battles.
-Characters level up once their Experience bar is full.
-Characters that are not in the party will not earn Experience, but will still level up if they are more than one level below the Player Character's. (eg. if the Player Character levels up to Level 6 but one of their party members is level 4, the party member will level up when the Player Character returns to camp).
