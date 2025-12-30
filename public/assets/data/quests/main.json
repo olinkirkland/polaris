@@ -1,6 +1,7 @@
 [
     {
-        "id": "quest_001",
+        "id": "escapeTheShip",
+        "text": "You've awoken on an airship, and it's being boarded by sky pirates! The escape pods may be the only way off this ship.",
         "nodes": [
             {
                 "id": "start",
@@ -28,18 +29,17 @@
                 "id": "rescueVillagers",
                 "description": "Two villagers are trapped by bandits.",
                 "type": "and",
-                "subNodes": [
-                    {
-                        "id": "rescueVillager1",
-                        "description": "Rescue Villager 1",
-                        "options": [{ "text": "Free Villager 1", "next": "rescueVillager2" }]
-                    },
-                    {
-                        "id": "rescueVillager2",
-                        "description": "Rescue Villager 2",
-                        "options": [{ "text": "Free Villager 2", "next": "questEndSuccess" }]
-                    }
-                ]
+                "subNodes": ["rescueVillager1", "rescueVillager2"]
+            },
+            {
+                "id": "rescueVillager1",
+                "description": "Rescue Villager 1",
+                "options": [{ "text": "Free Villager 1", "next": "rescueVillager2" }]
+            },
+            {
+                "id": "rescueVillager2",
+                "description": "Rescue Villager 2",
+                "options": [{ "text": "Free Villager 2", "next": "questEndSuccess" }]
             },
             {
                 "id": "questEndSuccess",
@@ -48,51 +48,6 @@
             {
                 "id": "questEndFail",
                 "description": "You failed the quest."
-            }
-        ]
-    },
-    {
-        "id": "quest_002",
-        "nodes": [
-            {
-                "id": "treasure_start",
-                "description": "A mysterious map leads you to a hidden cave.",
-                "type": "or",
-                "options": [
-                    { "text": "Enter the cave", "next": "exploreCave" },
-                    { "text": "Ignore the map", "next": "questEndFail" }
-                ]
-            },
-            {
-                "id": "exploreCave",
-                "description": "Inside the cave, you find two passages.",
-                "type": "and",
-                "subNodes": [
-                    {
-                        "id": "leftPassage",
-                        "description": "The left passage contains a riddle guarding a treasure chest.",
-                        "options": [
-                            { "text": "Solve the riddle", "next": "treasureFound" },
-                            { "text": "Skip it", "next": "questEndFail" }
-                        ]
-                    },
-                    {
-                        "id": "rightPassage",
-                        "description": "The right passage has a trap that must be disarmed.",
-                        "options": [
-                            { "text": "Disarm the trap", "next": "treasureFound" },
-                            { "text": "Ignore it", "next": "questEndFail" }
-                        ]
-                    }
-                ]
-            },
-            {
-                "id": "treasureFound",
-                "description": "You successfully navigate both passages and claim the treasure!"
-            },
-            {
-                "id": "questEndFail",
-                "description": "The quest fails. You leave empty-handed."
             }
         ]
     }

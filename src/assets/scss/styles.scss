@@ -1,43 +1,25 @@
-html,
-body {
-    // Disables pull-to-refresh and overscroll glow effect
-    // Still keeps swipe navigations
-    overscroll-behavior-y: none;
-    overscroll-behavior-x: none;
-}
-
-pre {
-    border-left: 0.4rem solid var(--color-accent);
-    text-align: left;
-    padding: 1rem;
-    overflow: auto;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    font-size: 1.2rem;
-    line-height: 1.5;
-    font-family: monospace;
-}
-
 // Base text
+
 body {
     font-family: var(--body);
-    font-size: 1rem;
-    line-height: 1.6;
+    font-size: 1.6rem;
+    line-height: 1.5;
     color: var(--color-text);
 }
 
 // Headings
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 0.5rem;
     color: var(--color-ink);
 }
 
 // Display headings
+
 h1 {
     font-family: var(--display);
     font-size: 2.4rem;
@@ -52,7 +34,8 @@ h2 {
     line-height: 1.15;
 }
 
-/* Structural headings */
+// Structural headings
+
 h3 {
     font-family: var(--body);
     font-size: 1.6rem;
@@ -85,6 +68,22 @@ h6 {
     color: var(--color-text-weak);
 }
 
+// Typography
+
+pre {
+    background-color: var(--color-surface-reverse);
+    color: var(--color-accent);
+    border-radius: var(--border-radius);
+    text-align: left;
+    padding: 1rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    font-family: monospace;
+}
+
 // Utility classes
 
 .muted {
@@ -99,46 +98,27 @@ h6 {
     user-select: none;
 }
 
-.flex {
+.flex-row {
     display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 1rem;
+    flex-direction: row;
+    gap: 0.4rem;
+}
 
-    &.wrap {
-        flex-wrap: wrap;
-    }
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
 
-    &.spread {
-        justify-content: space-between;
-        gap: 2rem;
-    }
-
-    &.center {
-        justify-content: center;
-        align-items: center;
-    }
+.grid {
+    display: grid;
+    gap: 0.4rem;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
 }
 
 .glass {
     background-color: rgb(255, 255, 255, 0.1);
     backdrop-filter: blur(2px);
-}
-
-i {
-    font-size: 1.2rem;
-}
-
-* {
-    touch-action: manipulation; // Prevent double-tap zoom on mobile devices
-    -webkit-tap-highlight-color: transparent; // Prevent highlight on tap
-}
-
-.ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    max-width: 100%;
 }
 
 :focus {

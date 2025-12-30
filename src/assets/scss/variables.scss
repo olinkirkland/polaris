@@ -8,25 +8,29 @@
 
     // Colors
     --color-theme: #154973; // primary actions and interactive elements like buttons and checkboxes
-    --color-theme-strong: #0e324f; // dark shade of theme color
-    --color-theme-weak: #cddde9; // light shade of theme color
+    --color-theme-strong: #0e324f;
+    --color-theme-weak: #cddde9;
     --color-theme-faint: #f7fafd; // subtle accents and backgrounds
     --color-accent: #face00; // highlighting or emphasis
-    --color-base: #dodoce; // base color for informational messages
-    --color-base-weak: #ededed; // base background color for informational messages
+    --color-base: #62666a; // base color for informational messages
+    --color-base-strong: #3b3e40;
+    --color-base-weak: #ededed;
     --color-ink: #1b1b1b; // default non-text, non-surface elements on a light background
     --color-ink-reverse: #f5f5f5; // default non-text, non-surface elements on a dark background
     --color-text: #1b1b1b; // default text color on surface or surface-raised
-    --color-text-weak: #4a4d4f; // secondary text color on surface or surface-raised
+    --color-text-weak: #4a4d4f;
     --color-link: #004dd1; // hyperlinks
     --color-link-strong: #0031a7; // strong hyperlinks
     --color-text-reverse: #f5f5f5; // default text color on dark surfaces
-    --color-text-reverse-weak: #d0d0ce; // secondary text color on dark surfaces
-    --color-surface: #ffffff; // default surface color
+    --color-text-reverse-weak: #d0d0ce;
+    --color-surface: #ffffff; // default surface
     --color-surface-raised: #f5f5f5; // raised surface
     --color-surface-reverse: #1b1b1b; // dark surface
 
     // Shadows
     --shadow-raised: rgba(0, 0, 0, 0.1) 0px 1px 3px;
     --shadow-overlay: rgba(0, 0, 0, 0.4) 0px 10px 15px;
+
+    // Utility
+    --border-radius: 0.4rem;
 }

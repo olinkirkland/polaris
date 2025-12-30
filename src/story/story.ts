@@ -1,4 +1,4 @@
-import Quest from './quest';
+import { Quest } from './story-types';
 
 export const quests: Quest[] = [];
 
