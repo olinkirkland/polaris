@@ -1,9 +1,9 @@
+import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import App from './App.vue';
-import { quests, setupQuests } from './story/story';
-import { createPinia } from 'pinia';
-import Card from './components/card.vue';
-import Panel from './components/panel.vue';
+import Card from './components/shared/card.vue';
+import Panel from './components/shared/panel.vue';
+import { setupQuests } from './story/story';
 
 // Create the app
 const app = createApp(App);

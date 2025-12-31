@@ -1,36 +1,45 @@
 export type Quest = {
     id: string;
     title: string;
-    description: string;
     currentNodeId: string;
-    nodes: Record<string, QuestNode>;
-    state: 'active' | 'completed' | 'failed';
+    nodes: QuestNode[];
+    state: 'dormant' | 'active' | 'completed' | 'failed';
 };
 
 export type QuestNode = {
     id: string;
     description: string;
-    effectsOnEnter: StoryEffect[];
+    effects: StoryEffect[];
     objectives: QuestObjective[];
-    successNodeId?: string; // next node on success
-    failureNodeId?: string; // next node on failure
 };
 
 export type QuestObjective = {
     description: string;
-    conditions: QuestNodeCondition[];
-    effectsOnComplete: StoryEffect[];
+    successMode: 'any' | 'all';
+    conditionsForSuccess: QuestNodeCondition[];
+    effectsOnSuccess: StoryEffect[];
+    failMode?: 'any' | 'all';
+    conditionsForFail?: QuestNodeCondition[];
+    effectsOnFail?: StoryEffect[];
 };
 
 export type QuestNodeCondition =
-    | { type: 'flag'; flag: string; value: boolean }
-    | { type: 'inventory'; item: string; count?: number }
-    | { type: 'stat'; stat: string; min?: number; max?: number }
+    | { type: 'flag'; flag: string }
+    | { type: 'counter'; count: number; comparator: 'lessThan' | 'greaterThan' | 'equalTo' | 'notEqualTo' }
+    | { type: 'hasItem'; item: string; count?: number }
     | { type: 'location'; locationId: string };
 
 export type StoryEffect =
-    | { type: 'setFlag'; flag: string; value: boolean }
-    | { type: 'modifyInventory'; item: string; amount: number }
-    | { type: 'modifyStat'; stat: string; amount: number }
-    | { type: 'changeLocation'; locationId: string }
-    | { type: 'progressNode'; nodeId: string };
+    | { type: 'setFlag'; flag: string }
+    | { type: 'setCounterRelative'; counter: string; amount: number }
+    | { type: 'setCounterAbsolute'; counter: string; amount: number }
+    | { type: 'giveItem'; item: string; amount: number }
+    | { type: 'removeItem'; item: string; amount: number }
+    | { type: 'travel'; locationId: string }
+    | { type: 'activateNode'; nodeId: string }
+    | { type: 'setMarkerStoryEffect'; markerId: string; effect: StoryEffect[] };
+
+export type Battle = {
+    backgroundImage: string; // Identifier for the background image
+    characterIds: string[]; // Identifiers for the enemies involved in the battle
+};
