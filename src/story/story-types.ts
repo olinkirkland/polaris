@@ -31,15 +31,24 @@ export type QuestNodeCondition =
 
 export type StoryEffect =
     | { type: 'setFlag'; flag: string }
-    | { type: 'setCounterRelative'; counter: string; amount: number }
-    | { type: 'setCounterAbsolute'; counter: string; amount: number }
-    | { type: 'giveItem'; item: string; amount: number }
-    | { type: 'removeItem'; item: string; amount: number }
+    | { type: 'updateCounter'; counter: string; amount: number }
+    | { type: 'setCounter'; counter: string; amount: number }
+    | { type: 'setItem'; item: string; amount: number }
+    | { type: 'updateItem'; item: string; amount: number }
     | { type: 'travel'; locationId: string }
-    | { type: 'activateNode'; nodeId: string }
+    | { type: 'startScene'; sceneId: string }
+    | { type: 'activateQuestNode'; questNodeId: string }
     | { type: 'setMarkerStoryEffect'; markerId: string; effect: StoryEffect[] };
 
 export type Battle = {
     backgroundImage: string; // Identifier for the background image
     characterIds: string[]; // Identifiers for the enemies involved in the battle
 };
+
+export type BattleSequence = {
+    battles: Battle[];
+};
+
+export type Scene = {}; // Battle, dialogue, or cutscene
+
+export type SceneSequence = {}; // A sequence of scenes
