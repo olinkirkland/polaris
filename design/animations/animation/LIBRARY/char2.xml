@@ -1,0 +1,26 @@
+<DOMSymbolItem xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" name="char2" itemID="69683f94-000002d8" lastModified="1768439700">
+  <timeline>
+    <DOMTimeline name="char2" layerDepthEnabled="true">
+      <layers>
+        <DOMLayer name="Layer_1" color="#00FFFF" current="true" isSelected="true">
+          <frames>
+            <DOMFrame index="0" keyMode="9728">
+              <elements>
+                <DOMShape>
+                  <fills>
+                    <FillStyle index="1">
+                      <SolidColor color="#CB3A6A"/>
+                    </FillStyle>
+                  </fills>
+                  <edges>
+                    <Edge fillStyle1="1" edges="!1280 640S2[1280 905 1092 1092!1092 1092[905 1280 640 1280!640 1280[375 1280 187 1092!187 1092[0 905 0 640!0 640[0 375 187 187!187 187[375 0 640 0!640 0[905 0 1092 187!1092 187[1280 375 1280 640"/>
+                  </edges>
+                </DOMShape>
+              </elements>
+            </DOMFrame>
+          </frames>
+        </DOMLayer>
+      </layers>
+    </DOMTimeline>
+  </timeline>
+</DOMSymbolItem>

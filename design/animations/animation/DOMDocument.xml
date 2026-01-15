@@ -1,0 +1,37 @@
+<DOMDocument xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://ns.adobe.com/xfl/2008/" width="1280" height="720" frameRate="30" currentTimeline="1" xflVersion="23.0" creatorInfo="Adobe Animate" platform="Macintosh" versionInfo="Saved by Animate Macintosh 24.0 build 2" majorVersion="24" buildNumber="2" viewAngle3D="100.925968316201" vanishingPoint3DX="640" vanishingPoint3DY="360" nextSceneIdentifier="2" playOptionsPlayLoop="false" playOptionsPlayPages="false" playOptionsPlayFrameActions="false" filetypeGUID="3CE50BB6-55CF-47A6-B591-01286DDDC64C" fileGUID="C8AF74681D3F4D8DBAFE99DC1A02BBA5">
+     <media>
+          <DOMBitmapItem name="Bitmap 1" itemID="69683d4b-000002b5" sourceExternalFilepath="/var/folders/km/zw5chdwj1rdgt615_0hjbhh40000gn/T/FlashPNG" sourceLastImported="1768439114" sourcePlatform="macintosh" allowSmoothing="true" originalCompressionType="lossless" quality="50" href="Bitmap 1" bitmapDataHRef="M 1 1768439463.dat" frameRight="20480" frameBottom="30720"/>
+     </media>
+     <symbols>
+          <Include href="char.xml" loadImmediate="false" itemID="69683c6d-00000235" lastModified="1768438893"/>
+          <Include href="char2.xml" loadImmediate="false" itemID="69683f94-000002d8" lastModified="1768439700"/>
+          <Include href="mc.xml" loadImmediate="false" itemID="69683c69-00000230" lastModified="1768443698"/>
+     </symbols>
+     <timelines>
+          <DOMTimeline name="Scene 1" layerDepthEnabled="true">
+               <layers>
+                    <DOMLayer name="Layer_1" color="#00FFFF" current="true" isSelected="true">
+                         <frames>
+                              <DOMFrame index="0" keyMode="9728">
+                                   <elements>
+                                        <DOMSymbolInstance libraryItemName="mc" selected="true">
+                                             <matrix>
+                                                  <Matrix tx="599.5" ty="319.9"/>
+                                             </matrix>
+                                             <transformationPoint>
+                                                  <Point x="40.5" y="40.5"/>
+                                             </transformationPoint>
+                                        </DOMSymbolInstance>
+                                   </elements>
+                              </DOMFrame>
+                         </frames>
+                    </DOMLayer>
+               </layers>
+          </DOMTimeline>
+     </timelines>
+     <scripts>
+          <GlobalScripts language="Javascript"/>
+     </scripts>
+     <PrinterSettings platform="macintosh"/>
+     <publishHistory/>
+</DOMDocument>

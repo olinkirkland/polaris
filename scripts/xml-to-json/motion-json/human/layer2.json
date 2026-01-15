@@ -1,0 +1,14 @@
+{
+  "duration": 30,
+  "frameRate": 30,
+  "keyframes": [
+    {
+      "index": 0
+    },
+    {
+      "index": 29,
+      "x": 131,
+      "y": 101
+    }
+  ]
+}
