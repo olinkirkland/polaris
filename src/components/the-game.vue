@@ -1,11 +1,23 @@
 <template>
-    <Atlas />
-    <Zone />
+    <div class="layout">
+        <TheMenu />
+        <Atlas />
+        <Zone />
+    </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import Atlas from './atlas/atlas.vue';
+import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.layout {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+}
+</style>

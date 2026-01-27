@@ -6,7 +6,7 @@ import Game from './components/the-game.vue';
     <div class="app-layout">
         <div class="pattern"></div>
         <Game />
-        <the-modal-container />
+        <!-- <the-modal-container /> -->
     </div>
 </template>
 

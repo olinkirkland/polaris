@@ -11,7 +11,7 @@
 <style lang="scss" scoped>
 .panel {
     background-color: var(--color-surface);
-    border: 1px solid var(--color-base-weak);
+    border: 1px solid var(--color-surface-raised);
     border-radius: var(--border-radius);
     .panel-content {
         padding: 1.2rem;

@@ -25,11 +25,11 @@ function onClickClose() {
     position: relative;
     display: flex;
     align-items: center;
-    height: 4rem;
-    padding: 0 1.6rem;
-    padding-right: 0.4rem;
+    height: 2rem;
+    padding: 0 2rem;
+    padding-right: 0.5rem;
     width: 100%;
-    gap: 1.6rem;
+    gap: 1rem;
     background-color: var(--overlay);
     border-bottom: 1px solid var(--surface-border);
 

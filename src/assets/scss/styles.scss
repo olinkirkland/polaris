@@ -2,7 +2,7 @@
 
 body {
     font-family: var(--body);
-    font-size: 1.6rem;
+    font-size: 1rem;
     line-height: 1.5;
     color: var(--color-text);
 }
@@ -22,14 +22,14 @@ h6 {
 
 h1 {
     font-family: var(--display);
-    font-size: 2.4rem;
+    font-size: 2rem;
     font-weight: bold;
     line-height: 1.1;
 }
 
 h2 {
     font-family: var(--display);
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: normal;
     line-height: 1.15;
 }
@@ -38,21 +38,21 @@ h2 {
 
 h3 {
     font-family: var(--body);
-    font-size: 1.6rem;
+    font-size: 1rem;
     font-weight: bold;
     line-height: 1.2;
 }
 
 h4 {
     font-family: var(--body);
-    font-size: 1.2;
+    font-size: 1rem;
     font-weight: bold;
     line-height: 1.5;
 }
 
 h5 {
     font-family: var(--body);
-    font-size: 1.2;
+    font-size: 1rem;
     font-weight: bold;
     line-height: 1.5;
     color: var(--color-text-weak);
@@ -79,7 +79,7 @@ pre {
     overflow: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 1.5;
     font-family: monospace;
 }
@@ -101,19 +101,19 @@ pre {
 .flex-row {
     display: flex;
     flex-direction: row;
-    gap: 0.4rem;
+    gap: 0.5rem;
 }
 
 .flex-column {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.5rem;
 }
 
 .grid {
     display: grid;
-    gap: 0.4rem;
-    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    gap: 0.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
 }
 
 .glass {
@@ -121,7 +121,8 @@ pre {
     backdrop-filter: blur(2px);
 }
 
-:focus {
-    outline-offset: 0.2rem;
-    outline: 1px dashed currentColor;
+input:focus {
+    border-radius: var(--border-radius);
+    outline-offset: 0.5rem;
+    outline: 2px dashed var(--color-theme);
 }
