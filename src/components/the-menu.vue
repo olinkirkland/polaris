@@ -1,21 +1,29 @@
 <template>
-    <Panel v-if="game.id" id="InGameMenu" raised reverse>
-        <p>id: {{ game.id }}</p>
-        <Button @click="onClickExit">Exit to Main Menu</Button>
+    <Panel v-if="game.id" raised reverse>
+        <div id="InGameMenu">
+            <p>id: {{ game.id }}</p>
+            <Button @click="onClickExit">Exit to Main Menu</Button>
+        </div>
     </Panel>
-    <Panel v-if="!game.id" id="StorageMenu" raised>
-        <Button @click="onClickNew">New</Button>
-        <ul>
-            <li v-for="g in game.storageIndex">
-                <Panel>
+    <Panel v-if="!game.id" raised>
+        <div id="StorageMenu">
+            <Button @click="onClickNew" theme>
+                <i class="fa-solid fa-square-plus"></i>
+                <span>New</span></Button
+            >
+            <ul>
+                <li v-for="g in game.storageIndex">
                     <pre>{{ JSON.stringify(g, null, 2) }}</pre>
                     <div class="button-row">
-                        <Button @click="onClickLoad(g.path)">Load</Button>
-                        <Button @click="onClickRemove(g.path)">Remove</Button>
+                        <Button @click="onClickLoad(g.path)"><span>Load</span></Button>
+                        <Button @click="onClickRemove(g.path)">
+                            <i class="fa-solid fa-trash"></i>
+                            <span>Remove</span></Button
+                        >
                     </div>
-                </Panel>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </Panel>
 </template>
 
@@ -43,15 +51,24 @@ function onClickExit() {
 </script>
 
 <style lang="scss" scoped>
+#StorageMenu,
 #InGameMenu {
-    p {
-        margin-bottom: 0.5rem;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
 }
 
-ul {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+#StorageMenu {
+    ul {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        li {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+    }
 }
 </style>

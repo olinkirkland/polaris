@@ -1,5 +1,13 @@
-<template>ATLAS</template>
+<template>
+    <Panel raised>
+        <p><strong>Atlas</strong></p>
+    </Panel>
+</template>
 
 <script lang="ts" setup>
-// Get pins for Atlas from state
+import { useGameStore } from '@/store/game-store';
+
+const game = useGameStore();
 </script>
+
+<style lang="scss" scoped></style>

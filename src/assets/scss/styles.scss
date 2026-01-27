@@ -1,3 +1,9 @@
+// Fontawesome
+@import '@fortawesome/fontawesome-free/css/fontawesome.css';
+@import '@fortawesome/fontawesome-free/css/solid.css';
+@import '@fortawesome/fontawesome-free/css/regular.css';
+@import '@fortawesome/fontawesome-free/css/brands.css';
+
 // Base text
 
 body {
@@ -131,5 +137,4 @@ input:focus {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    padding: 0.5rem;
 }

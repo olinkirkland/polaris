@@ -5,8 +5,7 @@
             'btn--mini': mini,
             'btn--icon': icon,
             'btn--disabled': disabled,
-            'btn--primary': primary,
-            'btn--danger': danger,
+            'btn--theme': theme,
             'btn--square': square,
             pressed: pressed || disabled,
             'full-width': fullWidth
@@ -22,11 +21,10 @@
 const props = defineProps({
     mini: Boolean,
     icon: Boolean,
-    primary: Boolean,
+    theme: Boolean,
     danger: Boolean,
     disabled: Boolean,
     fullWidth: Boolean,
-    fullWidthMobile: Boolean,
     pressed: Boolean,
     square: Boolean
 });
@@ -77,7 +75,7 @@ button.pressed > .btn__content,
 }
 
 // Primary button
-.btn--primary {
+.btn--theme {
     .btn__content {
         background-color: var(--color-theme);
         border: 1px solid var(--color-theme-strong);
@@ -98,25 +96,11 @@ button.pressed > .btn__content,
     }
 }
 
-// Danger button
-.btn--danger {
-    .btn__content {
-        background-color: var(--danger);
-        border: 1px solid var(--danger-alt);
-        * {
-            color: var(--background);
-        }
-    }
-    .btn__shadow {
-        background-color: var(--danger-alt);
-    }
-}
-
 // Icon-only button
 .btn.btn--icon {
     .btn__content {
-        width: 3.2rem;
-        height: 3.2rem;
+        width: 2rem;
+        height: 2rem;
         background-color: transparent;
         border: none;
         top: 0;
