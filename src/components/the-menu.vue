@@ -1,17 +1,19 @@
 <template>
-    <Panel v-if="game.id">
-        <p>
-            <strong>{{ game.id }}</strong>
-        </p>
+    <Panel v-if="game.id" id="InGameMenu" raised reverse>
+        <p>id: {{ game.id }}</p>
         <Button @click="onClickExit">Exit to Main Menu</Button>
     </Panel>
-    <Panel v-if="!game.id">
+    <Panel v-if="!game.id" id="StorageMenu" raised>
         <Button @click="onClickNew">New</Button>
         <ul>
             <li v-for="g in game.storageIndex">
-                <pre>{{ JSON.stringify(g, null, 2) }}</pre>
-                <Button @click="onClickLoad(g.path)">Load</Button>
-                <Button @click="onClickRemove(g.path)">Remove</Button>
+                <Panel>
+                    <pre>{{ JSON.stringify(g, null, 2) }}</pre>
+                    <div class="button-row">
+                        <Button @click="onClickLoad(g.path)">Load</Button>
+                        <Button @click="onClickRemove(g.path)">Remove</Button>
+                    </div>
+                </Panel>
             </li>
         </ul>
     </Panel>
@@ -41,6 +43,15 @@ function onClickExit() {
 </script>
 
 <style lang="scss" scoped>
-li {
+#InGameMenu {
+    p {
+        margin-bottom: 0.5rem;
+    }
+}
+
+ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
 }
 </style>
