@@ -1,14 +1,20 @@
 <template>
     <div class="panel">
-        <slot></slot>
+        <div class="panel-content">
+            <slot></slot>
+        </div>
     </div>
 </template>
+
+<script lang="ts" setup></script>
 
 <style lang="scss" scoped>
 .panel {
     background-color: var(--color-surface);
     border: 1px solid var(--color-base-weak);
     border-radius: var(--border-radius);
-    padding: 1.2rem;
+    .panel-content {
+        padding: 1.2rem;
+    }
 }
 </style>

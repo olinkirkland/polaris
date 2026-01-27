@@ -1,7 +1,6 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import App from './App.vue';
-import Card from './components/shared/card.vue';
 import Panel from './components/shared/panel.vue';
 import { setupQuests } from './story/story';
 
@@ -14,7 +13,6 @@ const pinia = createPinia();
 app.use(pinia);
 
 // Components
-app.component('Card', Card);
 app.component('Panel', Panel);
 
 // Setup
