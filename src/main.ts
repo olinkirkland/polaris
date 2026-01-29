@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import Panel from './components/shared/panel.vue';
 import Button from './components/ui/Button.vue';
+import Checkbox from './components/ui/Checkbox.vue';
 import { useGameStore } from './store/game-store';
 import { setupQuests } from './story/story';
 
@@ -17,6 +18,7 @@ app.use(pinia);
 // Components
 app.component('Panel', Panel);
 app.component('Button', Button);
+app.component('Checkbox', Checkbox);
 
 // Stores
 const gameStore = useGameStore();

@@ -1,5 +1,6 @@
 <template>
     <div class="layout">
+        <TheLoader />
         <TheMenu />
         <Atlas v-if="game.id" />
         <Zone v-if="game.id" />
@@ -11,6 +12,7 @@ import { useGameStore } from '@/store/game-store';
 import Atlas from './atlas/atlas.vue';
 import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
+import TheLoader from './the-loader.vue';
 
 const game = useGameStore();
 </script>

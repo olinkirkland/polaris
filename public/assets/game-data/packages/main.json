@@ -1,0 +1,17 @@
+{
+    "quests": [],
+    "pins": [
+        {
+            "id": "1",
+            "point": { "x": 0, "y": 0 },
+            "label": "foo",
+            "actions": []
+        },
+        {
+            "id": "2",
+            "point": { "x": 300, "y": 150 },
+            "label": "bar",
+            "actions": []
+        }
+    ]
+}

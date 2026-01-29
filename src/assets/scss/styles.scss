@@ -79,7 +79,7 @@ h6 {
 pre {
     background-color: var(--color-surface-reverse);
     color: var(--color-accent);
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     text-align: left;
     padding: 1rem;
     overflow: auto;
@@ -104,16 +104,30 @@ pre {
     user-select: none;
 }
 
-.flex-row {
+.flex {
     display: flex;
-    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    &-row {
+        flex-direction: row;
+    }
+
+    &-column {
+        flex-direction: column;
+    }
+
+    &-spread {
+        justify-content: space-between;
+    }
+}
+
+.gap-sm {
     gap: 0.5rem;
 }
 
-.flex-column {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+.gap-md {
+    gap: 1rem;
 }
 
 .grid {
@@ -128,9 +142,8 @@ pre {
 }
 
 input:focus {
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     outline-offset: 0.5rem;
-    outline: 2px dashed var(--color-theme);
 }
 
 .button-row {

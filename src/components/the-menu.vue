@@ -8,7 +8,7 @@
     <Panel v-if="!game.id" raised>
         <div id="StorageMenu">
             <Button @click="onClickNew" theme>
-                <i class="fa-solid fa-square-plus"></i>
+                <i class="fa-solid fa-plus"></i>
                 <span>New</span></Button
             >
             <ul>
@@ -18,8 +18,8 @@
                         <Button @click="onClickLoad(g.path)"><span>Load</span></Button>
                         <Button @click="onClickRemove(g.path)">
                             <i class="fa-solid fa-trash"></i>
-                            <span>Remove</span></Button
-                        >
+                            <span>Delete</span>
+                        </Button>
                     </div>
                 </li>
             </ul>

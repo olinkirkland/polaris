@@ -51,7 +51,7 @@ button {
     align-items: center;
     height: 2rem;
     padding: 0 0.5rem;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     background-color: var(--color-surface);
     border: 1px solid var(--color-base-weak);
     cursor: pointer;
@@ -70,7 +70,7 @@ button.pressed > .btn__content,
     position: absolute;
     width: 100%;
     height: 100%;
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
     background-color: var(--color-base-weak);
 }
 

@@ -17,7 +17,7 @@ const props = defineProps({
 .panel {
     background-color: var(--color-surface);
     border: 1px solid var(--color-surface-raised);
-    border-radius: var(--border-radius);
+    border-radius: var(--radius-md);
 
     &--raised {
         box-shadow: var(--shadow-raised);

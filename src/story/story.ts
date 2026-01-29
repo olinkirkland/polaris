@@ -1,4 +1,4 @@
-import escapeTheShip from '@/assets/data/quests/escape-the-ship';
+// import escapeTheShip from '@/assets/data/quests/escape-the-ship';
 import { Quest } from './story-types';
 
 export const quests: Quest[] = [];
@@ -16,5 +16,5 @@ export async function setupQuests() {
     // const response = await fetch('/assets/data/quests/main.json');
     // const questData = await response.json();
     // registerQuest(questData);
-    registerQuest(escapeTheShip);
+    // registerQuest(escapeTheShip);
 }
