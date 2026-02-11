@@ -1,11 +1,21 @@
 <template>
+    <!-- In Game Menu -->
     <Card v-if="game.id" raised reverse>
+        <template #header>
+            <DotBadge>3</DotBadge>
+            <span>In-Game</span>
+            <Button @click="onClickExit" class="ml-auto">Exit to Main Menu</Button>
+        </template>
         <div id="InGameMenu">
             <p>id: {{ game.id }}</p>
-            <Button @click="onClickExit">Exit to Main Menu</Button>
         </div>
     </Card>
+    <!-- Main Menu -->
     <Card v-if="!game.id" raised>
+        <template #header class="justify-between debug">
+            <DotBadge>2</DotBadge>
+            <span>Main Menu</span>
+        </template>
         <div class="flex flex-col gap-2">
             <Button @click="onClickNew" theme>
                 <i class="fa-solid fa-plus"></i>
