@@ -1,26 +1,30 @@
 <template>
-    <button class="w-fit flex gap-1 items-center py-1 px-2 rounded-sm shadow">
+    <button class="w-fit flex gap-1 items-center py-1 px-2 rounded-sm cursor-pointer">
         <slot></slot>
     </button>
 </template>
 
-<style scoped lang="scss">
-// Button
+<script setup lang="ts"></script>
 
+<style scoped lang="scss">
 button {
     background-color: var(--color-surface-raised);
-    border: 1px solid var(--color-text-weaker);
-    display: flex;
-    gap: 0.25rem;
-    cursor: pointer;
+    border: 1px solid var(--color-base-faint);
+    transition: 0.2s box-shadow;
 
     &:hover {
-        filter: brightness(0.95);
+        box-shadow: var(--shadow-sm);
     }
 
     &:active {
-        filter: brightness(0.9);
+        filter: brightness(0.95);
         box-shadow: none;
+    }
+}
+
+:deep {
+    i {
+        font-size: smaller;
     }
 }
 </style>

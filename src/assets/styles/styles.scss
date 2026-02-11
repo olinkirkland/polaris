@@ -28,7 +28,7 @@
     h4,
     h5,
     h6 {
-        color: var(--color-ink);
+        color: var(--color-text);
     }
 
     // Display headings
@@ -95,5 +95,31 @@
         font-size: 1rem;
         line-height: 1.5;
         font-family: monospace;
+    }
+
+    // Util
+
+    .debug {
+        border: 2px solid red !important;
+    }
+
+    :focus-visible,
+    .has-focus:has(:focus-visible) {
+        outline-offset: 0.2rem;
+        outline: 2px solid var(--color-theme);
+    }
+
+    [disabled] {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: pointer;
+
+        * {
+            pointer-events: none;
+        }
+    }
+
+    * {
+        user-select: none;
     }
 }

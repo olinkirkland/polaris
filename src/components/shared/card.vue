@@ -1,21 +1,14 @@
 <template>
-    <div class="card">
-        <div class="content p-2">
+    <div class="card rounded-md">
+        <div class="p-3">
             <slot></slot>
         </div>
     </div>
 </template>
 
-<script lang="ts" setup></script>
-
 <style lang="scss" scoped>
-.panel {
+.card {
     background-color: var(--color-surface);
-    border: 1px solid var(--color-surface-raised);
-    border-radius: var(--radius-md);
-
-    .content {
-        padding: 1.2rem;
-    }
+    border: 1px solid var(--color-base-faint);
 }
 </style>
