@@ -1,11 +1,11 @@
-import { Pin } from '@/components/pin/pin';
+import { Pin } from '@/game-data/pin/pin';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { ref } from 'vue';
 
 export const useGameStore = defineStore('game', () => {
     const storageIndex = ref<{ path: string; label: string; date: number }[]>([]);
-    const currentGameId = ref<string | null>(null); // Distinguishes this game from other games (e.g., characters, slots)
+    const currentGameId = ref<string | null>(null); // Distinguishes this save-game from other save-games
 
     const pins = ref<Pin[]>([]);
 

@@ -8,7 +8,7 @@
         </template>
         <div class="flex flex-col gap-2">
             <div class="flex flex-col gap-2">
-                <label v-for="c in content" class="cursor-pointer" :disabled="c.disabled">
+                <label v-for="c in availablePackages" class="cursor-pointer" :disabled="c.disabled">
                     <Card :pressed="c.selected">
                         <div class="flex justify-between gap-2">
                             <div class="flex flex-col">
@@ -26,18 +26,26 @@
                 <i v-if="isLoadingContent" class="fa-solid fa-circle-notch fa-spin"></i>
                 <span>Load Selected Content</span>
             </Button>
+            <div class="ml-auto flex gap-2">
+                <code>{{ gameData.data?.packageDescriptions }}</code>
+                <Button @click="onClickReset">
+                    <i class="fa-solid fa-arrow-rotate-left"></i>
+                    <span>Reset</span>
+                </Button>
+            </div>
         </template>
     </Card>
 </template>
 
 <script setup lang="ts">
-import { PackageDescription, useContentStore } from '@/store/content-store';
+import { useGameDataStore } from '@/store/game-data-store';
 import { ref } from 'vue';
 import DotBadge from './ui/dot-badge.vue';
 
-const content = ref<(PackageDescription & { selected?: boolean; disabled?: boolean })[]>([]);
-content.value.push({
-    label: 'Main',
+const gameData = useGameDataStore();
+
+const availablePackages = ref<{ url: string; selected?: boolean; disabled?: boolean }[]>([]);
+availablePackages.value.push({
     url: '/assets/game-data/packages/main.json',
     selected: true,
     disabled: true // This content must always be loaded
@@ -47,9 +55,13 @@ const isLoadingContent = ref(false);
 
 async function onClickLoad() {
     isLoadingContent.value = true;
-    const selectedContent = content.value.filter((c) => c.selected);
-    await useContentStore().loadPackages(selectedContent);
+    const selectedContent = availablePackages.value.filter((c) => c.selected);
+    await useGameDataStore().loadGameDataPackages(selectedContent);
     isLoadingContent.value = false;
+}
+
+function onClickReset() {
+    gameData.resetGameData();
 }
 </script>
 
