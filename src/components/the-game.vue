@@ -1,5 +1,5 @@
 <template>
-    <div class="layout">
+    <div class="flex flex-col p-2 gap-2">
         <TheLoader />
         <TheMenu />
         <Atlas v-if="game.id" />
@@ -17,12 +17,4 @@ import TheLoader from './the-loader.vue';
 const game = useGameStore();
 </script>
 
-<style lang="scss" scoped>
-.layout {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-}
-</style>
+<style lang="scss" scoped></style>

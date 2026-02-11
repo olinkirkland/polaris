@@ -1,0 +1,39 @@
+// Reset
+// https://meyerweb.com/eric/tools/css/reset/
+// https://medium.com/@fatimahakanbi/why-your-global-css-reset-overrides-tailwinds-margin-and-padding-acfcbd4c73ca
+
+// Wrapping the reset in a layer separates it from the tailwind layers, placing everything in here at a lower precedence to tailwind
+// This solves the problem of tailwind utility classes being overriden by the reset styles
+
+@layer properties {
+    *,
+    ::after,
+    ::before {
+        box-sizing: border-box;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: 0;
+
+        &:not(input) {
+            user-select: none;
+        }
+    }
+
+    * {
+        touch-action: manipulation; // Prevent double-tap zoom on mobile devices
+        -webkit-tap-highlight-color: transparent; // Prevent highlight on tap
+    }
+
+    html,
+    body {
+        // Disables pull-to-refresh and overscroll glow effect
+        // Still keeps swipe navigations
+        overscroll-behavior-y: none;
+        overscroll-behavior-x: none;
+    }
+
+    body {
+        margin: 0 !important;
+    }
+}

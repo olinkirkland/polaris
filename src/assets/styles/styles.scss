@@ -1,0 +1,99 @@
+// Add other files
+
+@use './reset.scss';
+@use './variables.scss';
+
+// Fontawesome
+
+@use '@fortawesome/fontawesome-free/css/fontawesome.css';
+@use '@fortawesome/fontawesome-free/css/solid.css';
+@use '@fortawesome/fontawesome-free/css/regular.css';
+@use '@fortawesome/fontawesome-free/css/brands.css';
+
+@layer base {
+    // Base text
+
+    body {
+        font-family: var(--body);
+        font-size: 1rem;
+        line-height: 1.5;
+        color: var(--color-text);
+    }
+
+    // Headings
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        color: var(--color-ink);
+    }
+
+    // Display headings
+
+    h1 {
+        font-family: var(--display);
+        font-size: 2rem;
+        font-weight: bold;
+        line-height: 1.1;
+    }
+
+    h2 {
+        font-family: var(--display);
+        font-size: 1.5rem;
+        font-weight: normal;
+        line-height: 1.15;
+    }
+
+    // Structural headings
+
+    h3 {
+        font-family: var(--body);
+        font-size: 1rem;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    h4 {
+        font-family: var(--body);
+        font-size: 1rem;
+        font-weight: bold;
+        line-height: 1.5;
+    }
+
+    h5 {
+        font-family: var(--body);
+        font-size: 1rem;
+        font-weight: bold;
+        line-height: 1.5;
+        color: var(--color-text-weak);
+    }
+
+    h6 {
+        font-family: var(--body);
+        font-size: 1rem;
+        font-weight: bold;
+        letter-spacing: 0.05rem;
+        text-transform: uppercase;
+        line-height: 1.5;
+        color: var(--color-text-weak);
+    }
+
+    // Typography
+
+    pre {
+        background-color: var(--color-surface-reverse);
+        color: var(--color-accent);
+        border-radius: var(--radius-md);
+        text-align: left;
+        padding: 1rem;
+        overflow: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        font-size: 1rem;
+        line-height: 1.5;
+        font-family: monospace;
+    }
+}

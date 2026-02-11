@@ -3,7 +3,7 @@ import Game from './components/the-game.vue';
 </script>
 
 <template>
-    <div class="app-layout">
+    <div class="p-5">
         <div class="pattern"></div>
         <Game />
         <!-- <the-modal-container /> -->
@@ -11,7 +11,9 @@ import Game from './components/the-game.vue';
 </template>
 
 <style lang="scss">
-@use '@/assets/scss/reset.scss';
-@use '@/assets/scss/variables.scss';
-@use '@/assets/scss/styles.scss';
+@use '@/assets/styles/styles.scss';
+</style>
+
+<style lang="css">
+@import 'tailwindcss';
 </style>

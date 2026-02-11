@@ -29,7 +29,7 @@
 
 <script setup lang="ts">
 import { useGameStore } from '@/store/game-store';
-import Panel from './shared/panel.vue';
+import Panel from './shared/card.vue';
 
 const game = useGameStore();
 

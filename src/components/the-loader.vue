@@ -1,9 +1,9 @@
 <template>
     <Panel raised>
-        <div class="flex flex-column gap-sm">
+        <div class="flex flex-col gap-2">
             <div class="grid">
                 <Checkbox v-for="c in content" v-model="c.selected">
-                    <div class="flex flex-column">
+                    <div class="flex flex-col">
                         <span>{{ c.label }}</span>
                         <em>{{ c.url }}</em>
                     </div>
