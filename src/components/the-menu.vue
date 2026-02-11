@@ -1,35 +1,37 @@
 <template>
-    <Panel v-if="game.id" raised reverse>
+    <Card v-if="game.id" raised reverse>
         <div id="InGameMenu">
             <p>id: {{ game.id }}</p>
             <Button @click="onClickExit">Exit to Main Menu</Button>
         </div>
-    </Panel>
-    <Panel v-if="!game.id" raised>
-        <div id="StorageMenu">
+    </Card>
+    <Card v-if="!game.id" raised>
+        <div class="flex flex-col gap-2">
             <Button @click="onClickNew" theme>
                 <i class="fa-solid fa-plus"></i>
                 <span>New</span></Button
             >
-            <ul>
+
+            <ul class="grid grid-cols-3 gap-2">
                 <li v-for="g in game.storageIndex">
-                    <pre>{{ JSON.stringify(g, null, 2) }}</pre>
-                    <div class="button-row">
-                        <Button @click="onClickLoad(g.path)"><span>Load</span></Button>
-                        <Button @click="onClickRemove(g.path)">
-                            <i class="fa-solid fa-trash"></i>
-                            <span>Delete</span>
-                        </Button>
-                    </div>
+                    <Card>
+                        <pre class="mb-2">{{ JSON.stringify(g, null, 2) }}</pre>
+                        <div class="flex gap-2 justify-end">
+                            <Button @click="onClickLoad(g.path)"><span>Load</span></Button>
+                            <Button @click="onClickRemove(g.path)">
+                                <i class="fa-solid fa-trash"></i>
+                                <span>Delete</span>
+                            </Button>
+                        </div>
+                    </Card>
                 </li>
             </ul>
         </div>
-    </Panel>
+    </Card>
 </template>
 
 <script setup lang="ts">
 import { useGameStore } from '@/store/game-store';
-import Panel from './shared/card.vue';
 
 const game = useGameStore();
 
@@ -50,25 +52,4 @@ function onClickExit() {
 }
 </script>
 
-<style lang="scss" scoped>
-#StorageMenu,
-#InGameMenu {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-}
-
-#StorageMenu {
-    ul {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-        li {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-    }
-}
-</style>
+<style lang="scss" scoped></style>

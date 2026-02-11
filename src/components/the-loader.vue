@@ -1,15 +1,15 @@
 <template>
-    <Card raised>
+    <Card>
         <div class="flex flex-col gap-2">
             <div class="flex flex-col gap-2">
                 <label v-for="c in content" class="cursor-pointer" :disabled="c.disabled">
-                    <Card>
+                    <Card :pressed="c.selected">
                         <div class="flex justify-between gap-2">
                             <div class="flex flex-col">
                                 <span>{{ c.label }}</span>
                                 <em>{{ c.url }}</em>
                             </div>
-                            <Checkbox v-model="c.selected" />
+                            <Checkbox :id="c.url" v-model="c.selected" />
                         </div>
                     </Card>
                 </label>
@@ -24,28 +24,12 @@
 import { loadGameContent } from '@/content-loader';
 import { ref } from 'vue';
 
-const content = ref<{ label: string; url: string; selected?: boolean; disabled?: boolean }[]>([]);
+const content = ref<{ label: string; url: string; selected: boolean; disabled: boolean }[]>([]);
 content.value.push({
     label: 'Main',
     url: '/assets/game-data/packages/main.json',
     selected: true,
     disabled: true
-});
-content.value.push({
-    label: 'Main',
-    url: '/assets/game-data/packages/main.json'
-});
-content.value.push({
-    label: 'Main',
-    url: '/assets/game-data/packages/main.json'
-});
-content.value.push({
-    label: 'Main',
-    url: '/assets/game-data/packages/main.json'
-});
-content.value.push({
-    label: 'Main',
-    url: '/assets/game-data/packages/main.json'
 });
 
 function onClickLoad() {

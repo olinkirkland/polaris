@@ -19,7 +19,6 @@ export async function loadGameContent(packages: { label: string; url: string }[]
 
     for (const p of packages) {
         const { label, url } = p;
-        console.log('Loading', label);
         try {
             const response = await fetch(url);
             if (!response.ok) throw new Error(`@loadGameContent: ${response.status}`);

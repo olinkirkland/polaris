@@ -1,7 +1,7 @@
 <template>
-    <Panel raised>
+    <Card>
         <p><strong>Zone</strong></p>
-    </Panel>
+    </Card>
 </template>
 
 <script lang="ts" setup>
