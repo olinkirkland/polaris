@@ -2,7 +2,7 @@
     <Card>
         <template #header>
             <div class="flex items-center gap-2">
-                <DotBadge>1</DotBadge>
+                <DotBadge>L</DotBadge>
                 <span>Load Content</span>
             </div>
         </template>
@@ -22,27 +22,34 @@
             </div>
         </div>
         <template #footer>
-            <Button @click="onClickLoad">Load</Button>
+            <Button @click="onClickLoad" :disabled="isLoadingContent">
+                <i v-if="isLoadingContent" class="fa-solid fa-circle-notch fa-spin"></i>
+                <span>Load Selected Content</span>
+            </Button>
         </template>
     </Card>
 </template>
 
 <script setup lang="ts">
-import { loadGameContent } from '@/content-loader';
+import { PackageDescription, useContentStore } from '@/store/content-store';
 import { ref } from 'vue';
 import DotBadge from './ui/dot-badge.vue';
 
-const content = ref<{ label: string; url: string; selected: boolean; disabled: boolean }[]>([]);
+const content = ref<(PackageDescription & { selected?: boolean; disabled?: boolean })[]>([]);
 content.value.push({
     label: 'Main',
     url: '/assets/game-data/packages/main.json',
     selected: true,
-    disabled: true
+    disabled: true // This content must always be loaded
 });
 
-function onClickLoad() {
+const isLoadingContent = ref(false);
+
+async function onClickLoad() {
+    isLoadingContent.value = true;
     const selectedContent = content.value.filter((c) => c.selected);
-    loadGameContent(selectedContent);
+    await useContentStore().loadPackages(selectedContent);
+    isLoadingContent.value = false;
 }
 </script>
 

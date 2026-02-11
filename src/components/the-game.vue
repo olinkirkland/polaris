@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col p-2 gap-2">
+    <div class="flex flex-col gap-5">
         <TheLoader />
         <TheMenu />
         <Atlas v-if="game.id" />
