@@ -1,11 +1,10 @@
 import { Pin } from '@/game-data/pin/pin';
-import { wait } from '@/util/wait-util';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export interface PackageDescription {
     label: string;
-    description: string;
+    summary: string;
 }
 
 // The core content structure contained in Game Data
@@ -44,7 +43,6 @@ export const useGameDataStore = defineStore('content', () => {
             }
         }
 
-        await wait(1); // TODO: Remove this
         data.value = result;
     }
 
@@ -59,6 +57,8 @@ export const useGameDataStore = defineStore('content', () => {
  * Merges lists of GameContent b into lists of GameContent a
  */
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
+    console.log('Merging', b, 'into', a);
+
     // Pins, Quests
     const listsToMerge = ['pins', 'quests'];
     listsToMerge.forEach((k) => {
