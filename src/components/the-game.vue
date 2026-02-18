@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-5">
-        <TheLoader />
-        <div v-if="gameData.data">
+        <TheLoader v-if="!game.id" />
+        <div v-if="gameData.data" class="flex flex-col gap-5">
             <TheMenu />
             <Atlas v-if="game.id" />
             <Zone v-if="game.id" />

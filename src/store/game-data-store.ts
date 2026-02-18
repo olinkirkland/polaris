@@ -3,6 +3,7 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export interface PackageDescription {
+    id: string;
     label: string;
     summary: string;
 }
@@ -10,7 +11,6 @@ export interface PackageDescription {
 // The core content structure contained in Game Data
 export interface BaseGameData {
     pins: Pin[];
-    quests: { id: string }[]; // TODO
 }
 
 // Individual Content Packs, optionally loaded (DLC support)
@@ -57,8 +57,6 @@ export const useGameDataStore = defineStore('content', () => {
  * Merges lists of GameContent b into lists of GameContent a
  */
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
-    console.log('Merging', b, 'into', a);
-
     // Pins, Quests
     const listsToMerge = ['pins', 'quests'];
     listsToMerge.forEach((k) => {
@@ -84,7 +82,6 @@ function mergePackageData(a: GameData, b: GameDataPackage): GameData {
 function makeEmptyGameData(): GameData {
     return {
         packageDescriptions: [],
-        pins: [],
-        quests: []
+        pins: []
     };
 }

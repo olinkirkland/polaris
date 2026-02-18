@@ -26,21 +26,24 @@
                 <i v-if="isLoadingContent" class="fa-solid fa-circle-notch fa-spin"></i>
                 <span>Load Selected Content</span>
             </Button>
-            <div class="ml-auto flex items-center gap-2">
-                <p>{{ gameData.data?.packageDescriptions.map((p) => p.label).join(', ') }}</p>
-                <Button @click="onClickReset">
-                    <i class="fa-solid fa-arrow-rotate-left"></i>
-                    <span>Reset</span>
-                </Button>
-            </div>
+            <ul class="ml-auto flex items-center gap-2">
+                <li v-for="p in gameData.data?.packageDescriptions">
+                    <Chip>
+                        <i class="text-sm fa-solid fa-cube"></i>
+                        <span>{{ p.id }}</span>
+                    </Chip>
+                </li>
+            </ul>
         </template>
     </Card>
 </template>
 
 <script setup lang="ts">
 import { useGameDataStore } from '@/store/game-data-store';
+import { wait } from '@/util/wait-util';
 import { ref } from 'vue';
 import DotBadge from './ui/dot-badge.vue';
+import Chip from './ui/chip.vue';
 
 type PackageManifest = {
     url: string;
@@ -68,13 +71,11 @@ onClickLoad(); // Load initially
 
 async function onClickLoad() {
     isLoadingContent.value = true;
-    const selectedContent = availablePackages.value.filter((c) => c.selected || c.forced).map((p) => p.url);
-    await useGameDataStore().loadGameDataPackages(selectedContent);
-    isLoadingContent.value = false;
-}
-
-function onClickReset() {
+    await wait(0.5);
     gameData.resetGameData();
+    const selectedContent = availablePackages.value.filter((c) => c.selected || c.forced).map((p) => p.url);
+    await gameData.loadGameDataPackages(selectedContent);
+    isLoadingContent.value = false;
 }
 </script>
 

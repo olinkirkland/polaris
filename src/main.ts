@@ -4,9 +4,10 @@ import App from './App.vue';
 import Card from './components/shared/card.vue';
 import Button from './components/ui/button.vue';
 import Checkbox from './components/ui/checkbox.vue';
-import { useGameStore } from './store/game-store';
-import { setupQuests } from './story/story';
 import DotBadge from './components/ui/dot-badge.vue';
+import { useGameDataStore } from './store/game-data-store';
+import { useGameStore } from './store/game-store';
+import { useStorageStore } from './store/storage-store';
 
 // Create the app
 const app = createApp(App);
@@ -23,11 +24,12 @@ app.component('Card', Card);
 app.component('DotBadge', DotBadge);
 
 // Stores
-const gameStore = useGameStore();
-gameStore.loadIndex();
+const storage = useStorageStore();
+const game = useGameStore();
+const gameData = useGameDataStore();
 
 // Setup
 (async () => {
-    await setupQuests();
+    storage.load();
     app.mount('#app');
 })();

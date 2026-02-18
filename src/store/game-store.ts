@@ -1,53 +1,55 @@
-import { Pin } from '@/game-data/pin/pin';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { ref } from 'vue';
+import { useGameDataStore } from './game-data-store';
+import { useStorageStore } from './storage-store';
 
 export const useGameStore = defineStore('game', () => {
-    const storageIndex = ref<{ path: string; label: string; date: number }[]>([]);
-    const currentGameId = ref<string | null>(null); // Distinguishes this save-game from other save-games
+    const gameData = useGameDataStore();
+    const storage = useStorageStore();
 
-    const pins = ref<Pin[]>([]);
-
-    function loadIndex() {
-        storageIndex.value = JSON.parse(localStorage.getItem('storage-index') || '[]');
-    }
+    // Game Variables
+    const id = ref<string | null>(null);
 
     function startNewGame() {
-        // Load the initial state
+        // Load an initial state
         // (the way the game starts)
-        currentGameId.value = uuidv4();
-        // pins.value = [];
+        id.value = uuidv4();
 
         save('autosave', 'Autosave');
     }
 
     function save(saveId: string, label: string) {
-        const path = currentGameId.value + '/' + saveId;
-        localStorage.setItem(
-            path,
-            JSON.stringify({ gameId: currentGameId.value, label, pins: pins.value, date: Date.now() })
-        );
-        storageIndex.value = [...storageIndex.value, { path, label, date: Date.now() }];
-        localStorage.setItem('storage-index', JSON.stringify(storageIndex.value));
+        if (!id.value) throw new Error('Missing gameId');
+        if (!gameData.data) throw new Error('Missing game data');
+
+        const path = id.value + '/' + saveId;
+
+        // TODO: Put data in here to be serialized
+        const packages = gameData.data?.packageDescriptions;
+        const data = { gameId: id.value, label, date: Date.now(), packages };
+
+        storage.save(path, label, packages);
+        localStorage.setItem(path, JSON.stringify(data));
     }
 
     function load(path: string) {
-        const g: any = JSON.parse(localStorage.getItem(path)!);
-        currentGameId.value = g.gameId;
-        pins.value = (g.pins as any[]).map((p) => Pin.from(p));
+        const g = JSON.parse(localStorage.getItem(path)!);
+        // TODO: Deserialize data here
+
+        id.value = g.gameId;
+        // pins.value = (g.pins as any[]).map((p) => Pin.from(p));
     }
 
     function remove(path: string) {
-        storageIndex.value = storageIndex.value.filter((v) => v.path !== path);
-        localStorage.setItem('storage-index', JSON.stringify(storageIndex.value));
         localStorage.removeItem(path);
+        storage.remove(path);
     }
 
     function reset() {
-        currentGameId.value = null;
-        pins.value = [];
+        // TODO: Reset the game values
+        id.value = null;
     }
 
-    return { startNewGame, loadIndex, remove, storageIndex, save, load, reset, id: currentGameId, pins };
+    return { startNewGame, remove, save, load, reset, id };
 });

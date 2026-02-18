@@ -22,22 +22,34 @@
                 <span>New</span>
             </Button>
 
+            <!-- List of Save Games to be loaded -->
             <ul class="grid grid-cols-3 gap-2">
-                <li v-for="g in game.storageIndex">
+                <li v-for="g in storage.indexes">
                     <Card>
                         <template #header>
                             <div class="w-full flex justify-center items-center">
                                 <em>{{ g.label }}</em>
                             </div>
                         </template>
-                        <pre class="mb-2">{{ JSON.stringify(g, null, 2) }}</pre>
-                        <div class="flex gap-2 justify-end">
+                        <div class="flex flex-col gap-2 mb-2">
+                            <small>{{ g.path }}</small>
+                            <p>{{ new Date(g.date).toLocaleString() }}</p>
+                            <ul class="flex flex-wrap gap-2">
+                                <li v-for="p in g.packageIds">
+                                    <Chip>
+                                        <i class="text-sm fa-solid fa-cube"></i>
+                                        <span>{{ p }}</span>
+                                    </Chip>
+                                </li>
+                            </ul>
+                        </div>
+                        <template #footer>
                             <Button @click="onClickLoad(g.path)"><span>Load</span></Button>
                             <Button @click="onClickRemove(g.path)">
                                 <i class="fa-solid fa-trash"></i>
                                 <span>Delete</span>
                             </Button>
-                        </div>
+                        </template>
                     </Card>
                 </li>
             </ul>
@@ -47,8 +59,12 @@
 
 <script setup lang="ts">
 import { useGameStore } from '@/store/game-store';
+import { useStorageStore } from '@/store/storage-store';
+import Chip from './ui/chip.vue';
 
 const game = useGameStore();
+const storage = useStorageStore();
+``;
 
 function onClickNew() {
     game.startNewGame();

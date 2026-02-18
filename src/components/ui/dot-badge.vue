@@ -1,6 +1,6 @@
 <template>
-    <div class="badge rounded-full flex justify-center items-center size-6">
-        <span class="text-xs leading-0 font-bold"><slot></slot></span>
+    <div class="badge rounded-md flex justify-center items-center size-5">
+        <span class="leading-0"><slot></slot></span>
     </div>
 </template>
 
@@ -8,5 +8,8 @@
 .badge {
     background-color: var(--color-ink);
     color: var(--color-ink-reverse);
+    span {
+        font-size: 0.625rem;
+    }
 }
 </style>
