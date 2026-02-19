@@ -41,7 +41,10 @@ export const useGameDataStore = defineStore('content', () => {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`@loadPackageData: ${response.status}`);
                 const data: GameDataPackage = await response.json();
-                result = mergePackageData(result, data);
+                // TODO: Unpack
+                const parsedData = unpackGameDataPackage(data);
+
+                result = mergePackageData(result, parsedData);
             } catch (error) {
                 console.error(`Error fetching ${url}`, error);
             }
@@ -57,9 +60,21 @@ export const useGameDataStore = defineStore('content', () => {
     return { loadGameDataPackages, resetGameData, data };
 });
 
-/**
- * Merges lists of GameContent b into lists of GameContent a
- */
+function unpackGameDataPackage(data: any): GameDataPackage {
+    const g: GameDataPackage = {
+        packageDescription: data.packageDescription,
+        pins: [],
+        quests: [],
+        zones: []
+    };
+
+    g.pins = data.pins.map((p: any) => Pin.unpack(p));
+    g.quests = data.quests.map((q: any) => Quest.unpack(q));
+    g.zones = data.zones.map((z: any) => Zone.unpack(z));
+
+    return g;
+}
+
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
     // Pins, Quests
     const listsToMerge = ['pins', 'quests', 'zones'];

@@ -28,6 +28,8 @@ const storage = useStorageStore();
 const gameState = useGameStateStore();
 const gameData = useGameDataStore();
 
+(window as any).g = gameState; // Expose game state to global
+
 // Setup
 (async () => {
     storage.load();

@@ -11,7 +11,7 @@ interface StoredGame {
         label: string;
         date: number;
     };
-    pins: any[];
+    pins: string[];
     // quests: any[];
 }
 
@@ -21,12 +21,15 @@ export const useGameStateStore = defineStore('game', () => {
 
     // Game Variables
     const id = ref<string | null>(null);
-    const pins = ref<Pin[]>([]);
+    const pins = ref<string[]>([]);
+
+    function getPins(): Pin[] {
+        if (!gameData.data) throw new Error('Missing Game Data');
+        return gameData.data.pins.filter((p) => pins.value.indexOf(p.id) > -1);
+    }
 
     function getPinsInZone(zone: string): Pin[] {
-        if (!gameData.data) throw new Error('Missing Game Data');
-        console.log(gameData.data.pins);
-        return gameData.data.pins.filter((p) => p.address.zone === zone);
+        return getPins().filter((p) => p.address.zone === zone);
     }
 
     function startNewGame() {
@@ -47,7 +50,7 @@ export const useGameStateStore = defineStore('game', () => {
         const packages = gameData.data?.packageDescriptions;
         const date = Date.now();
         const metadata = { id: id.value, label: label, date, packages };
-        const data: StoredGame = { metadata, pins: pins.value.map((p) => p.pack()) };
+        const data: StoredGame = { metadata, pins: pins.value };
 
         localStorage.setItem(path, JSON.stringify(data));
         storage.save(path, label, date, packages);
@@ -58,7 +61,7 @@ export const useGameStateStore = defineStore('game', () => {
 
         // Unpack the values from the loaded file
         id.value = g.metadata.id;
-        pins.value = (g.pins as any[]).map((p) => Pin.unpack(p));
+        pins.value = g.pins;
     }
 
     function remove(path: string) {
@@ -72,5 +75,13 @@ export const useGameStateStore = defineStore('game', () => {
         pins.value = [];
     }
 
-    return { startNewGame, remove, save, load, reset, id, getPinsInZone };
+    function addPin(id: string) {
+        pins.value.push(id);
+    }
+
+    function removePin(id: string) {
+        pins.value = pins.value.filter((p) => p !== id);
+    }
+
+    return { startNewGame, remove, save, load, reset, id, getPinsInZone, addPin, removePin };
 });

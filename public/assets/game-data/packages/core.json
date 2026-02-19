@@ -6,28 +6,28 @@
     },
     "pins": [
         {
-            "id": "1",
+            "id": "ursa-city",
             "address": { "zone": "atlas", "point": { "x": 0, "y": 0 } },
-            "label": "foo",
-            "actions": []
+            "label": "Ursa City (Bear Island)",
+            "actions": [{ "type": "go-to-zone", "id": "bear-island" }]
         },
         {
-            "id": "2",
+            "id": "bear-island-driftwood-cottage",
             "address": { "zone": "atlas", "point": { "x": 300, "y": 150 } },
-            "label": "bar",
+            "label": "Driftwood Cottage",
             "actions": []
         },
         {
-            "id": "3",
-            "address": { "zone": "hand-of-sorrow", "point": { "x": 25, "y": 30 } },
-            "label": "baz",
+            "id": "sawyers-shop",
+            "address": { "zone": "bear-island", "point": { "x": 25, "y": 30 } },
+            "label": "Old Bill Sawyer's Scrap Shop",
             "actions": []
         }
     ],
     "quests": [],
     "zones": [
         {
-            "id": "hand-of-sorrow"
+            "id": "bear-island"
         }
     ]
 }
