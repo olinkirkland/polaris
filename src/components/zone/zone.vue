@@ -1,7 +1,12 @@
 <template>
     <Card>
-        <p><strong>Zone</strong></p>
-        <p>{{ gameState.currentZone }}</p>
+        <template #header>
+            <div class="w-full flex items-center justify-between">
+                <span>{{ gameState.currentZone?.label }}</span>
+                <small>Zone</small>
+            </div>
+        </template>
+        <p class="mb-2">{{ gameState.currentZone?.description }}</p>
         <ul v-if="gameState.currentZone" class="grid grid-cols-4 gap-2">
             <li v-for="pin in gameState.getPinsInZone(gameState.currentZone.id)">
                 <Card>

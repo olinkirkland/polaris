@@ -1,6 +1,6 @@
 <template>
     <Card>
-        <p><strong>Atlas</strong></p>
+        <template #header>Atlas</template>
         <ul class="grid grid-cols-4 gap-2">
             <li v-for="pin in gameState.getPinsInZone('atlas')">
                 <Card>

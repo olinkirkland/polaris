@@ -12,10 +12,16 @@
             "actions": [{ "type": "go-to-zone", "id": "bear-island" }]
         },
         {
-            "id": "bear-island-driftwood-cottage",
-            "address": { "zone": "atlas", "point": { "x": 300, "y": 150 } },
+            "id": "the-reach__driftwood-cottage",
+            "address": { "zone": "the-reach", "point": { "x": 300, "y": 150 } },
             "label": "Driftwood Cottage",
             "actions": []
+        },
+        {
+            "id": "bear-island__return-to-ship",
+            "address": { "zone": "bear-island", "point": { "x": 300, "y": 150 } },
+            "label": "Return to Skyship",
+            "actions": [{ "type": "go-to-atlas" }]
         },
         {
             "id": "sawyers-shop",
@@ -27,7 +33,9 @@
     "quests": [],
     "zones": [
         {
-            "id": "bear-island"
+            "id": "bear-island",
+            "label": "Bear Island",
+            "description": "The thick walls of Ursa City have held since the Cataclysm hundreds of years ago. The power struggles in the distant capital are of little concern to the wealthy industrialists here. The technology to repair the rusting mining automatons has been lost to time, and cybernetically 'enhanced', forced labor has replaced the old mechanical drones."
         }
     ]
 }

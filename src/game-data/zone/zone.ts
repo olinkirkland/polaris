@@ -1,9 +1,11 @@
 export class Zone {
     id: string;
+    label: string;
+    description: string;
 
     static unpack(data: any): Zone {
         const z = new Zone();
-        z.id = data.id;
+        Object.assign(z, data);
         return z;
     }
 
