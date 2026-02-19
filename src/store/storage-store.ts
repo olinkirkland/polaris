@@ -13,6 +13,7 @@ export const useStorageStore = defineStore('index', () => {
     const indexes = ref<StoredGameManifest[]>([]);
 
     function save(path: string, label: string, date: number, packages: PackageDescription[]) {
+        indexes.value = indexes.value.filter((d) => d.path !== path);
         indexes.value = [...indexes.value, { path, label, date, packageIds: packages.map((p) => p.id) }];
         localStorage.setItem('storage-index', JSON.stringify(indexes.value));
     }

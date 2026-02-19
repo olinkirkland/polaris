@@ -31,6 +31,7 @@ export class GoToZoneAction implements Action {
     id: string;
 
     act() {
+        console.log(this);
         console.log('Open the Zone', this.id);
     }
 

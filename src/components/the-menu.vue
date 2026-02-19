@@ -4,7 +4,13 @@
         <template #header>
             <DotBadge>G</DotBadge>
             <span>In-Game</span>
-            <Button @click="onClickExit" class="ml-auto">Exit to Main Menu</Button>
+            <div class="flex gap-2 ml-auto">
+                <Button @click="onClickSave">
+                    <i class="fa-solid fa-save"></i>
+                    <span>Save</span></Button
+                >
+                <Button @click="onClickExit">Exit to Main Menu</Button>
+            </div>
         </template>
         <div id="InGameMenu">
             <p>id: {{ gameState.id }}</p>
@@ -24,7 +30,7 @@
 
             <!-- List of Save Games to be loaded -->
             <ul class="grid grid-cols-3 gap-2">
-                <li v-for="g in storage.indexes">
+                <li v-for="g in storage.indexes.sort((a, b) => (a.date > b.date ? -1 : 1))">
                     <Card>
                         <template #header>
                             <div class="w-full flex justify-center items-center">
@@ -32,7 +38,7 @@
                             </div>
                         </template>
                         <div class="flex flex-col gap-2 mb-2">
-                            <small>{{ g.path }}</small>
+                            <small class="w-full text-ellipsis line-clamp-1">{{ g.path }}</small>
                             <p>{{ new Date(g.date).toLocaleString() }}</p>
                             <ul class="flex flex-wrap gap-2">
                                 <li v-for="p in g.packageIds">
@@ -76,6 +82,10 @@ function onClickLoad(path: string) {
 
 function onClickRemove(path: string) {
     gameState.remove(path);
+}
+
+function onClickSave() {
+    gameState.save('quicksave', 'Quicksave');
 }
 
 function onClickExit() {
