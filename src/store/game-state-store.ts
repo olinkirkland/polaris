@@ -1,9 +1,13 @@
 import { Pin } from '@/game-data/pin/pin';
+import { Zone } from '@/game-data/zone/zone';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { useStorageStore } from './storage-store';
+import ActionController from '@/controllers/action-controller';
+import { ActionType, BaseAction } from '@/actions/base-action';
+import { GoToZoneAction } from '@/actions/go-to-zone-action';
 
 interface StoredGame {
     metadata: {
@@ -22,6 +26,21 @@ export const useGameStateStore = defineStore('game', () => {
     // Game Variables
     const id = ref<string | null>(null);
     const pins = ref<string[]>([]);
+    const currentZone = ref<Zone | null>();
+
+    // Listen to the action controller
+    ActionController.getInstance().addEventListener((action) => onActionReceived(action));
+
+    function onActionReceived(action: BaseAction) {
+        switch (action.type) {
+            case ActionType.GO_TO_ATLAS:
+                currentZone.value = null;
+                break;
+            case ActionType.GO_TO_ZONE:
+                currentZone.value = gameData.getZone((action as GoToZoneAction).id);
+                break;
+        }
+    }
 
     function getPins(): Pin[] {
         if (!gameData.data) throw new Error('Missing Game Data');
@@ -83,5 +102,5 @@ export const useGameStateStore = defineStore('game', () => {
         pins.value = pins.value.filter((p) => p !== id);
     }
 
-    return { startNewGame, remove, save, load, reset, id, getPinsInZone, addPin, removePin };
+    return { startNewGame, remove, save, load, reset, id, getPinsInZone, addPin, removePin, currentZone };
 });

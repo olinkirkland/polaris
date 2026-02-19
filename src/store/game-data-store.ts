@@ -57,7 +57,13 @@ export const useGameDataStore = defineStore('content', () => {
         data.value = null;
     }
 
-    return { loadGameDataPackages, resetGameData, data };
+    function getZone(id: string): Zone {
+        const zone = data.value?.zones.find((z) => z.id === id);
+        if (!zone) throw new Error(`@getZone: No such zone, id: ${id}`);
+        return zone;
+    }
+
+    return { loadGameDataPackages, resetGameData, data, getZone };
 });
 
 function unpackGameDataPackage(data: any): GameDataPackage {

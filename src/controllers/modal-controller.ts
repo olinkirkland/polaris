@@ -10,6 +10,15 @@ export default class ModalController {
     private static instance: ModalController | null = null;
     private subject: Subject<ModalDispatch> = new Subject<ModalDispatch>();
 
+    public static open(modal: ComponentOptions<any>, modalConfig?: any): void {
+        this.getInstance().dispatch({ modal, modalConfig });
+    }
+
+    public static close(callback?: Function): void {
+        this.getInstance().dispatch({ modal: null });
+        if (callback) callback();
+    }
+
     private constructor() {}
 
     public static getInstance(): ModalController {
@@ -18,15 +27,6 @@ export default class ModalController {
 
     private dispatch(d: ModalDispatch): void {
         this.subject.next(d);
-    }
-
-    public static open(modal: ComponentOptions<any>, modalConfig?: any): void {
-        this.getInstance().dispatch({ modal, modalConfig });
-    }
-
-    public static close(callback?: Function): void {
-        this.getInstance().dispatch({ modal: null });
-        if (callback) callback();
     }
 
     public addEventListener(callback: (d: ModalDispatch) => void): void {

@@ -1,19 +1,18 @@
-import { Action, ActionType, GoToAtlasAction, WaitAction, GoToZoneAction } from './action';
+import { ActionType, BaseAction } from './base-action';
+import { GoToAtlasAction } from './go-to-atlas-action';
+import { GoToZoneAction } from './go-to-zone-action';
 
-export function makeAction(data: any): Action {
+export function makeAction(data: any): BaseAction {
     if (!data.type) throw new Error('Actions must have a type', data);
 
     switch (data.type) {
-        case ActionType.WAIT: {
-            return WaitAction.from(data);
+        case ActionType.GO_TO_ATLAS: {
+            return GoToAtlasAction.unpack(data);
         }
-        case ActionType.ATLAS: {
-            return GoToAtlasAction.from(data);
-        }
-        case ActionType.ZONE: {
-            return GoToZoneAction.from(data);
+        case ActionType.GO_TO_ZONE: {
+            return GoToZoneAction.unpack(data);
         }
     }
 
-    return data as Action;
+    return data as BaseAction;
 }
