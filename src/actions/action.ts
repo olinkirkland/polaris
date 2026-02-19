@@ -1,7 +1,7 @@
 export enum ActionType {
     WAIT = 'wait',
-    ZONE = 'zone',
-    ATLAS = 'atlas'
+    ZONE = 'go-to-zone',
+    ATLAS = 'go-to-atlas'
 }
 
 export interface Action {
@@ -18,14 +18,14 @@ export class WaitAction implements Action {
         console.log('Waiting for', this.seconds, 'seconds');
     }
 
-    static from(data: any): ZoneAction {
-        const a = new ZoneAction();
+    static from(data: any): GoToZoneAction {
+        const a = new GoToZoneAction();
         Object.assign(a, data);
         return a;
     }
 }
 
-export class ZoneAction implements Action {
+export class GoToZoneAction implements Action {
     type: ActionType.ZONE;
 
     id: string;
@@ -34,14 +34,14 @@ export class ZoneAction implements Action {
         console.log('Open the Zone', this.id);
     }
 
-    static from(data: any): ZoneAction {
-        const a = new ZoneAction();
+    static from(data: any): GoToZoneAction {
+        const a = new GoToZoneAction();
         Object.assign(a, data);
         return a;
     }
 }
 
-export class AtlasAction {
+export class GoToAtlasAction {
     type: ActionType.ATLAS;
 
     x: number;
@@ -52,8 +52,8 @@ export class AtlasAction {
         console.log('Open the Atlas');
     }
 
-    static from(data: any): AtlasAction {
-        const a = new AtlasAction();
+    static from(data: any): GoToAtlasAction {
+        const a = new GoToAtlasAction();
         Object.assign(a, data);
         return a;
     }

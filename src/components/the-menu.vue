@@ -1,17 +1,17 @@
 <template>
     <!-- In Game Menu -->
-    <Card v-if="game.id" raised reverse>
+    <Card v-if="gameState.id" raised reverse>
         <template #header>
             <DotBadge>G</DotBadge>
             <span>In-Game</span>
             <Button @click="onClickExit" class="ml-auto">Exit to Main Menu</Button>
         </template>
         <div id="InGameMenu">
-            <p>id: {{ game.id }}</p>
+            <p>id: {{ gameState.id }}</p>
         </div>
     </Card>
     <!-- Main Menu -->
-    <Card v-if="!game.id" raised>
+    <Card v-if="!gameState.id" raised>
         <template #header class="justify-between debug">
             <DotBadge>M</DotBadge>
             <span>Main Menu</span>
@@ -58,28 +58,28 @@
 </template>
 
 <script setup lang="ts">
-import { useGameStore } from '@/store/game-store';
+import { useGameStateStore } from '@/store/game-state-store';
 import { useStorageStore } from '@/store/storage-store';
 import Chip from './ui/chip.vue';
 
-const game = useGameStore();
+const gameState = useGameStateStore();
 const storage = useStorageStore();
 ``;
 
 function onClickNew() {
-    game.startNewGame();
+    gameState.startNewGame();
 }
 
 function onClickLoad(path: string) {
-    game.load(path);
+    gameState.load(path);
 }
 
 function onClickRemove(path: string) {
-    game.remove(path);
+    gameState.remove(path);
 }
 
 function onClickExit() {
-    game.reset();
+    gameState.reset();
 }
 </script>
 

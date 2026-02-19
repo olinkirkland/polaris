@@ -1,13 +1,21 @@
 <template>
     <Card>
         <p><strong>Atlas</strong></p>
+        <ul class="grid grid-cols-4 gap-2">
+            <li v-for="pin in gameState.getPinsInZone('atlas')">
+                <Card>
+                    <p>{{ pin.label }}</p>
+                </Card>
+            </li>
+        </ul>
     </Card>
 </template>
 
 <script lang="ts" setup>
-import { useGameStore } from '@/store/game-store';
+import { useGameStateStore } from '@/store/game-state-store';
+import Card from '../shared/card.vue';
 
-const game = useGameStore();
+const gameState = useGameStateStore();
 </script>
 
 <style lang="scss" scoped></style>

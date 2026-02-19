@@ -1,4 +1,4 @@
-import { Action, ActionType, AtlasAction, WaitAction, ZoneAction } from './action';
+import { Action, ActionType, GoToAtlasAction, WaitAction, GoToZoneAction } from './action';
 
 export function makeAction(data: any): Action {
     if (!data.type) throw new Error('Actions must have a type', data);
@@ -8,10 +8,10 @@ export function makeAction(data: any): Action {
             return WaitAction.from(data);
         }
         case ActionType.ATLAS: {
-            return AtlasAction.from(data);
+            return GoToAtlasAction.from(data);
         }
         case ActionType.ZONE: {
-            return ZoneAction.from(data);
+            return GoToZoneAction.from(data);
         }
     }
 

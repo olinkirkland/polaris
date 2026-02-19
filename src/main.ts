@@ -6,7 +6,7 @@ import Button from './components/ui/button.vue';
 import Checkbox from './components/ui/checkbox.vue';
 import DotBadge from './components/ui/dot-badge.vue';
 import { useGameDataStore } from './store/game-data-store';
-import { useGameStore } from './store/game-store';
+import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
 
 // Create the app
@@ -25,7 +25,7 @@ app.component('DotBadge', DotBadge);
 
 // Stores
 const storage = useStorageStore();
-const game = useGameStore();
+const gameState = useGameStateStore();
 const gameData = useGameDataStore();
 
 // Setup

@@ -4,19 +4,30 @@
         "label": "Core",
         "summary": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod sequi, sit earum consequuntur consequatur rem nesciunt aliquid velit itaque illo."
     },
-    "quests": [],
     "pins": [
         {
             "id": "1",
-            "point": { "x": 0, "y": 0 },
+            "address": { "zone": "atlas", "point": { "x": 0, "y": 0 } },
             "label": "foo",
             "actions": []
         },
         {
             "id": "2",
-            "point": { "x": 300, "y": 150 },
+            "address": { "zone": "atlas", "point": { "x": 300, "y": 150 } },
             "label": "bar",
             "actions": []
+        },
+        {
+            "id": "3",
+            "address": { "zone": "hand-of-sorrow", "point": { "x": 25, "y": 30 } },
+            "label": "baz",
+            "actions": []
+        }
+    ],
+    "quests": [],
+    "zones": [
+        {
+            "id": "hand-of-sorrow"
         }
     ]
 }

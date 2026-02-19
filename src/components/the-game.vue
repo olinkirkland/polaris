@@ -1,24 +1,24 @@
 <template>
     <div class="flex flex-col gap-5">
-        <TheLoader v-if="!game.id" />
+        <TheLoader v-if="!gameState.id" />
         <div v-if="gameData.data" class="flex flex-col gap-5">
             <TheMenu />
-            <Atlas v-if="game.id" />
-            <Zone v-if="game.id" />
+            <Atlas v-if="gameState.id" />
+            <Zone v-if="gameState.id" />
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
 import { useGameDataStore } from '@/store/game-data-store';
-import { useGameStore } from '@/store/game-store';
+import { useGameStateStore } from '@/store/game-state-store';
 import Atlas from './atlas/atlas.vue';
 import TheLoader from './the-loader.vue';
 import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
 
 const gameData = useGameDataStore();
-const game = useGameStore();
+const gameState = useGameStateStore();
 </script>
 
 <style lang="scss" scoped></style>

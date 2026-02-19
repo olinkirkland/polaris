@@ -5,9 +5,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useGameStore } from '@/store/game-store';
+import { useGameStateStore } from '@/store/game-state-store';
 
-const game = useGameStore();
+const gameState = useGameStateStore();
 </script>
 
 <style lang="scss" scoped></style>

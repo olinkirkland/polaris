@@ -4,18 +4,23 @@ import { Point } from '@/util/math-util';
 
 export class Pin {
     id: string;
-    point: Point;
+    address: {
+        zone?: string;
+        point: Point;
+    };
     label: string;
     actions: Action[];
 
-    constructor() {}
-
-    static from(data: any): Pin {
+    static unpack(data: any): Pin {
         const p = new Pin();
         p.id = data.id;
-        p.point = data.point;
+        p.address = data.address;
         p.label = data.label;
         p.actions = data.actions.map((a: any) => makeAction(a));
         return p;
+    }
+
+    pack(): string {
+        return JSON.stringify(this);
     }
 }
