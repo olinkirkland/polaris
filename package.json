@@ -12,6 +12,7 @@
         "@fortawesome/fontawesome-free": "^7.1.0",
         "@tailwindcss/postcss": "^4.1.18",
         "fast-xml-parser": "^5.3.3",
+        "npm": "^11.10.1",
         "pinia": "^3.0.4",
         "uuid": "^13.0.0",
         "vue": "^3.5.24"
