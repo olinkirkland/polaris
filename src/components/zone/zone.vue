@@ -2,13 +2,13 @@
     <Card>
         <template #header>
             <div class="w-full flex items-center justify-between">
-                <span>{{ gameState.currentZone?.label }}</span>
+                <span>{{ gameState.zone?.label }}</span>
                 <small>Zone</small>
             </div>
         </template>
-        <p class="mb-2">{{ gameState.currentZone?.description }}</p>
-        <ul v-if="gameState.currentZone" class="grid grid-cols-4 gap-2">
-            <li v-for="pin in gameState.getPinsInZone(gameState.currentZone.id)">
+        <p class="mb-2">{{ gameState.zone?.description }}</p>
+        <ul v-if="gameState.zone" class="grid grid-cols-4 gap-2">
+            <li v-for="pin in gameState.getPinsInZone(gameState.zone.id)">
                 <Card>
                     <p>{{ pin.label }}</p>
                     <ul v-if="pin.actions.length" class="mt-1 flex flex-wrap gap-1">

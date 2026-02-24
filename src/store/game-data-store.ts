@@ -41,9 +41,7 @@ export const useGameDataStore = defineStore('content', () => {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`@loadPackageData: ${response.status}`);
                 const data: GameDataPackage = await response.json();
-                // TODO: Unpack
                 const parsedData = unpackGameDataPackage(data);
-
                 result = mergePackageData(result, parsedData);
             } catch (error) {
                 console.error(`Error fetching ${url}`, error);

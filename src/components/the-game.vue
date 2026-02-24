@@ -3,8 +3,8 @@
         <TheLoader v-if="!gameState.id" />
         <div v-if="gameData.data" class="flex flex-col gap-5">
             <TheMenu />
-            <Atlas v-if="gameState.id && !gameState.currentZone" />
-            <Zone v-if="gameState.id && gameState.currentZone" />
+            <Atlas v-if="gameState.id && !gameState.zone" />
+            <Zone v-if="gameState.id && gameState.zone" />
         </div>
     </div>
 </template>

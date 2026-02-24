@@ -2,12 +2,13 @@ import { ActionType, BaseAction } from '@/actions/base-action';
 import { GoToZoneAction } from '@/actions/go-to-zone-action';
 import ActionController from '@/controllers/action-controller';
 import { Pin } from '@/game-data/pin/pin';
-import { Zone } from '@/game-data/zone/zone';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { useStorageStore } from './storage-store';
+
+type StateValue = string | number | boolean | null;
 
 interface StoredGame {
     metadata: {
@@ -16,8 +17,7 @@ interface StoredGame {
         date: number;
     };
     pins: string[];
-    currentZone: string | null;
-    // quests: any[];
+    stateValues: { [key: string]: StateValue };
 }
 
 export const useGameStateStore = defineStore('game', () => {
@@ -27,7 +27,20 @@ export const useGameStateStore = defineStore('game', () => {
     // Game Variables
     const id = ref<string | null>(null);
     const pins = ref<string[]>([]);
-    const currentZone = ref<Zone | null>();
+    const stateValues = ref<{ [key: string]: StateValue }>({});
+    const zone = computed(() => {
+        const z = stateValues.value.zone;
+        if (!z) return null;
+        return gameData.getZone(getValue('zone') as string);
+    });
+
+    function getValue(key: string): StateValue {
+        return stateValues.value[key];
+    }
+
+    function setValue(key: string, value: StateValue) {
+        stateValues.value[key] = value;
+    }
 
     // Listen to the action controller
     ActionController.getInstance().addEventListener((action) => onActionReceived(action));
@@ -35,10 +48,10 @@ export const useGameStateStore = defineStore('game', () => {
     function onActionReceived(action: BaseAction) {
         switch (action.type) {
             case ActionType.GO_TO_ATLAS:
-                currentZone.value = null;
+                setValue('zone', null);
                 break;
             case ActionType.GO_TO_ZONE:
-                currentZone.value = gameData.getZone((action as GoToZoneAction).id);
+                setValue('zone', (action as GoToZoneAction).id);
                 break;
         }
     }
@@ -70,7 +83,7 @@ export const useGameStateStore = defineStore('game', () => {
         const packages = gameData.data?.packageDescriptions;
         const date = Date.now();
         const metadata = { id: id.value, label: label, date, packages };
-        const data: StoredGame = { metadata, pins: pins.value, currentZone: currentZone.value?.id || null };
+        const data: StoredGame = { metadata, pins: pins.value, stateValues: stateValues.value };
 
         localStorage.setItem(path, JSON.stringify(data));
         storage.save(path, label, date, packages);
@@ -82,7 +95,7 @@ export const useGameStateStore = defineStore('game', () => {
         // Unpack the values from the loaded file
         id.value = g.metadata.id;
         pins.value = g.pins;
-        currentZone.value = g.currentZone ? gameData.getZone(g.currentZone) : null;
+        setValue('zone', g.zone ? gameData.getZone(g.zone) : null);
     }
 
     function remove(path: string) {
@@ -94,7 +107,7 @@ export const useGameStateStore = defineStore('game', () => {
         // TODO: Reset the game values
         id.value = null;
         pins.value = [];
-        currentZone.value = null;
+        zone.value = null;
     }
 
     function addPin(id: string) {
@@ -105,5 +118,26 @@ export const useGameStateStore = defineStore('game', () => {
         pins.value = pins.value.filter((p) => p !== id);
     }
 
-    return { startNewGame, remove, save, load, reset, id, getPinsInZone, addPin, removePin, currentZone };
+    function listPins() {
+        const allPins = gameData.data?.pins.map((p) => p.id);
+        const active = [...pins.value];
+        const inactive = allPins?.filter((p) => pins.value.every((q) => q !== p));
+        return { active, inactive };
+    }
+
+    return {
+        startNewGame,
+        remove,
+        save,
+        load,
+        reset,
+        id,
+        getPinsInZone,
+        addPin,
+        removePin,
+        zone,
+        stateValues,
+        listPins,
+        stateValues
+    };
 });

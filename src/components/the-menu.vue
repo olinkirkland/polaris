@@ -7,7 +7,7 @@
             <div class="flex gap-2 ml-auto">
                 <Button @click="onClickSave">
                     <i class="fa-solid fa-save"></i>
-                    <span>Save</span></Button
+                    <span>Quick Save</span></Button
                 >
                 <Button @click="onClickExit">Exit to Main Menu</Button>
             </div>

@@ -54,26 +54,23 @@ type PackageManifest = {
 
 const gameData = useGameDataStore();
 const availablePackages = ref<PackageManifest[]>([]);
-availablePackages.value.push(
-    {
-        url: '/assets/game-data/packages/core.json',
-        label: 'Core',
-        forced: true // This content must always be loaded
-    },
-    {
-        url: '/assets/game-data/packages/foo.json',
-        label: 'Foo'
-    }
-);
+const isLoadingContent = ref(true);
 
-const isLoadingContent = ref(false);
-onClickLoad(); // Load initially
+loadPackageManifests();
+
+async function loadPackageManifests() {
+    const response = await fetch('/assets/game-data/package-manifests.json');
+    if (!response.ok) throw new Error(`@loadPackageManifests: ${response.status}`);
+    const data: PackageManifest[] = await response.json();
+    availablePackages.value = data;
+    onClickLoad(); // Load initially
+}
 
 async function onClickLoad() {
     isLoadingContent.value = true;
     await wait(0.5);
     gameData.resetGameData();
-    const selectedContent = availablePackages.value.filter((c) => c.selected || c.forced).map((p) => p.url);
+    const selectedContent = availablePackages.value.filter((c) => c.selected).map((p) => p.url);
     await gameData.loadGameDataPackages(selectedContent);
     isLoadingContent.value = false;
 }
