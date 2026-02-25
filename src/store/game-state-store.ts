@@ -58,6 +58,7 @@ export const useGameStateStore = defineStore('game', () => {
         id.value = uuidv4();
 
         state.value = {
+            zone: 'bear-island',
             pins: ['bear-island']
         };
 
