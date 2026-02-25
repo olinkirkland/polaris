@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import TheModalContainer from './components/modals/the-modal-container.vue';
 import Game from './components/the-game.vue';
 </script>
 
@@ -6,12 +7,13 @@ import Game from './components/the-game.vue';
     <div class="p-5">
         <div class="pattern"></div>
         <Game />
-        <!-- <the-modal-container /> -->
     </div>
+    <TheModalContainer />
 </template>
 
 <style lang="scss">
 @use '@/assets/styles/styles.scss';
+@use '@/assets/styles/variables.scss';
 </style>
 
 <style lang="css">

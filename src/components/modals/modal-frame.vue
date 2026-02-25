@@ -1,42 +1,34 @@
 <template>
-    <div class="modal">
+    <Card class="modal">
         <slot name="header"></slot>
-        <div class="modal__content">
+        <div class="modal__content p-2 flex flex-col gap-2">
             <slot name="content"></slot>
         </div>
         <footer v-if="$slots.footer">
             <slot name="footer"></slot>
         </footer>
-        <div class="modal__background"></div>
-    </div>
+        <div class="modal__background w-full h-full top-0 left-0 absolute"></div>
+    </Card>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import Card from '../shared/card.vue';
+</script>
 
 <style lang="scss" scoped>
 .modal {
     position: relative;
     display: flex;
     flex-direction: column;
-    color: var(--on-surface);
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    border-radius: 5px;
-
+    border-radius: var(--radius-md);
     .modal__background {
-        position: absolute;
-        background-color: var(--background);
+        background-color: var(--surface);
         z-index: -1;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
     }
 
     .modal__content {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem;
         flex: 1;
         max-width: 100%;
         overflow-x: hidden;

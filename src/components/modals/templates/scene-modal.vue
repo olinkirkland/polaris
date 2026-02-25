@@ -2,11 +2,14 @@
     <ModalFrame>
         <template v-slot:header>
             <ModalHeader closeButton>
-                <h2>{{ props.id }}</h2>
+                <div class="flex w-full gap-2 items-center">
+                    <i class="fa-solid fa-panorama"></i>
+                    <p>{{ props.id }}</p>
+                </div>
             </ModalHeader>
         </template>
         <template v-slot:content>
-            <div class="scene"></div>
+            <pre>{{ props.id }}</pre>
         </template>
     </ModalFrame>
 </template>

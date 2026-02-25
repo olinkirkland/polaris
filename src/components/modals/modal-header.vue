@@ -1,7 +1,7 @@
 <template>
-    <div class="modal__header">
+    <div class="modal__header px-0.5 flex gap-2 w-full">
         <slot></slot>
-        <Button icon class="close" :class="closeButton ? '' : 'close--hidden'" @click="onClickClose">
+        <Button icon :class="closeButton ? '' : 'close--hidden'" @click="onClickClose">
             <i class="fas fa-times"></i>
         </Button>
     </div>
@@ -22,16 +22,7 @@ function onClickClose() {
 
 <style lang="scss" scoped>
 .modal__header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    height: 2rem;
-    padding: 0 2rem;
-    padding-right: 0.5rem;
-    width: 100%;
-    gap: 1rem;
-    background-color: var(--overlay);
-    border-bottom: 1px solid var(--surface-border);
+    border-bottom: 1px solid var(--surface-raised);
 
     .close {
         margin-left: auto;

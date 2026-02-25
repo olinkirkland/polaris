@@ -1,6 +1,12 @@
 <template>
-    <div class="modal-container" :class="{ active: !!currentModal }">
-        <div class="modal-container__background" @click="onClickBackground()"></div>
+    <div
+        class="modal-container w-full flex flex-col justify-center items-center absolute p-1 top-0"
+        :class="{ active: !!currentModal }"
+    >
+        <div
+            class="modal-container__background w-full h-full absolute top-0 opacity-100"
+            @click="onClickBackground()"
+        ></div>
         <Transition name="modal-transition" mode="out-in">
             <component :is="currentModal" v-bind="currentModalConfig" ref="modalRef" />
         </Transition>
@@ -22,8 +28,6 @@ function onClickBackground() {
 const queue: { modal: any; modalConfig: any }[] = [];
 
 ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
-    // (document.activeElement as HTMLElement)?.blur();
-
     // If no modal was passed, close the current one
     if (!modal) {
         currentModal.value = null;
@@ -47,13 +51,11 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
         if (isModalAlreadyInQueue) return;
 
         // Add the modal to the queue
-        // console.log('Queueing modal', JSON.stringify(modalConfig));
         queue.push({ modal, modalConfig });
         return;
     }
 
     if (modal) {
-        // console.log('Opening modal', JSON.stringify(modalConfig));
         currentModal.value = { ...modal! } as any;
         currentModalConfig.value = { ...modalConfig };
     }
@@ -78,31 +80,15 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
 
 <style scoped lang="scss">
 .modal-container {
-    width: 100%;
-
-    height: 100vh; // Works everywhere, but buggy on mobile Safari (includes address bar)
-    height: 100dvh; // Modern fix, uses the dynamic viewport height. Works properly with iOS Safari and all modern browsers
-    min-height: -webkit-fill-available; // Fallback for iOS Safari
-
+    height: 100vh;
+    height: 100dvh;
+    min-height: -webkit-fill-available;
     -webkit-overflow-scrolling: touch;
-    position: absolute;
-    top: 0;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
     z-index: 99;
-    padding: 1rem;
 
     > .modal-container__background {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
         z-index: -1;
         background-color: rgba(0, 0, 0, 0.5);
-        opacity: 1;
     }
 
     &:not(.active) {
