@@ -1,7 +1,9 @@
 import { ActionType, BaseAction } from './base-action';
-import { GoToAtlasAction } from './go-to-atlas-action';
-import { GoToZoneAction } from './go-to-zone-action';
-import { StartSceneAction } from './start-scene-action';
+import { EndSceneAction } from './end-scene';
+import { GoToAtlasAction } from './go-to-atlas';
+import { GoToZoneAction } from './go-to-zone';
+import { PatchStateAction } from './patch-state';
+import { StartSceneAction } from './start-scene';
 
 export function makeAction(data: any): BaseAction {
     if (!data.type) throw new Error('Actions must have a type', data);
@@ -15,6 +17,12 @@ export function makeAction(data: any): BaseAction {
         }
         case ActionType.START_SCENE: {
             return StartSceneAction.unpack(data);
+        }
+        case ActionType.END_SCENE: {
+            return EndSceneAction.unpack(data);
+        }
+        case ActionType.PATCH_STATE: {
+            return PatchStateAction.unpack(data);
         }
     }
 

@@ -1,6 +1,3 @@
-import { ActionType, BaseAction } from '@/actions/base-action';
-import { GoToZoneAction } from '@/actions/go-to-zone-action';
-import ActionController from '@/controllers/action-controller';
 import { Pin } from '@/game-data/pin/pin';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
@@ -8,15 +5,13 @@ import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { useStorageStore } from './storage-store';
 
-type StateValue = string | number | boolean | string[] | null;
-
 interface StoredGame {
     metadata: {
         id: string;
         label: string;
         date: number;
     };
-    state: { [key: string]: StateValue };
+    state: { [key: string]: any };
 }
 
 export const useGameStateStore = defineStore('game', () => {
@@ -25,7 +20,7 @@ export const useGameStateStore = defineStore('game', () => {
 
     // Game Variables
     const id = ref<string | null>(null);
-    const state = ref<{ [key: string]: StateValue }>({});
+    const state = ref<{ [key: string]: any }>({});
 
     // Computed values (from state)
     const zone = computed(() => {
@@ -34,32 +29,18 @@ export const useGameStateStore = defineStore('game', () => {
         return gameData.getZone(getValue('zone') as string);
     });
 
-    function getValue(key: string): StateValue {
+    function getValue(key: string): any {
         return state.value[key];
     }
 
-    function setValue(key: string, value: StateValue) {
+    function setValue(key: string, value: any) {
         state.value[key] = value;
     }
 
-    function updateValue(key: string, f: (oldValue: StateValue) => StateValue) {
+    function patchValue(key: string, f: (oldValue: any) => any) {
         const currentValue = getValue(key);
         const newValue = f(currentValue);
         setValue(key, newValue);
-    }
-
-    // Listen to the action controller
-    ActionController.getInstance().addEventListener((action) => onActionReceived(action));
-
-    function onActionReceived(action: BaseAction) {
-        switch (action.type) {
-            case ActionType.GO_TO_ATLAS:
-                setValue('zone', null);
-                break;
-            case ActionType.GO_TO_ZONE:
-                setValue('zone', (action as GoToZoneAction).id);
-                break;
-        }
     }
 
     function getPins(): Pin[] {
@@ -119,11 +100,11 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function addPin(id: string) {
-        updateValue('pins', (pins) => [...(pins as string[]), id]);
+        patchValue('pins', (pins) => [...(pins as string[]), id]);
     }
 
     function removePin(id: string) {
-        updateValue('pins', (pins) => (pins as string[]).filter((p) => p !== id));
+        patchValue('pins', (pins) => (pins as string[]).filter((p) => p !== id));
     }
 
     function listPins() {
@@ -145,6 +126,9 @@ export const useGameStateStore = defineStore('game', () => {
         removePin,
         zone,
         state,
-        listPins
+        listPins,
+        getValue,
+        setValue,
+        patchValue
     };
 });
