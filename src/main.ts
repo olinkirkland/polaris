@@ -8,6 +8,7 @@ import DotBadge from './components/ui/dot-badge.vue';
 import { useGameDataStore } from './store/game-data-store';
 import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
+import ActionButton from './components/shared/action-button.vue';
 
 // Create the app
 const app = createApp(App);
@@ -19,6 +20,7 @@ app.use(pinia);
 
 // Components
 app.component('Button', Button);
+app.component('ActionButton', ActionButton);
 app.component('Checkbox', Checkbox);
 app.component('Card', Card);
 app.component('DotBadge', DotBadge);

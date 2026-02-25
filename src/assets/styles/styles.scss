@@ -123,3 +123,9 @@
         user-select: none;
     }
 }
+
+mark {
+    background-color: var(--color-accent);
+    border-radius: var(--radius-sm);
+    padding: 0 0.25rem;
+}

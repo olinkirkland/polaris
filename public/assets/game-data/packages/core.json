@@ -21,13 +21,13 @@
             "id": "bear-island__return-to-ship",
             "address": { "zone": "bear-island", "point": { "x": 300, "y": 150 } },
             "label": "Return to Skyship",
-            "actions": [{ "type": "go-to-atlas" }]
+            "actions": [{ "type": "go-to-atlas", "point": { "x": 221, "y": 153 } }]
         },
         {
             "id": "sawyers-shop",
             "address": { "zone": "bear-island", "point": { "x": 25, "y": 30 } },
             "label": "Old Bill Sawyer's Scrap Shop",
-            "actions": []
+            "actions": [{ "type": "start-scene", "id": "scrap-shop" }]
         }
     ],
     "quests": [],
