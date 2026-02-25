@@ -1,5 +1,5 @@
 <template>
-    <button class="w-fit flex gap-1 items-center py-1 px-2 rounded-lg cursor-pointer">
+    <button class="w-fit flex gap-1.5 items-center py-1 px-2 rounded-lg cursor-pointer">
         <slot></slot>
     </button>
 </template>

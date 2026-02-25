@@ -7,7 +7,7 @@
             </div>
         </template>
         <p class="mb-2">{{ gameState.zone?.description }}</p>
-        <ul v-if="gameState.zone" class="grid grid-cols-4 gap-2">
+        <ul v-if="gameState.zone" class="grid grid-cols-3 gap-2">
             <li v-for="pin in gameState.getPinsInZone(gameState.zone.id)">
                 <Card>
                     <p>{{ pin.label }}</p>

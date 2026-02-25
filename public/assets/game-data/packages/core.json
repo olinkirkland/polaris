@@ -12,13 +12,13 @@
             "actions": [{ "type": "go-to-zone", "id": "bear-island" }]
         },
         {
-            "id": "the-reach__driftwood-cottage",
+            "id": "the-reach.driftwood-cottage",
             "address": { "zone": "the-reach", "point": { "x": 300, "y": 150 } },
             "label": "Driftwood Cottage",
             "actions": []
         },
         {
-            "id": "bear-island__return-to-ship",
+            "id": "bear-island.return",
             "address": { "zone": "bear-island", "point": { "x": 300, "y": 150 } },
             "label": "Return to Skyship",
             "actions": [{ "type": "go-to-atlas", "point": { "x": 221, "y": 153 } }]

@@ -59,7 +59,7 @@ export const useGameStateStore = defineStore('game', () => {
 
         state.value = {
             zone: 'bear-island',
-            pins: ['bear-island']
+            pins: ['bear-island', 'bear-island.return']
         };
 
         save('autosave', 'Autosave');
