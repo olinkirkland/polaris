@@ -8,7 +8,7 @@ import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { useStorageStore } from './storage-store';
 
-type StateValue = string | number | boolean | null;
+type StateValue = string | number | boolean | string[] | null;
 
 interface StoredGame {
     metadata: {
@@ -16,8 +16,7 @@ interface StoredGame {
         label: string;
         date: number;
     };
-    pins: string[];
-    stateValues: { [key: string]: StateValue };
+    state: { [key: string]: StateValue };
 }
 
 export const useGameStateStore = defineStore('game', () => {
@@ -26,20 +25,27 @@ export const useGameStateStore = defineStore('game', () => {
 
     // Game Variables
     const id = ref<string | null>(null);
-    const pins = ref<string[]>([]);
-    const stateValues = ref<{ [key: string]: StateValue }>({});
+    const state = ref<{ [key: string]: StateValue }>({});
+
+    // Computed values (from state)
     const zone = computed(() => {
-        const z = stateValues.value.zone;
+        const z = state.value.zone;
         if (!z) return null;
         return gameData.getZone(getValue('zone') as string);
     });
 
     function getValue(key: string): StateValue {
-        return stateValues.value[key];
+        return state.value[key];
     }
 
     function setValue(key: string, value: StateValue) {
-        stateValues.value[key] = value;
+        state.value[key] = value;
+    }
+
+    function updateValue(key: string, f: (oldValue: StateValue) => StateValue) {
+        const currentValue = getValue(key);
+        const newValue = f(currentValue);
+        setValue(key, newValue);
     }
 
     // Listen to the action controller
@@ -58,7 +64,7 @@ export const useGameStateStore = defineStore('game', () => {
 
     function getPins(): Pin[] {
         if (!gameData.data) throw new Error('Missing Game Data');
-        return gameData.data.pins.filter((p) => pins.value.indexOf(p.id) > -1);
+        return gameData.data.pins.filter((p) => (getValue('pins') as string[]).indexOf(p.id) > -1);
     }
 
     function getPinsInZone(zone: string): Pin[] {
@@ -69,6 +75,10 @@ export const useGameStateStore = defineStore('game', () => {
         // Load an initial state
         // (the way the game starts)
         id.value = uuidv4();
+
+        state.value = {
+            pins: ['bear-island']
+        };
 
         save('autosave', 'Autosave');
     }
@@ -83,7 +93,7 @@ export const useGameStateStore = defineStore('game', () => {
         const packages = gameData.data?.packageDescriptions;
         const date = Date.now();
         const metadata = { id: id.value, label: label, date, packages };
-        const data: StoredGame = { metadata, pins: pins.value, stateValues: stateValues.value };
+        const data: StoredGame = { metadata, state: state.value };
 
         localStorage.setItem(path, JSON.stringify(data));
         storage.save(path, label, date, packages);
@@ -94,8 +104,7 @@ export const useGameStateStore = defineStore('game', () => {
 
         // Unpack the values from the loaded file
         id.value = g.metadata.id;
-        pins.value = g.pins;
-        setValue('zone', g.zone ? gameData.getZone(g.zone) : null);
+        state.value = g.state;
     }
 
     function remove(path: string) {
@@ -106,22 +115,21 @@ export const useGameStateStore = defineStore('game', () => {
     function reset() {
         // TODO: Reset the game values
         id.value = null;
-        pins.value = [];
-        zone.value = null;
+        state.value = {};
     }
 
     function addPin(id: string) {
-        pins.value.push(id);
+        updateValue('pins', (pins) => [...(pins as string[]), id]);
     }
 
     function removePin(id: string) {
-        pins.value = pins.value.filter((p) => p !== id);
+        updateValue('pins', (pins) => (pins as string[]).filter((p) => p !== id));
     }
 
     function listPins() {
         const allPins = gameData.data?.pins.map((p) => p.id);
-        const active = [...pins.value];
-        const inactive = allPins?.filter((p) => pins.value.every((q) => q !== p));
+        const active = getValue('pins');
+        const inactive = allPins?.filter((p) => (getValue('pins') as string[]).every((q) => q !== p));
         return { active, inactive };
     }
 
@@ -136,8 +144,7 @@ export const useGameStateStore = defineStore('game', () => {
         addPin,
         removePin,
         zone,
-        stateValues,
-        listPins,
-        stateValues
+        state,
+        listPins
     };
 });
