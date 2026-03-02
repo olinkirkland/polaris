@@ -3,6 +3,7 @@
         <TheLoader v-if="!gameState.id" />
         <div v-if="gameData.data" class="flex flex-col gap-5">
             <TheMenu />
+            <CharacterEditor v-if="gameState.id" />
             <Atlas v-if="gameState.id && !gameState.zone" />
             <Zone v-if="gameState.id && gameState.zone" />
         </div>
@@ -16,6 +17,7 @@ import Atlas from './atlas/atlas.vue';
 import TheLoader from './the-loader.vue';
 import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
+import CharacterEditor from './character-editor/character-editor.vue';
 
 const gameData = useGameDataStore();
 const gameState = useGameStateStore();
