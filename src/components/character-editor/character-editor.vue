@@ -1,8 +1,8 @@
 <template>
     <Card>
-        <template #header>Character Editor</template>
+        <template #header>Character Management</template>
         <label class="input-box">
-            <span>Name</span>
+            <span>My Name</span>
             <input type="text" placeholder="Character Name" />
         </label>
     </Card>
