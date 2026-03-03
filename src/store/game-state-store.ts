@@ -126,9 +126,10 @@ export const useGameStateStore = defineStore('game', () => {
         return party.find((c) => c.id === id) || null;
     }
 
-    function setCharacter(updatedCharacter: Character) {
+    function setCharacter(character: Character) {
+        patchValue( // TODO
         const party = getValue('party') as Character[];
-        const newParty = party.map((c) => (c.id === updatedCharacter.id ? updatedCharacter : c));
+        const newParty = party.map((c) => (c.id === character.id ? character : c));
         setValue('party', newParty);
     }
 
@@ -147,6 +148,8 @@ export const useGameStateStore = defineStore('game', () => {
         listPins,
         getValue,
         setValue,
-        patchValue
+        patchValue,
+        getCharacter,
+        setCharacter
     };
 });
