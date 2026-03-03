@@ -34,6 +34,6 @@ const gameData = useGameDataStore();
 
 // Setup
 (async () => {
-    storage.load();
+    storage.loadManifests();
     app.mount('#app');
 })();

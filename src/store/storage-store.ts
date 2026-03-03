@@ -1,31 +1,57 @@
 import { defineStore } from 'pinia';
-import { ref } from 'vue';
-import { PackageDescription } from './game-data-store';
+import { computed, ref } from 'vue';
 
-interface StoredGameManifest {
-    path: string;
+export interface StoredGameManifest {
+    id: string;
     label: string;
+    path: string; // id + / + label
     date: number;
     packageIds: string[];
+    summary: {
+        name?: string;
+        level?: number;
+        path?: string;
+    };
+}
+
+export interface StoredGameManifestGroup {
+    id: string; // All manifests in this group share this id
+    manifests: StoredGameManifest[];
+}
+
+export interface StoredGame {
+    manifest: StoredGameManifest;
+    state: { [key: string]: any };
 }
 
 export const useStorageStore = defineStore('index', () => {
-    const indexes = ref<StoredGameManifest[]>([]);
+    const manifests = ref<StoredGameManifest[]>([]);
+    const manifestGroups = computed(() => {
+        const groups: StoredGameManifestGroup[] = [];
+        manifests.value.forEach((m) => {
+            const g = groups.find((g) => g.id === m.id);
+            if (g) g.manifests.push(m);
+            else groups.push({ id: m.id, manifests: [m] });
+        });
+        groups.forEach((g) => g.manifests.sort((a, b) => (a.date > b.date ? -1 : 1)));
+        return groups;
+    });
 
-    function save(path: string, label: string, date: number, packages: PackageDescription[]) {
-        indexes.value = indexes.value.filter((d) => d.path !== path);
-        indexes.value = [...indexes.value, { path, label, date, packageIds: packages.map((p) => p.id) }];
-        localStorage.setItem('storage-index', JSON.stringify(indexes.value));
+    function saveManifest(manifest: StoredGameManifest) {
+        // Overwrite manifests with the same path
+        manifests.value = manifests.value.filter((m) => m.path !== manifest.path);
+        manifests.value = [...manifests.value, manifest];
+        localStorage.setItem('storage-index', JSON.stringify(manifests.value));
     }
 
-    function load() {
-        indexes.value = JSON.parse(localStorage.getItem('storage-index') || '[]');
+    function loadManifests() {
+        manifests.value = JSON.parse(localStorage.getItem('storage-index') || '[]');
     }
 
     function remove(path: string) {
-        indexes.value = indexes.value.filter((v) => v.path !== path);
-        localStorage.setItem('storage-index', JSON.stringify(indexes.value));
+        manifests.value = manifests.value.filter((v) => v.path !== path);
+        localStorage.setItem('storage-index', JSON.stringify(manifests.value));
     }
 
-    return { save, load, remove, indexes };
+    return { saveManifest, loadManifests, remove, manifests, manifestGroups };
 });

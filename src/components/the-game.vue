@@ -14,10 +14,10 @@
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import Atlas from './atlas/atlas.vue';
+import CharacterEditor from './character-editor/character-editor.vue';
 import TheLoader from './the-loader.vue';
 import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
-import CharacterEditor from './character-editor/character-editor.vue';
 
 const gameData = useGameDataStore();
 const gameState = useGameStateStore();

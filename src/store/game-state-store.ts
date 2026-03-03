@@ -1,18 +1,10 @@
+import { Character } from '@/character/character-types';
 import { Pin } from '@/game-data/pin/pin';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
-import { useStorageStore } from './storage-store';
-
-interface StoredGame {
-    metadata: {
-        id: string;
-        label: string;
-        date: number;
-    };
-    state: { [key: string]: any };
-}
+import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -58,6 +50,7 @@ export const useGameStateStore = defineStore('game', () => {
         id.value = uuidv4();
 
         state.value = {
+            party: [], // Empty party
             zone: 'bear-island',
             pins: ['bear-island', 'bear-island.return']
         };
@@ -74,18 +67,32 @@ export const useGameStateStore = defineStore('game', () => {
         // Prepare data and put it into the data object to be packed
         const packages = gameData.data?.packageDescriptions;
         const date = Date.now();
-        const metadata = { id: id.value, label: label, date, packages };
-        const data: StoredGame = { metadata, state: state.value };
+        const player = getCharacter('player');
+        const summary = {
+            name: player?.name,
+            path: player?.path,
+            level: player?.level
+        };
+        const manifest: StoredGameManifest = {
+            id: id.value,
+            label: label,
+            path,
+            date,
+            packageIds: packages.map((p) => p.id),
+            summary
+        };
+
+        const data: StoredGame = { manifest, state: state.value };
 
         localStorage.setItem(path, JSON.stringify(data));
-        storage.save(path, label, date, packages);
+        storage.saveManifest(manifest);
     }
 
     function load(path: string) {
         const g: StoredGame = JSON.parse(localStorage.getItem(path)!);
 
         // Unpack the values from the loaded file
-        id.value = g.metadata.id;
+        id.value = g.manifest.id;
         state.value = g.state;
     }
 
@@ -95,7 +102,6 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function reset() {
-        // TODO: Reset the game values
         id.value = null;
         state.value = {};
     }
@@ -113,6 +119,17 @@ export const useGameStateStore = defineStore('game', () => {
         const active = getValue('pins');
         const inactive = allPins?.filter((p) => (getValue('pins') as string[]).every((q) => q !== p));
         return { active, inactive };
+    }
+
+    function getCharacter(id: string): Character | null {
+        const party = getValue('party') as Character[];
+        return party.find((c) => c.id === id) || null;
+    }
+
+    function setCharacter(updatedCharacter: Character) {
+        const party = getValue('party') as Character[];
+        const newParty = party.map((c) => (c.id === updatedCharacter.id ? updatedCharacter : c));
+        setValue('party', newParty);
     }
 
     return {

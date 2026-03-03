@@ -11,7 +11,7 @@
 
                 <div class="choices">
                     <Button @click="onClickCancel" :fullWidthMobile="true">
-                        <span>{{ props.cancelText || useI18n().t('Modals.Confirm.Controls.cancel') }}</span>
+                        <span>{{ props.cancelText || 'Cancel' }}</span>
                     </Button>
                     <Button
                         :primary="props.isConfirmButtonPrimary"
@@ -19,7 +19,7 @@
                         :fullWidthMobile="true"
                         @click="props.onConfirm"
                     >
-                        <span>{{ props.confirmText || useI18n().t('Modals.Confirm.Controls.confirm') }}</span>
+                        <span>{{ props.confirmText || 'Confirm' }}</span>
                     </Button>
                 </div>
             </div>
@@ -28,10 +28,7 @@
 </template>
 
 <script setup lang="ts">
-import ModalFrame from '@/components/modals/ModalFrame.vue';
-import ModalHeader from '@/components/modals/ModalHeader.vue';
 import ModalController from '@/controllers/modal-controller';
-import { useI18n } from 'vue-i18n';
 
 const props = defineProps<{
     title: string;

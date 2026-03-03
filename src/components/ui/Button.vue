@@ -11,6 +11,7 @@ button {
     background-color: var(--color-surface-raised);
     border: 1px solid var(--color-base-faint);
     transition: 0.2s box-shadow;
+    height: fit-content;
 
     &:hover {
         box-shadow: var(--shadow-sm);

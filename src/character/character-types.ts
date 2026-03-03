@@ -1,26 +1,32 @@
-export type Talent = {
-    id: string;
-    name: string;
-    description: string;
-};
-
 export type Stat = 'brawn' | 'agility' | 'wits' | 'presence';
+export type Skill =
+    | 'melee'
+    | 'berserk'
+    | 'endurance'
+    | 'ranged'
+    | 'precision'
+    | 'evasion'
+    | 'tinker'
+    | 'medicine'
+    | 'attunement'
+    | 'inspiration'
+    | 'deception'
+    | 'ritual';
 
 export type Character = {
-    id: string;
-    name: string;
-    level: number;
-    look: {
-        hairTypeId: string;
-        hairColor: string;
-        skinColor: string;
-        equippedClothing: Item;
-        equippedArmorItems: Item[];
-    };
+    id: string; // A unique id for this character, e.g., 'player' is used for the Player's created character
+    name: string; // The character's name, as used in labels in the user interface
+    path: string; // The character's path
+    level: number; // The character's level
     stats: {
         [key in Stat]?: number;
     };
-    talents: Talent[];
+    skills: {
+        [key in Skill]?: number;
+    };
+
+    // talents: Talent[];
+    // abilities: Ability[];
 };
 
 export type Item = {

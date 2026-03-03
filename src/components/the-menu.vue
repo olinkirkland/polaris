@@ -30,33 +30,8 @@
 
             <!-- List of Save Games to be loaded -->
             <ul class="grid grid-cols-3 gap-2">
-                <li v-for="g in storage.indexes.sort((a, b) => (a.date > b.date ? -1 : 1))">
-                    <Card>
-                        <template #header>
-                            <div class="w-full flex justify-center items-center">
-                                <em>{{ g.label }}</em>
-                            </div>
-                        </template>
-                        <div class="flex flex-col gap-2 mb-2">
-                            <small class="w-full text-ellipsis line-clamp-1">{{ g.path }}</small>
-                            <p>{{ new Date(g.date).toLocaleString() }}</p>
-                            <ul class="flex flex-wrap gap-2">
-                                <li v-for="p in g.packageIds">
-                                    <Chip>
-                                        <i class="text-sm fa-solid fa-cube"></i>
-                                        <span>{{ p }}</span>
-                                    </Chip>
-                                </li>
-                            </ul>
-                        </div>
-                        <template #footer>
-                            <Button @click="onClickLoad(g.path)"><span>Load</span></Button>
-                            <Button @click="onClickRemove(g.path)">
-                                <i class="fa-solid fa-trash"></i>
-                                <span>Delete</span>
-                            </Button>
-                        </template>
-                    </Card>
+                <li v-for="g in storage.manifestGroups">
+                    <StoredGameCard :manifestGroup="g" />
                 </li>
             </ul>
         </div>
@@ -66,22 +41,13 @@
 <script setup lang="ts">
 import { useGameStateStore } from '@/store/game-state-store';
 import { useStorageStore } from '@/store/storage-store';
-import Chip from './ui/chip.vue';
+import StoredGameCard from './stored-game-card.vue';
 
 const gameState = useGameStateStore();
 const storage = useStorageStore();
-``;
 
 function onClickNew() {
     gameState.startNewGame();
-}
-
-function onClickLoad(path: string) {
-    gameState.load(path);
-}
-
-function onClickRemove(path: string) {
-    gameState.remove(path);
 }
 
 function onClickSave() {
