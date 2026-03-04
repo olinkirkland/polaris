@@ -23,7 +23,7 @@ const gameState = useGameStateStore();
 
 onMounted(() => {
     // Does the player character exist? If not, prompt the player for that info
-    if (gameState.)
+    // if (gameState.)
 });
 </script>
 

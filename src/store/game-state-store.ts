@@ -127,10 +127,9 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function setCharacter(character: Character) {
-        patchValue( // TODO
-        const party = getValue('party') as Character[];
-        const newParty = party.map((c) => (c.id === character.id ? character : c));
-        setValue('party', newParty);
+        patchValue('party', (party) => {
+            return party.map((c) => (c.id === character.id ? character : c));;
+        });
     }
 
     return {
