@@ -20,9 +20,9 @@
 
 <script lang="ts" setup>
 import { ActionType, BaseAction } from '@/actions/base-action';
-import { GoToAtlasAction } from '@/actions/go-to-atlas';
-import { GoToZoneAction } from '@/actions/go-to-zone';
-import { StartSceneAction } from '@/actions/start-scene';
+import { GoToAtlasAction } from '@/actions/go-to-atlas-action';
+import { GoToZoneAction } from '@/actions/go-to-zone-action';
+import { StartSceneAction } from '@/actions/start-scene-action';
 import { PropType } from 'vue';
 
 const props = defineProps({

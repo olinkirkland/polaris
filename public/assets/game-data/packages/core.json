@@ -30,7 +30,31 @@
             "actions": [{ "type": "start-scene", "id": "scrap-shop" }]
         }
     ],
-    "quests": [],
+    "quests": [
+        {
+            "id": "onboarding",
+            "label": "Onboarding",
+            "entryNode": "start-onboarding",
+            "condition": {
+                "type": "FLAG",
+                "flag": "game-started",
+                "op": "EQ",
+                "value": true
+            },
+            "nodes": [
+                {
+                    "id": "start-onboarding",
+                    "actions": [{ "type": "onboarding" }],
+                    "edges": []
+                },
+                {
+                    "id": "complete-onboarding",
+                    "actions": [],
+                    "edges": []
+                }
+            ]
+        }
+    ],
     "zones": [
         {
             "id": "bear-island",

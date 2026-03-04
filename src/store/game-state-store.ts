@@ -1,5 +1,6 @@
 import { Character } from '@/character/character-types';
 import { Pin } from '@/game-data/pin/pin';
+import { QuestNode, QuestState } from '@/game-data/quest/quest';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
@@ -52,10 +53,17 @@ export const useGameStateStore = defineStore('game', () => {
         state.value = {
             party: [], // Empty party
             zone: 'bear-island',
-            pins: ['bear-island', 'bear-island.return']
+            quests: [],
+            pins: ['bear-island', 'bear-island.return'],
+            flags: { 'game-started': true }
         };
 
-        save('autosave', 'Autosave');
+        validateQuestConditions();
+    }
+
+    function validateQuestConditions() {
+        const quests = gameData.data?.quests || [];
+        quests.forEach((q) => q.validate());
     }
 
     function save(saveId: string, label: string) {
@@ -132,6 +140,26 @@ export const useGameStateStore = defineStore('game', () => {
         });
     }
 
+    function getActiveNodeId(questId: string): QuestNode {
+        return getValue('quests').find((q: QuestState) => q.id === questId);
+    }
+
+    function setActiveNodeId(questId: string, nodeId: string) {
+        patchValue('quests', (quests) => {
+            if (!quests.find((q: QuestState) => q.id === questId))
+                return quests.push({ id: questId, activeNodeId: nodeId });
+            return (quests.find((q: QuestState) => q.id === questId).activeNodeId = nodeId);
+        });
+    }
+
+    function getFlag(name: string): string | number | boolean {
+        return getValue('flags')[name];
+    }
+
+    function setFlag(name: string, value: string | number | boolean) {
+        patchValue('flags', (flags) => ({ ...flags, [name]: value }));
+    }
+
     return {
         startNewGame,
         remove,
@@ -149,6 +177,10 @@ export const useGameStateStore = defineStore('game', () => {
         setValue,
         patchValue,
         getCharacter,
-        setCharacter
+        setCharacter,
+        getActiveNodeId,
+        setActiveNodeId,
+        getFlag,
+        setFlag
     };
 });

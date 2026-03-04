@@ -9,6 +9,7 @@ import { useGameDataStore } from './store/game-data-store';
 import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
 import ActionButton from './components/shared/action-button.vue';
+import ActionController from './controllers/action-controller';
 
 // Create the app
 const app = createApp(App);
@@ -28,9 +29,9 @@ app.component('DotBadge', DotBadge);
 // Stores
 const storage = useStorageStore();
 const gameState = useGameStateStore();
-const gameData = useGameDataStore();
 
-(window as any).g = gameState; // Expose game state to global
+(window as any).g = gameState; // Expose game state
+(window as any).a = ActionController.getInstance(); // Expose the action controller
 
 // Setup
 (async () => {

@@ -19,8 +19,4 @@ export class Pin {
         p.actions = data.actions.map((a: BaseAction) => makeAction(a));
         return p;
     }
-
-    pack(): string {
-        return JSON.stringify(this);
-    }
 }
