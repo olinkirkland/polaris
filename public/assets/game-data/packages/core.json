@@ -49,7 +49,7 @@
                 },
                 {
                     "id": "complete-onboarding",
-                    "actions": [],
+                    "actions": [{ "type": "autosave" }],
                     "edges": []
                 }
             ]

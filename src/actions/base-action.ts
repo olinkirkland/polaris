@@ -13,6 +13,7 @@ export abstract class BaseAction {
     abstract type: string;
 
     act() {
+        console.log('@act:', this.type);
         ActionController.getInstance().add(this);
     }
 }
