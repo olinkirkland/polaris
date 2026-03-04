@@ -3,7 +3,7 @@
         <header v-if="hasHeader" class="p-3 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
-        <div class="p-3">
+        <div class="flex flex-col p-3 gap-2">
             <slot></slot>
         </div>
         <footer v-if="hasFooter" class="p-3 w-full flex items-center gap-2">

@@ -126,9 +126,9 @@ export const useGameStateStore = defineStore('game', () => {
         return party.find((c) => c.id === id) || null;
     }
 
-    function setCharacter(character: Character) {
+    function setCharacter(newCharacter: Character) {
         patchValue('party', (party) => {
-            return party.map((c) => (c.id === character.id ? character : c));;
+            return party.map((c: Character) => (c.id === newCharacter.id ? newCharacter : c));
         });
     }
 

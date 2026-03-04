@@ -12,6 +12,7 @@ button {
     border: 1px solid var(--color-base-faint);
     transition: 0.2s box-shadow;
     height: fit-content;
+    min-height: 2rem;
 
     &:hover {
         box-shadow: var(--shadow-sm);
