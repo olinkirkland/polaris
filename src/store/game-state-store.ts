@@ -55,7 +55,7 @@ export const useGameStateStore = defineStore('game', () => {
             zone: 'bear-island',
             quests: [],
             pins: ['bear-island', 'bear-island.return'],
-            flags: { 'game-started': true }
+            flags: {}
         };
 
         validateQuestConditions();
@@ -140,15 +140,20 @@ export const useGameStateStore = defineStore('game', () => {
         });
     }
 
-    function getActiveNodeId(questId: string): QuestNode {
-        return getValue('quests').find((q: QuestState) => q.id === questId);
+    function getActiveNodeId(questId: string): string {
+        const quests: QuestState[] = getValue('quests');
+        const questState = quests.find((q: QuestState) => q.id === questId)!;
+        return questState.activeNodeId;
     }
 
     function setActiveNodeId(questId: string, nodeId: string) {
-        patchValue('quests', (quests) => {
-            if (!quests.find((q: QuestState) => q.id === questId))
-                return quests.push({ id: questId, activeNodeId: nodeId });
-            return (quests.find((q: QuestState) => q.id === questId).activeNodeId = nodeId);
+        patchValue('quests', (quests: QuestState[]) => {
+            const existingQuestIndex = quests.findIndex((q) => q.id === questId);
+            if (existingQuestIndex === -1) return [...quests, { id: questId, activeNodeId: nodeId }];
+            return quests.map((q, index) => {
+                if (index === existingQuestIndex) return { ...q, activeNodeId: nodeId };
+                return q;
+            });
         });
     }
 

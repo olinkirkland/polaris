@@ -1,7 +1,7 @@
 <template>
-    <div class="w-fit flex gap-1.5 items-center py-1 px-2 rounded-lg">
+    <div class="w-fit flex gap-1.5 items-center py-1 px-2 rounded-lg" :class="flagType"">
         <span class="flag-name">{{ flagName }}</span>
-        <mark :class="'mark--' + flagType">{{ flagValue }}</mark>
+        <mark>{{ flagValue }}</mark>
     </div>
 </template>
 
@@ -21,22 +21,27 @@ const flagType = computed<'string' | 'number' | 'boolean'>(() => {
 </script>
 
 <style scoped lang="scss">
-div {
-    background-color: var(--color-gray-100);
+.number {
+    background-color: var(--color-blue-100);
+    > mark {
+        background-color: var(--color-blue-700);
+        color: var(--color-blue-100);
+    }
 }
 
-.mark--number {
-    background-color: var(--color-blue-700);
-    color: var(--color-blue-100);
+.string {
+    background-color: var(--color-green-100);
+    > mark {
+        background-color: var(--color-green-700);
+        color: var(--color-green-100);
+    }
 }
 
-.mark--string {
-    background-color: var(--color-green-700);
-    color: var(--color-green-100);
-}
-
-.mark--boolean {
-    background-color: var(--color-purple-700);
-    color: var(--color-purple-100);
+.boolean {
+    background-color: var(--color-purple-100);
+    > mark {
+        background-color: var(--color-purple-700);
+        color: var(--color-purple-100);
+    }
 }
 </style>

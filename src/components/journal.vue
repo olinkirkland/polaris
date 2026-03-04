@@ -7,17 +7,13 @@
                 </li>
             </ul>
         </Card>
-        <pre>{{ gameState.getValue('quests') }}</pre>
         <ul class="flex flex-col">
             <li v-for="q in gameData?.data?.quests">
                 <Card>
                     <pre>{{ q.label }}</pre>
-                    <pre>{{ q.condition }}</pre>
-                    <ul class="grid grid-cols-6 gap-2">
+                    <ul class="flex flex-col">
                         <li v-for="n in q.nodes">
-                            <Card>
-                                {{ n.id }}
-                            </Card>
+                            • <span :class="{ underline: n.id === q.getActiveNode().id }">{{ n.id }}</span>
                         </li>
                     </ul>
                 </Card>

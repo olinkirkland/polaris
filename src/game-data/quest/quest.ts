@@ -51,18 +51,17 @@ export class Quest {
     }
 
     validate() {
-        // Evaluate the starting condition for the quest
         if (evaluateCondition(this.condition)) {
-            console.log('Condition evaluated as true:', this.condition);
-            this.activeNode = this.entryNode.id;
+            console.log('@quest.validate() condition evaluated as true', this.condition);
+            this.setActiveNode(this.entryNode.id);
         }
     }
 
-    set activeNode(id: string) {
+    setActiveNode(id: string) {
         this.gameState.setActiveNodeId(this.id, id);
     }
 
-    get activeNode(): QuestNode {
-        return this.gameState.getActiveNodeId(this.id);
+    getActiveNode(): QuestNode {
+        return this.getNode(this.gameState.getActiveNodeId(this.id))!;
     }
 }

@@ -36,15 +36,21 @@
             "label": "Onboarding",
             "entryNode": "start-onboarding",
             "condition": {
-                "type": "FLAG",
-                "flag": "game-started",
-                "op": "EQ",
-                "value": true
+                "type": "NOT",
+                "condition": {
+                    "type": "FLAG",
+                    "flag": "onboarding-completed",
+                    "op": "EQ",
+                    "value": true
+                }
             },
             "nodes": [
                 {
                     "id": "start-onboarding",
-                    "actions": [{ "type": "onboarding" }],
+                    "actions": [
+                        { "type": "onboarding" },
+                        { "type": "flag", "flag": "onboarding-completed", "value": true }
+                    ],
                     "edges": []
                 },
                 {

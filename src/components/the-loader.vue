@@ -42,8 +42,8 @@
 import { useGameDataStore } from '@/store/game-data-store';
 import { wait } from '@/util/wait-util';
 import { ref } from 'vue';
-import DotBadge from './ui/dot-badge.vue';
 import Chip from './ui/chip.vue';
+import DotBadge from './ui/dot-badge.vue';
 
 type PackageManifest = {
     url: string;
