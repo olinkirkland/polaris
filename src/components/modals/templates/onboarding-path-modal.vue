@@ -3,23 +3,19 @@
         <template v-slot:header>
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
-                    <i class="fa-solid fa-user"></i>
-                    <p>Who are you?</p>
+                    <i class="fas fa-person"></i>
+                    <p>Choose your Path</p>
                 </div>
             </ModalHeader>
         </template>
         <template v-slot:content>
-            <label class="input-box">
-                <span>My Name</span>
-                <input type="text" placeholder="Character Name" v-model="characterName" />
-            </label>
             <ul class="grid grid-cols-2 gap-3">
                 <li v-for="p in gameData.data?.characterPaths">
                     <Card class="h-full" :pressed="characterPath?.id === p.id">
                         <template #header>
                             <p>{{ p.label }}</p>
                             <Button class="ml-auto" :disabled="characterPath?.id === p.id" @click="characterPath = p">
-                                <i v-if="characterPath?.id === p.id" class="fa-solid fa-check"></i>
+                                <i v-if="characterPath?.id === p.id" class="fas fa-check"></i>
                                 <span>{{ characterPath?.id === p.id ? 'Selected' : 'Select' }}</span></Button
                             >
                         </template>
@@ -39,8 +35,8 @@
             <Button @click="onClickCancel()" class="ml-auto">
                 <span>Cancel</span>
             </Button>
-            <Button @click="onClickSubmit()" :disabled="characterName.length === 0 || !characterPath">
-                <span>Start</span>
+            <Button @click="onClickSubmit()" :disabled="!characterPath">
+                <span>Continue</span>
             </Button>
         </template>
     </ModalFrame>
@@ -61,7 +57,6 @@ const gameState = useGameStateStore();
 const gameData = useGameDataStore();
 
 const props = defineProps<{}>();
-const characterName = ref<string>('');
 const characterPath = ref<CharacterPath>();
 
 function onClickCancel() {
@@ -70,18 +65,13 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    if (!characterPath.value) return;
-
-    // Add player character to state
     const playerCharacter = new Character();
     playerCharacter.id = 'player';
-    playerCharacter.name = characterName.value;
-    playerCharacter.characterPathId = characterPath.value.id;
-    playerCharacter.attributeModifiers = characterPath.value.attributeModifiers;
+    playerCharacter.characterPathId = characterPath.value!.id;
+    playerCharacter.attributeModifiers = characterPath.value!.attributeModifiers;
     gameState.setCharacter(playerCharacter);
 
-    // Onboarding quest
-    gameState.setActiveNode('onboarding', 'complete-onboarding');
+    gameState.setActiveNode('onboarding', 'complete');
     ModalController.close();
 }
 </script>

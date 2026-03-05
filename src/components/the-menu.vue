@@ -6,7 +6,7 @@
             <span>In-Game</span>
             <div class="flex gap-2 ml-auto">
                 <Button @click="onClickSave">
-                    <i class="fa-solid fa-save"></i>
+                    <i class="fas fa-save"></i>
                     <span>Quick Save</span></Button
                 >
                 <Button @click="onClickExit"><span>Exit to Main Menu</span></Button>
@@ -24,7 +24,7 @@
         </template>
         <div class="flex flex-col gap-2">
             <Button @click="onClickNew" theme>
-                <i class="fa-solid fa-plus"></i>
+                <i class="fas fa-plus"></i>
                 <span>New Character</span>
             </Button>
 

@@ -15,12 +15,12 @@
             </small>
             <div class="flex gap-2 justify-center">
                 <Button @click="onClickLoad()">
-                    <i class="fa-solid fa-folder-open"></i>
+                    <i class="fas fa-folder-open"></i>
                     <span>Manage ({{ manifestGroup.manifests.length }})</span>
                 </Button>
                 <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
                     <span>Continue</span>
-                    <i class="fa-solid fa-caret-right"></i>
+                    <i class="fas fa-caret-right"></i>
                 </Button>
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <ul class="flex flex-wrap justify-center gap-2">
                     <li v-for="p in manifestGroup.manifests[0].packageIds">
                         <Chip>
-                            <i class="text-sm fa-solid fa-cube"></i>
+                            <i class="text-sm fas fa-cube"></i>
                             <span>{{ p }}</span>
                         </Chip>
                     </li>

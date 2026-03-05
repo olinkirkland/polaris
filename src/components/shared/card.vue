@@ -3,9 +3,10 @@
         <header v-if="hasHeader" class="p-3 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
-        <div class="flex flex-col p-3 gap-2 flex-1">
+        <div class="flex flex-col p-3 gap-2 flex-1" v-if="$slots.default">
             <slot></slot>
         </div>
+        <slot name="floor"></slot>
         <footer v-if="hasFooter" class="p-3 w-full flex items-center gap-2">
             <slot name="footer"></slot>
         </footer>

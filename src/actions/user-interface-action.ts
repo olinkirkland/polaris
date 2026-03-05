@@ -1,4 +1,6 @@
-import OnboardingModal from '@/components/modals/templates/onboarding-modal.vue';
+import OnboardingHeritageModal from '@/components/modals/templates/onboarding-heritage-modal.vue';
+import OnboardingNameModal from '@/components/modals/templates/onboarding-name-modal.vue';
+import OnboardingPathModal from '@/components/modals/templates/onboarding-path-modal.vue';
 import ModalController from '@/controllers/modal-controller';
 import { ActionType, BaseAction } from './base-action';
 
@@ -15,8 +17,14 @@ export class UserInterfaceAction extends BaseAction {
 
     override act() {
         switch (this.id) {
-            case 'onboarding':
-                ModalController.open(OnboardingModal);
+            case 'onboarding-name':
+                ModalController.open(OnboardingNameModal);
+                break;
+            case 'onboarding-heritage':
+                ModalController.open(OnboardingHeritageModal);
+                break;
+            case 'onboarding-path':
+                ModalController.open(OnboardingPathModal);
                 break;
         }
 

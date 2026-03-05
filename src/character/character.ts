@@ -1,37 +1,24 @@
 import { AttributeModifier } from '@/game-data/attribute';
 import { useGameDataStore } from '@/store/game-data-store';
 
+export type Heritage = {
+    id: string;
+    label: string;
+    description: string;
+};
+
 export class Character {
     id: string;
     name: string;
     characterPathId: string;
+    heritageId: string;
     attributeModifiers: AttributeModifier[];
 
     get characterPath() {
         return useGameDataStore().data?.characterPaths.find((p) => p.id === this.characterPathId);
     }
+
+    get heritage() {
+        return useGameDataStore().data?.characterHeritages.find((h) => h.id === this.heritageId);
+    }
 }
-
-export type Item = {
-    id: string;
-    name: string;
-    description: string;
-    effects: ItemEffect[];
-};
-
-// ItemEffect describes a passive effect an Item can have when equipped on a Character.
-export type ItemEffect = {
-    armor: {
-        physical: number; // Adds a flat amount of physical armor
-        magic: number; // Adds a flat amount of magic armor
-    };
-
-    resistance: {
-        physical: number; // Adds a percentage resistance to physical damage
-        magic: number; // Adds a percentage resistance to magic damage
-    };
-
-    statModifiers: {
-        // [key in Stat]?: number;
-    };
-};

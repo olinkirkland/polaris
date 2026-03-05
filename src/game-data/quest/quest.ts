@@ -16,16 +16,22 @@ export type QuestOption = {
 
 export class QuestNode {
     id: string;
+    label: string;
+    description: string;
     actions: BaseAction[];
     edges: QuestOption[];
 
     static unpack(data: any): QuestNode {
         const n = new QuestNode();
         n.id = data.id;
+        n.label = data.label;
+        n.description = data.description;
         n.actions = data.actions.map((a: any) => makeAction(a));
-        n.edges = data.edges.map((e: any) => {
-            return { condition: e.condition, nodeId: e.nodeId };
-        });
+        n.edges = data.edges
+            ? data.edges.map((e: any) => {
+                  return { condition: e.condition, nodeId: e.nodeId };
+              })
+            : [];
 
         return n;
     }

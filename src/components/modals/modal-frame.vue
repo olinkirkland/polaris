@@ -3,13 +3,14 @@
         <template #header v-if="$slots.header">
             <slot name="header"></slot>
         </template>
-        <div class="modal__content flex flex-col gap-2 p-2 h-full">
-            <slot name="content"></slot>
-        </div>
+        <template #floor>
+            <div class="modal__content flex flex-col gap-2 p-2 m-2">
+                <slot name="content"></slot>
+            </div>
+        </template>
         <template #footer v-if="$slots.footer">
             <slot name="footer"></slot>
         </template>
-        <div class="modal__background w-full h-full top-0 left-0 absolute"></div>
     </Card>
 </template>
 
@@ -23,11 +24,8 @@ import Card from '../shared/card.vue';
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border-radius: var(--radius-md);
-
-    .modal__background {
-        background-color: var(--surface);
-        z-index: -1;
-    }
+    height: fit-content;
+    overflow: hidden;
 
     .modal__content {
         flex: 1;

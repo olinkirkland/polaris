@@ -23,13 +23,13 @@
         </div>
         <template #footer>
             <Button @click="onClickLoad" :disabled="isLoadingContent">
-                <i v-if="isLoadingContent" class="fa-solid fa-circle-notch fa-spin"></i>
+                <i v-if="isLoadingContent" class="fas fa-circle-notch fa-spin"></i>
                 <span>Load Selected Content</span>
             </Button>
             <ul class="ml-auto flex items-center gap-2">
                 <li v-for="p in gameData.data?.packageDescriptions">
                     <Chip>
-                        <i class="text-sm fa-solid fa-cube"></i>
+                        <i class="text-sm fas fa-cube"></i>
                         <span>{{ p.id }}</span>
                     </Chip>
                 </li>

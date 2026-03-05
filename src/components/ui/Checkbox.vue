@@ -8,7 +8,7 @@
             @change="handleChange"
         />
         <div class="box w-5 h-5 rounded-sm flex justify-center items-center leading-0" :class="{ checked: modelValue }">
-            <i v-if="modelValue" class="text-xs fa-solid fa-check"></i>
+            <i v-if="modelValue" class="text-xs fas fa-check"></i>
         </div>
     </label>
 </template>

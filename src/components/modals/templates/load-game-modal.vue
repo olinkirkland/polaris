@@ -3,7 +3,7 @@
         <template v-slot:header>
             <ModalHeader closeButton>
                 <div class="flex w-full gap-2 items-center">
-                    <i class="fa-solid fa-folder-open"></i>
+                    <i class="fas fa-folder-open"></i>
                     <p>{{ name }}</p>
                 </div>
             </ModalHeader>
@@ -20,7 +20,7 @@
                             </div>
                             <Button class="ml-auto" @click="onClickLoad(m.path)">
                                 <span>Load</span>
-                                <i class="fa-solid fa-caret-right"></i>
+                                <i class="fas fa-caret-right"></i>
                             </Button>
                         </div>
                         <template #footer v-if="!arePackagesLoaded(m)">
@@ -28,7 +28,7 @@
                                 <ul class="flex flex-wrap gap-2">
                                     <li v-for="p in m.packageIds">
                                         <Chip>
-                                            <i class="text-sm fa-solid fa-cube"></i>
+                                            <i class="text-sm fas fa-cube"></i>
                                             <span>{{ p }}</span>
                                         </Chip>
                                     </li>
@@ -46,7 +46,7 @@
                 <div class="flex flex-col gap-1">
                     <span>Permanently delete this character?</span>
                     <Button @click="onClickRemove()">
-                        <i class="fa-solid fa-trash"></i>
+                        <i class="fas fa-trash"></i>
                         <span>Delete this Character</span>
                     </Button>
                 </div>

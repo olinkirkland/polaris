@@ -3,7 +3,7 @@
         <template v-slot:header>
             <ModalHeader closeButton>
                 <div class="flex w-full gap-2 items-center">
-                    <i class="fa-solid fa-panorama"></i>
+                    <i class="fas fa-panorama"></i>
                     <p>{{ props.id }}</p>
                 </div>
             </ModalHeader>

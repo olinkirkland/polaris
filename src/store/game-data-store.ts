@@ -1,3 +1,4 @@
+import { Heritage } from '@/character/character';
 import { CharacterPath } from '@/game-data/character/character-path';
 import { Pin } from '@/game-data/pin/pin';
 import { Quest } from '@/game-data/quest/quest';
@@ -18,6 +19,9 @@ export interface BaseGameData {
     quests: Quest[];
 
     characterPaths: CharacterPath[];
+    characterHeritages: Heritage[];
+    nameSuggestions: string[];
+
     // characterSkills: CharacterSkill[];
 }
 
@@ -44,7 +48,7 @@ export const useGameDataStore = defineStore('content', () => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`@loadPackageData: ${response.status}`);
-                const data: GameDataPackage = await response.json();
+                const data: any = await response.json();
                 const parsedData = unpackGameDataPackage(data);
                 result = mergePackageData(result, parsedData);
             } catch (error) {
@@ -74,20 +78,23 @@ function unpackGameDataPackage(data: any): GameDataPackage {
         pins: [],
         quests: [],
         zones: [],
-        characterPaths: []
+        characterPaths: [],
+        characterHeritages: [],
+        nameSuggestions: []
     };
 
     g.pins = (data.pins || []).map((p: any) => Pin.unpack(p));
     g.quests = (data.quests || []).map((q: any) => Quest.unpack(q));
     g.zones = (data.zones || []).map((z: any) => Zone.unpack(z));
     g.characterPaths = (data.characterPaths || []).map((p: any) => CharacterPath.unpack(p));
+    g.characterHeritages = data.characterHeritages || [];
+    g.nameSuggestions = data.nameSuggestions || [];
 
     return g;
 }
 
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
-    // Pins, Quests
-    const listsToMerge = ['pins', 'quests', 'zones', 'characterPaths'];
+    const listsToMerge = ['pins', 'quests', 'zones', 'characterPaths', 'characterHeritages'];
     listsToMerge.forEach((k) => {
         const key = k as keyof BaseGameData;
         const listA = a[key] as { id: string }[];
@@ -98,6 +105,14 @@ function mergePackageData(a: GameData, b: GameDataPackage): GameData {
             if (index > -1) listA.splice(index, 1);
             listA.push(item);
         });
+    });
+
+    const listsToConcatenate = ['nameSuggestions'];
+    listsToConcatenate.forEach((k) => {
+        const key = k as keyof BaseGameData;
+        const listA = a[key] as any[];
+        const listB = b[key] as any[];
+        a[key] = listA.concat(listB);
     });
 
     // Package Descriptions
@@ -112,6 +127,8 @@ function makeEmptyGameData(): GameData {
         pins: [],
         zones: [],
         quests: [],
-        characterPaths: []
+        characterPaths: [],
+        characterHeritages: [],
+        nameSuggestions: []
     };
 }

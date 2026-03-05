@@ -1,26 +1,26 @@
 <template>
     <Button @click="action.act()">
         <template v-if="props.action.type === ActionType.GO_TO_ATLAS">
-            <i class="fa-solid fa-globe"></i>
+            <i class="fas fa-globe"></i>
             <span>Go to Atlas</span>
             <mark>{{ (props.action as GoToAtlasAction).point }}</mark>
         </template>
         <template v-else-if="props.action.type === ActionType.GO_TO_ZONE">
-            <i class="fa-solid fa-map-pin"></i>
+            <i class="fas fa-map-pin"></i>
             <span>Go to Zone</span>
             <mark>{{ (props.action as GoToZoneAction).id }}</mark>
         </template>
         <template v-else-if="props.action.type === ActionType.START_SCENE">
-            <i class="fa-solid fa-panorama"></i>
+            <i class="fas fa-panorama"></i>
             <span>Start Scene</span>
             <mark>{{ (props.action as StartSceneAction).id }}</mark>
         </template>
         <template v-else-if="props.action.type === ActionType.PATCH_STATE">
-            <i class="fa-solid fa-pencil"></i>
+            <i class="fas fa-pencil"></i>
             <mark>{{ (props.action as PatchStateAction).path }}: {{ (props.action as PatchStateAction).value }}</mark>
         </template>
         <template v-else>
-            <i class="fa-solid fa-play"></i>
+            <i class="fas fa-play"></i>
             <span>[{{ props.action.type }}]</span>
         </template>
     </Button>

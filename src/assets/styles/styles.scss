@@ -129,7 +129,7 @@ label.input-box {
     align-items: center;
     border: 1px solid var(--color-theme-weak);
     border-radius: var(--radius-md);
-    height: 2rem;
+    min-height: 2rem;
     overflow: hidden;
 
     &:has(:focus-within) {
@@ -154,8 +154,13 @@ label.input-box {
     > input {
         outline: none;
         padding: 0 0.5rem;
+        width: 100%;
         &::placeholder {
             font-style: italic;
         }
     }
+}
+
+.muted {
+    opacity: 0.5;
 }
