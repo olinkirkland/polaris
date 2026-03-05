@@ -2,7 +2,7 @@
     "packageDescription": {
         "id": "core",
         "label": "Core",
-        "summary": "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quod sequi, sit earum consequuntur consequatur rem nesciunt aliquid velit itaque illo."
+        "summary": "Core story file."
     },
     "pins": [
         {

@@ -1,9 +1,9 @@
 <template>
-    <Card class="modal">
+    <Card class="modal flex flex-col">
         <template #header v-if="$slots.header">
             <slot name="header"></slot>
         </template>
-        <div class="modal__content flex flex-col gap-2">
+        <div class="modal__content flex flex-col gap-2 p-2 h-full">
             <slot name="content"></slot>
         </div>
         <template #footer v-if="$slots.footer">
@@ -20,11 +20,10 @@ import Card from '../shared/card.vue';
 <style lang="scss" scoped>
 .modal {
     position: relative;
-    display: flex;
-    flex-direction: column;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
     border-radius: var(--radius-md);
+
     .modal__background {
         background-color: var(--surface);
         z-index: -1;

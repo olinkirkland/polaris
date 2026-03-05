@@ -1,6 +1,6 @@
 <template>
     <div
-        class="modal-container w-full flex flex-col justify-center items-center absolute p-1 top-0"
+        class="modal-container w-full flex flex-col justify-center items-center absolute p-3 top-0"
         :class="{ active: !!currentModal }"
     >
         <div
@@ -96,50 +96,6 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
         > .modal-container__background {
             opacity: 0;
         }
-    }
-}
-
-.modal {
-    max-height: calc(100dvh - 4rem);
-}
-
-// Media queries
-@media (max-width: 768px) {
-    .modal-container {
-        padding: 0;
-    }
-
-    .modal {
-        min-width: 100%;
-        max-width: 100%;
-
-        height: 100vh; // Works everywhere, but buggy on mobile Safari (includes address bar)
-        height: 100dvh; // Modern fix, uses the dynamic viewport height. Works properly with iOS Safari and all modern browsers
-        min-height: -webkit-fill-available; // Fallback for iOS Safari
-
-        max-height: unset;
-        animation: none;
-        border-radius: 0;
-    }
-
-    // Transition (for mobile)
-    .modal-transition-enter-active,
-    .modal-transition-leave-active {
-        transition: all 0.2s ease;
-    }
-
-    .modal-transition-enter-from,
-    .modal-transition-leave-to {
-        opacity: 0;
-        transform: translateY(2rem);
-    }
-
-    .modal-transition-leave-active {
-        position: absolute;
-    }
-
-    .modal-container__background {
-        display: none;
     }
 }
 </style>

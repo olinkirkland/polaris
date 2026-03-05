@@ -1,3 +1,4 @@
+import { CharacterPath } from '@/game-data/character/character-path';
 import { Pin } from '@/game-data/pin/pin';
 import { Quest } from '@/game-data/quest/quest';
 import { Zone } from '@/game-data/zone/zone';
@@ -15,6 +16,9 @@ export interface BaseGameData {
     pins: Pin[];
     zones: Zone[];
     quests: Quest[];
+
+    characterPaths: CharacterPath[];
+    // characterSkills: CharacterSkill[];
 }
 
 // Individual Content Packs, optionally loaded (DLC support)
@@ -44,7 +48,7 @@ export const useGameDataStore = defineStore('content', () => {
                 const parsedData = unpackGameDataPackage(data);
                 result = mergePackageData(result, parsedData);
             } catch (error) {
-                console.error(`Error fetching ${url}`, error);
+                console.error(`Error parsing ${url}`, error);
             }
         }
 
@@ -69,31 +73,31 @@ function unpackGameDataPackage(data: any): GameDataPackage {
         packageDescription: data.packageDescription,
         pins: [],
         quests: [],
-        zones: []
+        zones: [],
+        characterPaths: []
     };
 
-    g.pins = data.pins.map((p: any) => Pin.unpack(p));
-    g.quests = data.quests.map((q: any) => Quest.unpack(q));
-    g.zones = data.zones.map((z: any) => Zone.unpack(z));
+    g.pins = (data.pins || []).map((p: any) => Pin.unpack(p));
+    g.quests = (data.quests || []).map((q: any) => Quest.unpack(q));
+    g.zones = (data.zones || []).map((z: any) => Zone.unpack(z));
+    g.characterPaths = (data.characterPaths || []).map((p: any) => CharacterPath.unpack(p));
 
     return g;
 }
 
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
     // Pins, Quests
-    const listsToMerge = ['pins', 'quests', 'zones'];
+    const listsToMerge = ['pins', 'quests', 'zones', 'characterPaths'];
     listsToMerge.forEach((k) => {
         const key = k as keyof BaseGameData;
         const listA = a[key] as { id: string }[];
         const listB = b[key] as { id: string }[];
-        if (listB) {
-            listB.forEach((item) => {
-                const { id } = item;
-                const index = listA.findIndex((t) => t.id === id);
-                if (index > -1) listA.splice(index, 1);
-                listA.push(item);
-            });
-        }
+        listB.forEach((item) => {
+            const { id } = item;
+            const index = listA.findIndex((t) => t.id === id);
+            if (index > -1) listA.splice(index, 1);
+            listA.push(item);
+        });
     });
 
     // Package Descriptions
@@ -107,6 +111,7 @@ function makeEmptyGameData(): GameData {
         packageDescriptions: [],
         pins: [],
         zones: [],
-        quests: []
+        quests: [],
+        characterPaths: []
     };
 }

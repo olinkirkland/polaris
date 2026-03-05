@@ -1,0 +1,53 @@
+{
+    "packageDescription": {
+        "id": "paths",
+        "label": "Paths",
+        "summary": "Paths: Vanguard, Prowler, Whisper, Artificer"
+    },
+    "characterPaths": [
+        {
+            "id": "vanguard",
+            "label": "Vanguard",
+            "description": "You are a heavily armored, frontline protector. You’re most comfortable standing firmly between your vulnerable companions and the sharp points of enemy weapons.",
+            "attributeModifiers": [
+                { "key": "brawn", "value": 1 },
+                { "key": "agility", "value": 0 },
+                { "key": "aura", "value": 0 },
+                { "key": "wits", "value": -1 }
+            ]
+        },
+        {
+            "id": "prowler",
+            "label": "Prowler",
+            "description": "You’re an expert hunter and thrive at range. Your enemies are your prey, and you stalk them relentlessly, striking at their weak points. You’re accompanied by a fiercely loyal animal. Companions cannot be attacked; they’re mechanically a part of the Prowler.",
+            "attributeModifiers": [
+                { "key": "brawn", "value": 0 },
+                { "key": "agility", "value": 1 },
+                { "key": "aura", "value": -1 },
+                { "key": "wits", "value": 0 }
+            ]
+        },
+        {
+            "id": "whisper",
+            "label": "Whisper",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "attributeModifiers": [
+                { "key": "brawn", "value": -1 },
+                { "key": "agility", "value": 0 },
+                { "key": "aura", "value": 1 },
+                { "key": "wits", "value": 0 }
+            ]
+        },
+        {
+            "id": "artificer",
+            "label": "Artificer",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "attributeModifiers": [
+                { "key": "brawn", "value": 0 },
+                { "key": "agility", "value": -1 },
+                { "key": "aura", "value": 0 },
+                { "key": "wits", "value": 1 }
+            ]
+        }
+    ]
+}

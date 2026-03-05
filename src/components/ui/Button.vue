@@ -1,5 +1,5 @@
 <template>
-    <button class="w-fit flex gap-1.5 items-center py-1 px-2 rounded-lg cursor-pointer">
+    <button class="w-fit flex items-center gap-1.5 py-1 px-1 rounded-lg cursor-pointer">
         <slot></slot>
     </button>
 </template>
@@ -27,6 +27,15 @@ button {
 :deep {
     i {
         font-size: smaller;
+    }
+
+    i:first-child,
+    span:first-child {
+        margin-left: 0.25rem;
+    }
+
+    :last-child:not(mark) {
+        margin-right: 0.25rem;
     }
 }
 </style>

@@ -17,7 +17,7 @@
                     <i class="fa-solid fa-folder-tree"></i>
                     <span>Manage ({{ manifestGroup.manifests.length }})</span>
                 </Button>
-                <Button @click="onClickContinue()">Continue</Button>
+                <Button @click="onClickContinue()"> <span>Continue</span></Button>
             </div>
         </div>
 

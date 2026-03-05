@@ -1,15 +1,15 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import App from './App.vue';
+import ActionButton from './components/shared/action-button.vue';
 import Card from './components/shared/card.vue';
 import Button from './components/ui/button.vue';
 import Checkbox from './components/ui/checkbox.vue';
 import DotBadge from './components/ui/dot-badge.vue';
-import { useGameDataStore } from './store/game-data-store';
+import Flag from './components/ui/flag.vue';
+import ActionController from './controllers/action-controller';
 import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
-import ActionButton from './components/shared/action-button.vue';
-import ActionController from './controllers/action-controller';
 
 // Create the app
 const app = createApp(App);
@@ -25,6 +25,7 @@ app.component('ActionButton', ActionButton);
 app.component('Checkbox', Checkbox);
 app.component('Card', Card);
 app.component('DotBadge', DotBadge);
+app.component('Flag', Flag);
 
 // Stores
 const storage = useStorageStore();

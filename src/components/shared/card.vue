@@ -1,9 +1,9 @@
 <template>
-    <div class="card rounded-lg" :class="{ pressed: props.pressed }">
+    <div class="card rounded-lg flex flex-col" :class="{ pressed: props.pressed }">
         <header v-if="hasHeader" class="p-3 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
-        <div class="flex flex-col p-3 gap-2">
+        <div class="flex flex-col p-3 gap-2 flex-1">
             <slot></slot>
         </div>
         <footer v-if="hasFooter" class="p-3 w-full flex items-center gap-2">

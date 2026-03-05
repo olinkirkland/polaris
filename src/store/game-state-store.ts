@@ -1,4 +1,6 @@
-import { Character } from '@/character/character-types';
+import { Character } from '@/character/character';
+import SavingModal from '@/components/modals/templates/saving-modal.vue';
+import ModalController from '@/controllers/modal-controller';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';
 import { getNestedValue, setNestedValue } from '@/util/object-util';
@@ -7,8 +9,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
-import ModalController from '@/controllers/modal-controller';
-import SavingModal from '@/components/modals/templates/saving-modal.vue';
+import { wait } from '@/util/wait-util';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -69,7 +70,7 @@ export const useGameStateStore = defineStore('game', () => {
         quests.forEach((q) => q.validate());
     }
 
-    function save(saveId: string, label: string) {
+    async function save(saveId: string, label: string) {
         if (!id.value) throw new Error('Missing gameId');
         if (!gameData.data) throw new Error('Missing game data');
 
@@ -83,8 +84,8 @@ export const useGameStateStore = defineStore('game', () => {
         const player = getCharacter('player');
         const summary = {
             name: player?.name,
-            path: player?.path,
-            level: player?.level
+            path: player?.characterPath?.label
+            // level: player?.level
         };
         const manifest: StoredGameManifest = {
             id: id.value,
@@ -100,9 +101,8 @@ export const useGameStateStore = defineStore('game', () => {
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
 
-        setTimeout(() => {
-            ModalController.close();
-        }, 500);
+        await wait(0.5);
+        ModalController.close();
     }
 
     function load(path: string) {

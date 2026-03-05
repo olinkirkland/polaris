@@ -1,6 +1,6 @@
 <template>
-    <div class="w-fit flex gap-1.5 items-center py-1 px-2 rounded-lg" :class="flagType"">
-        <span class="flag-name">{{ flagName }}</span>
+    <div class="w-fit flex gap-1.5 items-center py-1 px-1 rounded-lg" :class="flagType"">
+        <span class="flag-name ml-1">{{ flagName }}</span>
         <mark>{{ flagValue }}</mark>
     </div>
 </template>
