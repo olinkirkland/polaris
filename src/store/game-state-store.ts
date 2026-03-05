@@ -144,9 +144,13 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function setCharacter(newCharacter: Character) {
-        patchValue('party', (party) => {
-            return party.map((c: Character) => (c.id === newCharacter.id ? newCharacter : c));
+        console.log(getValue('party'));
+        patchValue('party', (party: Character[]) => {
+            const exists = party.some((c: Character) => c.id === newCharacter.id);
+            if (exists) return party.map((c: Character) => (c.id === newCharacter.id ? newCharacter : c));
+            else return [...party, newCharacter];
         });
+        console.log(getValue('party'));
     }
 
     function getActiveNode(questId: string): string {

@@ -2,11 +2,12 @@
     <Card>
         <template #header>
             <div class="w-full flex flex-col justify-center items-center">
-                <strong>{{ name }}</strong>
+                <strong>{{ summary.name }}</strong>
             </div>
         </template>
 
         <div class="w-full flex flex-col gap-2">
+            <em class="text-center">{{ summary.path }}</em>
             <small class="text-center">
                 {{ manifestGroup.manifests[0].label }}
                 &nbsp;❖&nbsp;
@@ -44,7 +45,7 @@ const props = defineProps({
 });
 
 const date = computed(() => new Date(props.manifestGroup.manifests[0].date));
-const name = computed(() => props.manifestGroup.manifests[0].summary.name || 'Unnamed');
+const summary = computed(() => props.manifestGroup.manifests[0].summary);
 
 function onClickLoad() {
     ModalController.open(LoadGameModal, { manifestGroup: props.manifestGroup });

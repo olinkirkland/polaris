@@ -54,7 +54,7 @@ type PackageManifest = {
 
 const gameData = useGameDataStore();
 const availablePackages = ref<PackageManifest[]>([]);
-const isLoadingContent = ref(true);
+const isLoadingContent = ref(false);
 
 loadPackageManifests();
 
@@ -63,7 +63,8 @@ async function loadPackageManifests() {
     if (!response.ok) throw new Error(`@loadPackageManifests: ${response.status}`);
     const data: PackageManifest[] = await response.json();
     availablePackages.value = data;
-    onClickLoad(); // Load initially
+    // Initial load if nothing is loaded yet
+    if (!gameData.data?.packageDescriptions.length) onClickLoad();
 }
 
 async function onClickLoad() {

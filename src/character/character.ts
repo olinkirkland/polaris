@@ -2,15 +2,13 @@ import { AttributeModifier } from '@/game-data/attribute';
 import { useGameDataStore } from '@/store/game-data-store';
 
 export class Character {
-    private gameData = useGameDataStore();
-
     id: string;
     name: string;
     characterPathId: string;
-    attributeModifiers: AttributeModifier;
+    attributeModifiers: AttributeModifier[];
 
     get characterPath() {
-        return this.gameData.data?.characterPaths.find((p) => p.id === this.characterPathId);
+        return useGameDataStore().data?.characterPaths.find((p) => p.id === this.characterPathId);
     }
 }
 
