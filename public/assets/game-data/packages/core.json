@@ -27,7 +27,10 @@
             "id": "sawyers-shop",
             "address": { "zone": "bear-island", "point": { "x": 25, "y": 30 } },
             "label": "Old Bill Sawyer's Scrap Shop",
-            "actions": [{ "type": "start-scene", "id": "scrap-shop" }]
+            "actions": [
+                { "type": "start-scene", "id": "scrap-shop" },
+                { "type": "patch-state", "path": "flags.visited-sawyers-shop", "value": true }
+            ]
         }
     ],
     "quests": [

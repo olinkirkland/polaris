@@ -17,9 +17,7 @@
                                 <i class="fa-regular fa-circle"></i>
                                 {{ n.id }}
                             </strong>
-                            <span
-                                v-else-if="gameState.getQuest(q.id).traversedNodeIds.includes(n.id)"
-                            >
+                            <span v-else-if="gameState.getQuest(q.id).traversedNodeIds.includes(n.id)">
                                 <i class="fa-regular fa-circle-check"></i>
                                 {{ n.id }}
                             </span>
