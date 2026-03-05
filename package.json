@@ -6,12 +6,15 @@
     "scripts": {
         "dev": "vite",
         "build": "vue-tsc -b && vite build",
-        "preview": "vite preview"
+        "preview": "vite preview",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
     "dependencies": {
         "@fortawesome/fontawesome-free": "^7.1.0",
         "@tailwindcss/postcss": "^4.1.18",
         "fast-xml-parser": "^5.3.3",
+        "gh-pages": "^6.3.0",
         "inkjs": "^2.4.0",
         "npm": "^11.10.1",
         "pinia": "^3.0.4",

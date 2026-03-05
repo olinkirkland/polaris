@@ -24,18 +24,15 @@ button {
     }
 }
 
-:deep {
-    i {
-        font-size: smaller;
-    }
+:deep(i) {
+    font-size: smaller;
+}
 
-    i:first-child,
-    span:first-child {
-        margin-left: 0.25rem;
-    }
+:deep(i:first-child, span:first-child) {
+    margin-left: 0.25rem;
+}
 
-    :last-child:not(mark) {
-        margin-right: 0.25rem;
-    }
+:deep(:last-child:not(mark)) {
+    margin-right: 0.25rem;
 }
 </style>

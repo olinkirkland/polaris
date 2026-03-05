@@ -23,7 +23,17 @@
         </div>
 
         <template #footer>
-            <small class="w-full text-center">{{ manifestGroup.id }}</small>
+            <div class="flex flex-col w-full gap-2">
+                <ul class="flex flex-wrap justify-center gap-2">
+                    <li v-for="p in manifestGroup.manifests[0].packageIds">
+                        <Chip>
+                            <i class="text-sm fa-solid fa-cube"></i>
+                            <span>{{ p }}</span>
+                        </Chip>
+                    </li>
+                </ul>
+                <small class="w-full text-center">{{ manifestGroup.id }}</small>
+            </div>
         </template>
     </Card>
 </template>
@@ -34,6 +44,7 @@ import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifestGroup } from '@/store/storage-store';
 import { computed, PropType } from 'vue';
 import LoadGameModal from './modals/templates/load-game-modal.vue';
+import Chip from './ui/chip.vue';
 
 const gameState = useGameStateStore();
 

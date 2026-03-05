@@ -9,7 +9,7 @@
                     <i class="fa-solid fa-save"></i>
                     <span>Quick Save</span></Button
                 >
-                <Button @click="onClickExit">Exit to Main Menu</Button>
+                <Button @click="onClickExit"><span>Exit to Main Menu</span></Button>
             </div>
         </template>
         <div id="InGameMenu">
@@ -25,7 +25,7 @@
         <div class="flex flex-col gap-2">
             <Button @click="onClickNew" theme>
                 <i class="fa-solid fa-plus"></i>
-                <span>New</span>
+                <span>New Character</span>
             </Button>
 
             <!-- List of Save Games to be loaded -->
