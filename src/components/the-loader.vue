@@ -59,7 +59,9 @@ const isLoadingContent = ref(false);
 loadPackageManifests();
 
 async function loadPackageManifests() {
-    const response = await fetch('/assets/game-data/package-manifests.json');
+    const base = import.meta.url;
+    console.log(base);
+    const response = await fetch('assets/game-data/package-manifests.json');
     if (!response.ok) throw new Error(`@loadPackageManifests: ${response.status}`);
     const data: PackageManifest[] = await response.json();
     availablePackages.value = data;
