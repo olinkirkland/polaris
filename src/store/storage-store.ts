@@ -51,6 +51,7 @@ export const useStorageStore = defineStore('index', () => {
     function remove(path: string) {
         manifests.value = manifests.value.filter((v) => v.path !== path);
         localStorage.setItem('storage-index', JSON.stringify(manifests.value));
+        localStorage.removeItem(path);
     }
 
     return { saveManifest, loadManifests, remove, manifests, manifestGroups };

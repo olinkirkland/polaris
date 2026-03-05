@@ -113,11 +113,6 @@ export const useGameStateStore = defineStore('game', () => {
         gameState.value = g.state;
     }
 
-    function remove(path: string) {
-        localStorage.removeItem(path);
-        storage.remove(path);
-    }
-
     function reset() {
         id.value = null;
         gameState.value = {};
@@ -194,7 +189,6 @@ export const useGameStateStore = defineStore('game', () => {
 
     return {
         startNewGame,
-        remove,
         save,
         load,
         reset,
