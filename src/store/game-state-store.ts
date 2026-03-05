@@ -101,7 +101,7 @@ export const useGameStateStore = defineStore('game', () => {
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
 
-        await wait(0.5);
+        await wait(0.25);
         ModalController.close();
     }
 

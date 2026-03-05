@@ -10,15 +10,18 @@
             <em class="text-center">{{ summary.path }}</em>
             <small class="text-center">
                 {{ manifestGroup.manifests[0].label }}
-                &nbsp;❖&nbsp;
+                &nbsp;•&nbsp;
                 {{ date.toLocaleString() }}
             </small>
             <div class="flex gap-2 justify-center">
                 <Button @click="onClickLoad()">
-                    <i class="fa-solid fa-folder-tree"></i>
+                    <i class="fa-solid fa-folder-open"></i>
                     <span>Manage ({{ manifestGroup.manifests.length }})</span>
                 </Button>
-                <Button @click="onClickContinue()"><span>Continue</span></Button>
+                <Button @click="onClickContinue()">
+                    <span>Continue</span>
+                    <i class="fa-solid fa-caret-right"></i>
+                </Button>
             </div>
         </div>
 

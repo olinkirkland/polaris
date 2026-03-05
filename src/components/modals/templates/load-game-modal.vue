@@ -17,7 +17,10 @@
                             <!-- <small>Level 99, Lorem Ipsum</small> -->
                             <small>{{ new Date(m.date).toLocaleString() }}</small>
                         </div>
-                        <Button class="ml-auto" @click="onClickLoad(m.path)">Load</Button>
+                        <Button class="ml-auto" @click="onClickLoad(m.path)">
+                            <span>Load</span>
+                            <i class="fa-solid fa-caret-right"></i>
+                        </Button>
                     </div>
                 </li>
             </ul>
