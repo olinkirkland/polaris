@@ -28,7 +28,8 @@ button {
     font-size: smaller;
 }
 
-:deep(i:first-child, span:first-child) {
+:deep(i:first-child),
+:deep(span:first-child) {
     margin-left: 0.25rem;
 }
 
