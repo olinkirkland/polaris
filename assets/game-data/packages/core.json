@@ -36,30 +36,44 @@
     "quests": [
         {
             "id": "onboarding",
-            "label": "Onboarding",
-            "entryNode": "start-onboarding",
+            "label": "Character creation",
+            "entryNode": "name",
             "condition": {
                 "type": "NOT",
                 "condition": {
                     "type": "FLAG",
-                    "flag": "onboarding-completed",
+                    "flag": "onboarding-complete",
                     "op": "EQ",
                     "value": true
                 }
             },
             "nodes": [
                 {
-                    "id": "start-onboarding",
-                    "actions": [{ "type": "user-interface", "id": "onboarding" }],
-                    "edges": []
+                    "id": "name",
+                    "label": "Choose a name",
+                    "description": "What should I be called? My name could be simple, or complex.",
+                    "actions": [{ "type": "user-interface", "id": "onboarding-name" }]
                 },
                 {
-                    "id": "complete-onboarding",
+                    "id": "heritage",
+                    "label": "Choose your origin",
+                    "description": "Where am I from? What did I do before this? Pick an origin.",
+                    "actions": [{ "type": "user-interface", "id": "onboarding-heritage" }]
+                },
+                {
+                    "id": "path",
+                    "label": "Choose your Path",
+                    "description": "A Path determines what Talents I'll have access to.",
+                    "actions": [{ "type": "user-interface", "id": "onboarding-path" }]
+                },
+                {
+                    "id": "complete",
+                    "label": "",
+                    "description": "I created my character.",
                     "actions": [
-                        { "type": "patch-state", "path": "flags.onboarding-completed", "value": true },
+                        { "type": "patch-state", "path": "flags.onboarding-complete", "value": true },
                         { "type": "autosave" }
-                    ],
-                    "edges": []
+                    ]
                 }
             ]
         }
@@ -70,5 +84,32 @@
             "label": "Ursa City (Bear Island)",
             "description": "The thick walls of Ursa City have held since the Cataclysm hundreds of years ago. The power struggles in the distant capital are of little concern to the wealthy industrialists here. The technology to repair the rusting mining automatons has been lost to time, and cybernetically 'enhanced', forced labor has replaced the old mechanical drones."
         }
-    ]
+    ],
+    "characterHeritages": [
+        {
+            "id": "reach-scavenger",
+            "label": "Scavenger",
+            "origin": "The Reach",
+            "description": "You found a valuable relic in the Eastern Approach. Too valuable. You refused an offer from a Syndicate buyer, and they decided to take both you and the relic."
+        },
+        {
+            "id": "imperial-soldier",
+            "label": "Imperial Soldier",
+            "origin": "Polaris",
+            "description": "After refusing an order that would have lined a Syndicate captain's pockets, you were framed for theft and stripped of your rank. After that, you were easy to disappear."
+        },
+        {
+            "id": "blight-refugee",
+            "label": "Blight Refugee",
+            "origin": "Murmansk",
+            "description": "You fled the fall of Murmansk with nothing. Stateless and undocumented, you were exactly the kind of person the Syndicate preys on... there was nobody to report you missing."
+        },
+        {
+            "id": "attendant",
+            "label": "Svean Attendant",
+            "origin": "Svea",
+            "description": "You served a wealthy household in Svea until your employer fell into catastrophic debt with the Syndicate. When they came to collect, they took the staff along with the furniture."
+        }
+    ],
+    "nameSuggestions": ["Helda Brighyin", "Siv Halvorsen", "Eska Mourne", "Danek Voss", "Runa Keld", "Tomas Greyfjord"]
 }
