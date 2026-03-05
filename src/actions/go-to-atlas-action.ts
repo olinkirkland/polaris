@@ -14,9 +14,9 @@ export class GoToAtlasAction extends BaseAction {
     }
 
     override act() {
-        const state = useGameStateStore();
-        state.setValue('zone', null);
-        state.setValue('atlas-coordinates', this.point);
+        const gameState = useGameStateStore();
+        gameState.setValue('zone', null);
+        gameState.setValue('atlas-coordinates', this.point);
 
         super.act();
     }

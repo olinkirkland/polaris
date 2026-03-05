@@ -13,8 +13,8 @@ export class GoToZoneAction extends BaseAction {
     }
 
     override act() {
-        const state = useGameStateStore();
-        state.setValue('zone', this.id);
+        const gameState = useGameStateStore();
+        gameState.setValue('zone', this.id);
 
         super.act();
     }

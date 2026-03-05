@@ -8,7 +8,7 @@
         </template>
         <div class="flex flex-col gap-2">
             <div class="flex flex-col gap-2">
-                <label v-for="c in availablePackages" class="cursor-pointer" :disabled="c.forced">
+                <label v-for="c in availablePackages" class="cursor-pointer" :disabled="c.forced || undefined">
                     <Card :pressed="c.selected">
                         <div class="flex justify-between gap-2">
                             <div class="flex flex-col">
@@ -76,5 +76,3 @@ async function onClickLoad() {
     isLoadingContent.value = false;
 }
 </script>
-
-<style lang="scss" scoped></style>

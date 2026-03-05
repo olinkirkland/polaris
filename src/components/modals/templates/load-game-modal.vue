@@ -11,17 +11,35 @@
         <template v-slot:content>
             <ul class="flex flex-col gap-2">
                 <li v-for="m in manifestGroup.manifests">
-                    <div class="flex gap-2">
-                        <div class="flex flex-col">
-                            <span>{{ m.label }}</span>
-                            <!-- <small>Level 99, Lorem Ipsum</small> -->
-                            <small>{{ new Date(m.date).toLocaleString() }}</small>
+                    <Card>
+                        <div class="flex gap-2">
+                            <div class="flex flex-col">
+                                <span>{{ m.label }}</span>
+                                <!-- <small>Level 99, Lorem Ipsum</small> -->
+                                <small>{{ new Date(m.date).toLocaleString() }}</small>
+                            </div>
+                            <Button class="ml-auto" @click="onClickLoad(m.path)">
+                                <span>Load</span>
+                                <i class="fa-solid fa-caret-right"></i>
+                            </Button>
                         </div>
-                        <Button class="ml-auto" @click="onClickLoad(m.path)">
-                            <span>Load</span>
-                            <i class="fa-solid fa-caret-right"></i>
-                        </Button>
-                    </div>
+                        <template #footer v-if="!arePackagesLoaded(m)">
+                            <div class="flex flex-col gap-2">
+                                <ul class="flex flex-wrap gap-2">
+                                    <li v-for="p in m.packageIds">
+                                        <Chip>
+                                            <i class="text-sm fa-solid fa-cube"></i>
+                                            <span>{{ p }}</span>
+                                        </Chip>
+                                    </li>
+                                </ul>
+                                <small>
+                                    <strong>Caution!</strong> Not all content expected by this save are loaded. You can
+                                    load anyway, but there may be unintended consequences.
+                                </small>
+                            </div>
+                        </template>
+                    </Card>
                 </li>
             </ul>
             <Card pressed>
@@ -43,12 +61,15 @@
 <script setup lang="ts">
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
+import Chip from '@/components/ui/chip.vue';
 import ModalController from '@/controllers/modal-controller';
+import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
-import { StoredGameManifestGroup, useStorageStore } from '@/store/storage-store';
+import { StoredGameManifest, StoredGameManifestGroup, useStorageStore } from '@/store/storage-store';
 import { computed } from 'vue';
 
-const state = useGameStateStore();
+const gameState = useGameStateStore();
+const gameData = useGameDataStore();
 const storage = useStorageStore();
 
 const props = defineProps<{
@@ -66,7 +87,13 @@ function onClickRemove() {
 }
 
 function onClickLoad(path: string) {
-    state.load(path);
+    gameState.load(path);
     ModalController.close();
+}
+
+function arePackagesLoaded(manifest: StoredGameManifest) {
+    const gamePackageIds = manifest.packageIds;
+    const loadedPackageIds = gameData.data?.packageDescriptions.map((p) => p.id);
+    return gamePackageIds.every((p) => loadedPackageIds?.includes(p));
 }
 </script>

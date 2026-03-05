@@ -17,21 +17,21 @@ export const useGameStateStore = defineStore('game', () => {
 
     // Game Variables
     const id = ref<string | null>(null);
-    const state = ref<{ [key: string]: any }>({});
+    const gameState = ref<{ [key: string]: any }>({});
 
     // Computed values (from state)
     const zone = computed(() => {
-        const z = state.value.zone;
+        const z = gameState.value.zone;
         if (!z) return null;
         return gameData.getZone(getValue('zone') as string);
     });
 
     function getValue(key: string): any {
-        return getNestedValue(state.value, key);
+        return getNestedValue(gameState.value, key);
     }
 
     function setValue(key: string, value: any) {
-        return setNestedValue(state.value, key, value);
+        return setNestedValue(gameState.value, key, value);
     }
 
     function patchValue(key: string, f: (oldValue: any) => any) {
@@ -54,7 +54,7 @@ export const useGameStateStore = defineStore('game', () => {
         // (the way the game starts)
         id.value = uuidv4();
 
-        state.value = {
+        gameState.value = {
             party: [], // Empty party
             zone: 'bear-island',
             quests: [],
@@ -96,7 +96,7 @@ export const useGameStateStore = defineStore('game', () => {
             summary
         };
 
-        const data: StoredGame = { manifest, state: state.value };
+        const data: StoredGame = { manifest, state: gameState.value };
 
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
@@ -110,7 +110,7 @@ export const useGameStateStore = defineStore('game', () => {
 
         // Unpack the values from the loaded file
         id.value = g.manifest.id;
-        state.value = g.state;
+        gameState.value = g.state;
     }
 
     function remove(path: string) {
@@ -120,7 +120,7 @@ export const useGameStateStore = defineStore('game', () => {
 
     function reset() {
         id.value = null;
-        state.value = {};
+        gameState.value = {};
     }
 
     function addPin(id: string) {
@@ -203,7 +203,7 @@ export const useGameStateStore = defineStore('game', () => {
         addPin,
         removePin,
         zone,
-        state,
+        state: gameState,
         listPins,
         getValue,
         setValue,

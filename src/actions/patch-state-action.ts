@@ -22,17 +22,17 @@ export class PatchStateAction extends BaseAction {
     }
 
     override act() {
-        const state = useGameStateStore();
+        const gameState = useGameStateStore();
         switch (this.op) {
             case 'sum':
-                state.patchValue(this.path, (n) => {
+                gameState.patchValue(this.path, (n) => {
                     let v = n + this.value;
                     if (this.options?.max !== undefined) v = Math.min(v, this.options?.max);
                     if (this.options?.min !== undefined) v = Math.max(v, this.options?.min);
                 });
                 break;
             case 'replace':
-                state.setValue(this.path, this.value);
+                gameState.setValue(this.path, this.value);
                 break;
         }
 

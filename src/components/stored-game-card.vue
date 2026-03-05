@@ -18,7 +18,7 @@
                     <i class="fa-solid fa-folder-open"></i>
                     <span>Manage ({{ manifestGroup.manifests.length }})</span>
                 </Button>
-                <Button @click="onClickContinue()">
+                <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
                     <span>Continue</span>
                     <i class="fa-solid fa-caret-right"></i>
                 </Button>
@@ -48,8 +48,10 @@ import { StoredGameManifestGroup } from '@/store/storage-store';
 import { computed, PropType } from 'vue';
 import LoadGameModal from './modals/templates/load-game-modal.vue';
 import Chip from './ui/chip.vue';
+import { useGameDataStore } from '@/store/game-data-store';
 
 const gameState = useGameStateStore();
+const gameData = useGameDataStore();
 
 const props = defineProps({
     manifestGroup: {
@@ -68,5 +70,11 @@ function onClickLoad() {
 function onClickContinue() {
     const manifest = props.manifestGroup.manifests[0];
     gameState.load(manifest.path);
+}
+
+function arePackagesLoaded() {
+    const gamePackageIds = props.manifestGroup.manifests[0].packageIds;
+    const loadedPackageIds = gameData.data?.packageDescriptions.map((p) => p.id);
+    return gamePackageIds.every((p) => loadedPackageIds?.includes(p));
 }
 </script>
