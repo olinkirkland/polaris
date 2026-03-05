@@ -9,6 +9,6 @@
         "url": "assets/game-data/packages/paths.json",
         "label": "Paths",
         "selected": true,
-        "forced": false
+        "forced": true
     }
 ]
