@@ -1,0 +1,71 @@
+{
+    "packageDescription": {
+        "id": "core",
+        "label": "Core",
+        "summary": "Core story file."
+    },
+    "pins": [
+        {
+            "id": "bear-island",
+            "address": { "zone": "atlas", "point": { "x": 0, "y": 0 } },
+            "label": "Ursa City (Bear Island)",
+            "actions": [{ "type": "go-to-zone", "id": "bear-island" }]
+        },
+        {
+            "id": "the-reach.driftwood-cottage",
+            "address": { "zone": "the-reach", "point": { "x": 300, "y": 150 } },
+            "label": "Driftwood Cottage",
+            "actions": []
+        },
+        {
+            "id": "bear-island.return",
+            "address": { "zone": "bear-island", "point": { "x": 300, "y": 150 } },
+            "label": "Return to Skyship",
+            "actions": [{ "type": "go-to-atlas", "point": { "x": 221, "y": 153 } }]
+        },
+        {
+            "id": "sawyers-shop",
+            "address": { "zone": "bear-island", "point": { "x": 25, "y": 30 } },
+            "label": "Old Bill Sawyer's Scrap Shop",
+            "actions": [{ "type": "start-scene", "id": "scrap-shop" }]
+        }
+    ],
+    "quests": [
+        {
+            "id": "onboarding",
+            "label": "Onboarding",
+            "entryNode": "start-onboarding",
+            "condition": {
+                "type": "NOT",
+                "condition": {
+                    "type": "FLAG",
+                    "flag": "onboarding-completed",
+                    "op": "EQ",
+                    "value": true
+                }
+            },
+            "nodes": [
+                {
+                    "id": "start-onboarding",
+                    "actions": [{ "type": "user-interface", "id": "onboarding" }],
+                    "edges": []
+                },
+                {
+                    "id": "complete-onboarding",
+                    "actions": [
+                        { "type": "patch-state", "path": "flags.onboarding-completed", "value": true },
+                        { "type": "autosave" }
+                    ],
+                    "edges": []
+                }
+            ]
+        }
+    ],
+    "zones": [
+        {
+            "id": "bear-island",
+            "label": "Ursa City (Bear Island)",
+            "description": "The thick walls of Ursa City have held since the Cataclysm hundreds of years ago. The power struggles in the distant capital are of little concern to the wealthy industrialists here. The technology to repair the rusting mining automatons has been lost to time, and cybernetically 'enhanced', forced labor has replaced the old mechanical drones."
+        }
+    ]
+}

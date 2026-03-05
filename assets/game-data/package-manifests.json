@@ -1,0 +1,14 @@
+[
+    {
+        "url": "/assets/game-data/packages/core.json",
+        "label": "Core",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "/assets/game-data/packages/paths.json",
+        "label": "Paths",
+        "selected": true,
+        "forced": true
+    }
+]
