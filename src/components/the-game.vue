@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
-import { onMounted } from 'vue';
 import Atlas from './atlas/atlas.vue';
 import Journal from './journal.vue';
 import TheLoader from './the-loader.vue';
@@ -22,11 +21,6 @@ import Zone from './zone/zone.vue';
 
 const gameData = useGameDataStore();
 const gameState = useGameStateStore();
-
-onMounted(() => {
-    // Does the player character exist? If not, prompt the player for that info
-    // if (gameState.)
-});
 </script>
 
 <style lang="scss" scoped></style>

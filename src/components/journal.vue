@@ -10,8 +10,8 @@
         <ul class="flex flex-col">
             <li v-for="q in gameData?.data?.quests">
                 <Card>
-                    <pre>{{ q.label }}</pre>
-                    <ul class="flex flex-col">
+                    <em>{{ q.label }}</em>
+                    <ul class="flex flex-col ml-2">
                         <li v-for="n in q.nodes">
                             • <span :class="{ underline: n.id === q.getActiveNode().id }">{{ n.id }}</span>
                         </li>

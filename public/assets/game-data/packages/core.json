@@ -47,15 +47,15 @@
             "nodes": [
                 {
                     "id": "start-onboarding",
-                    "actions": [
-                        { "type": "onboarding" },
-                        { "type": "flag", "flag": "onboarding-completed", "value": true }
-                    ],
+                    "actions": [{ "type": "user-interface", "id": "onboarding" }],
                     "edges": []
                 },
                 {
                     "id": "complete-onboarding",
-                    "actions": [{ "type": "autosave" }],
+                    "actions": [
+                        { "type": "patch-state", "path": "flags.onboarding-completed", "value": true },
+                        { "type": "autosave" }
+                    ],
                     "edges": []
                 }
             ]

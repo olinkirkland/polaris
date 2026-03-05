@@ -15,7 +15,7 @@
             </label>
         </template>
         <template #footer>
-            <button>Ok</button>
+            <Button @click="onClickSubmit()" class="ml-auto">Submit</Button>
         </template>
     </ModalFrame>
 </template>
@@ -25,28 +25,14 @@ import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
 import { useGameStateStore } from '@/store/game-state-store';
-import { StoredGameManifestGroup, useStorageStore } from '@/store/storage-store';
-import { computed } from 'vue';
 
-const state = useGameStateStore();
-const storage = useStorageStore();
+const gameState = useGameStateStore();
 
-const props = defineProps<{
-    manifestGroup: StoredGameManifestGroup;
-}>();
+const props = defineProps<{}>();
 
-const name = computed(() => {
-    const m = props.manifestGroup.manifests[0];
-    return m.summary.name || 'Unnamed';
-});
-
-function onClickRemove() {
-    props.manifestGroup.manifests.forEach((m) => storage.remove(m.path));
-    ModalController.close();
-}
-
-function onClickLoad(path: string) {
-    state.load(path);
+function onClickSubmit() {
+    // Advance quest 'complete-onboarding'
+    gameState.setActiveNode('onboarding', 'complete-onboarding');
     ModalController.close();
 }
 </script>

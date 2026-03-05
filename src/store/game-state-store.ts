@@ -1,6 +1,7 @@
 import { Character } from '@/character/character-types';
 import { Pin } from '@/game-data/pin/pin';
-import { QuestNode, QuestState } from '@/game-data/quest/quest';
+import { QuestState } from '@/game-data/quest/quest';
+import { getNestedValue, setNestedValue } from '@/util/object-util';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
@@ -23,11 +24,11 @@ export const useGameStateStore = defineStore('game', () => {
     });
 
     function getValue(key: string): any {
-        return state.value[key];
+        return getNestedValue(state.value, key);
     }
 
     function setValue(key: string, value: any) {
-        state.value[key] = value;
+        return setNestedValue(state.value, key, value);
     }
 
     function patchValue(key: string, f: (oldValue: any) => any) {
@@ -140,13 +141,13 @@ export const useGameStateStore = defineStore('game', () => {
         });
     }
 
-    function getActiveNodeId(questId: string): string {
+    function getActiveNode(questId: string): string {
         const quests: QuestState[] = getValue('quests');
         const questState = quests.find((q: QuestState) => q.id === questId)!;
         return questState.activeNodeId;
     }
 
-    function setActiveNodeId(questId: string, nodeId: string) {
+    function setActiveNode(questId: string, nodeId: string) {
         patchValue('quests', (quests: QuestState[]) => {
             const existingQuestIndex = quests.findIndex((q) => q.id === questId);
             if (existingQuestIndex === -1) return [...quests, { id: questId, activeNodeId: nodeId }];
@@ -155,6 +156,11 @@ export const useGameStateStore = defineStore('game', () => {
                 return q;
             });
         });
+
+        // Perform actions
+        const activeNode = gameData.data?.quests.find((q) => q.id === questId)?.getActiveNode();
+        const actions = activeNode?.actions;
+        if (actions) actions.forEach((a) => a.act());
     }
 
     function getFlag(name: string): string | number | boolean {
@@ -183,8 +189,8 @@ export const useGameStateStore = defineStore('game', () => {
         patchValue,
         getCharacter,
         setCharacter,
-        getActiveNodeId,
-        setActiveNodeId,
+        getActiveNode,
+        setActiveNode,
         getFlag,
         setFlag
     };

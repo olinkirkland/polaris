@@ -16,7 +16,7 @@ export class Pin {
         p.id = data.id;
         p.address = data.address;
         p.label = data.label;
-        p.actions = data.actions.map((a: BaseAction) => makeAction(a));
+        p.actions = data.actions.map((a: any) => makeAction(a));
         return p;
     }
 }

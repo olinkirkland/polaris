@@ -6,7 +6,8 @@ export enum ActionType {
     GO_TO_ZONE = 'go-to-zone',
     GO_TO_ATLAS = 'go-to-atlas',
     START_SCENE = 'start-scene',
-    PATCH_STATE = 'patch-state'
+    PATCH_STATE = 'patch-state',
+    USER_INTERFACE = 'user-interface'
 }
 
 export abstract class BaseAction {

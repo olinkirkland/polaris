@@ -1,5 +1,7 @@
+import { BaseAction } from '@/actions/base-action';
 import { useGameStateStore } from '@/store/game-state-store';
 import { Condition, evaluateCondition } from './condition';
+import { makeAction } from '@/actions/action-factory';
 
 export type QuestState = {
     id: string;
@@ -13,11 +15,13 @@ export type QuestOption = {
 
 export class QuestNode {
     id: string;
+    actions: BaseAction[];
     edges: QuestOption[];
 
     static unpack(data: any): QuestNode {
         const n = new QuestNode();
         n.id = data.id;
+        n.actions = data.actions.map((a: any) => makeAction(a));
         n.edges = data.edges.map((e: any) => {
             return { condition: e.condition, nodeId: e.nodeId };
         });
@@ -51,17 +55,27 @@ export class Quest {
     }
 
     validate() {
+        // Starting condition
         if (evaluateCondition(this.condition)) {
-            console.log('@quest.validate() condition evaluated as true', this.condition);
+            console.log('@quest.validate', this.id);
             this.setActiveNode(this.entryNode.id);
         }
+
+        // Condition to change the activeNode from the edges
+        this.getActiveNode().edges.forEach((e) => {
+            if (evaluateCondition(e.condition)) {
+                console.log('@quest.validate', this.id, e.nodeId);
+                this.setActiveNode(e.nodeId);
+            }
+        });
     }
 
     setActiveNode(id: string) {
-        this.gameState.setActiveNodeId(this.id, id);
+        console.log('@quest.setActiveNode()', this.id, id);
+        this.gameState.setActiveNode(this.id, id);
     }
 
     getActiveNode(): QuestNode {
-        return this.getNode(this.gameState.getActiveNodeId(this.id))!;
+        return this.getNode(this.gameState.getActiveNode(this.id))!;
     }
 }
