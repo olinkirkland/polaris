@@ -1,5 +1,5 @@
-import { Heritage } from '@/character/character';
 import { CharacterPath } from '@/game-data/character/character-path';
+import { Heritage } from '@/game-data/heritage';
 import { Pin } from '@/game-data/pin/pin';
 import { Quest } from '@/game-data/quest/quest';
 import { Zone } from '@/game-data/zone/zone';

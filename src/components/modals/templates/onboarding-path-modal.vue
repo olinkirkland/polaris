@@ -1,5 +1,5 @@
 <template>
-    <ModalFrame class="w-200">
+    <ModalFrame class="w-175">
         <template v-slot:header>
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
@@ -65,13 +65,13 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    const playerCharacter = new Character();
+    const playerCharacter = gameState.getCharacter('player') || new Character();
     playerCharacter.id = 'player';
     playerCharacter.characterPathId = characterPath.value!.id;
     playerCharacter.attributeModifiers = characterPath.value!.attributeModifiers;
     gameState.setCharacter(playerCharacter);
 
-    gameState.setActiveNode('onboarding', 'complete');
+    gameState.setActiveNodeId('onboarding', 'complete');
     ModalController.close();
 }
 </script>

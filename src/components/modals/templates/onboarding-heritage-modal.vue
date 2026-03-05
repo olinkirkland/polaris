@@ -1,5 +1,5 @@
 <template>
-    <ModalFrame class="w-150">
+    <ModalFrame class="w-175">
         <template v-slot:header>
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
@@ -15,22 +15,15 @@
             </p>
             <ul class="grid grid-cols-2 gap-3">
                 <li v-for="h in gameData.data?.characterHeritages">
-                    <Card class="h-full" :pressed="characterHeritage?.id === h.id">
+                    <Card class="h-full" :pressed="heritage?.id === h.id">
                         <template #header>
                             <p>{{ h.label }}</p>
-                            <Button
-                                class="ml-auto"
-                                :disabled="characterHeritage?.id === h.id"
-                                @click="characterHeritage = h"
-                            >
-                                <i v-if="characterHeritage?.id === h.id" class="fas fa-check"></i>
-                                <span>{{ characterHeritage?.id === h.id ? 'Selected' : 'Select' }}</span></Button
+                            <Button class="ml-auto" :disabled="heritage?.id === h.id" @click="heritage = h">
+                                <i v-if="heritage?.id === h.id" class="fas fa-check"></i>
+                                <span>{{ heritage?.id === h.id ? 'Selected' : 'Select' }}</span></Button
                             >
                         </template>
                         <em>{{ h.description }}</em>
-                        <template #footer>
-                            {{ h.id }}
-                        </template>
                     </Card>
                 </li>
             </ul>
@@ -39,7 +32,7 @@
             <Button @click="onClickCancel()" class="ml-auto">
                 <span>Cancel</span>
             </Button>
-            <Button @click="onClickSubmit()" :disabled="!characterHeritage">
+            <Button @click="onClickSubmit()" :disabled="!heritage">
                 <span>Continue</span>
             </Button>
         </template>
@@ -47,10 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { Character, Heritage } from '@/character/character';
+import { Character } from '@/character/character';
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
+import { Heritage } from '@/game-data/heritage';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';
@@ -59,7 +53,7 @@ const gameState = useGameStateStore();
 const gameData = useGameDataStore();
 
 const props = defineProps<{}>();
-const characterHeritage = ref<Heritage>();
+const heritage = ref<Heritage>();
 
 function onClickCancel() {
     gameState.reset();
@@ -67,12 +61,12 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    const playerCharacter = new Character();
+    const playerCharacter = gameState.getCharacter('player') || new Character();
     playerCharacter.id = 'player';
-    playerCharacter.heritageId = characterHeritage.value!.id;
     gameState.setCharacter(playerCharacter);
+    gameState.setValue('flags.heritage', heritage.value!.id);
 
-    gameState.setActiveNode('onboarding', 'path');
+    gameState.setActiveNodeId('onboarding', 'path');
     ModalController.close();
 }
 </script>

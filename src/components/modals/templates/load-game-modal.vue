@@ -1,5 +1,5 @@
 <template>
-    <ModalFrame class="w-96">
+    <ModalFrame class="w-100">
         <template v-slot:header>
             <ModalHeader closeButton>
                 <div class="flex w-full gap-2 items-center">

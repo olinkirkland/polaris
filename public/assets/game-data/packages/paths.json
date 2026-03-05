@@ -8,7 +8,7 @@
         {
             "id": "vanguard",
             "label": "Vanguard",
-            "description": "You are a heavily armored, frontline protector. You’re most comfortable standing firmly between your vulnerable companions and the sharp points of enemy weapons.",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "attributeModifiers": [
                 { "key": "brawn", "value": 1 },
                 { "key": "agility", "value": 0 },
@@ -19,7 +19,7 @@
         {
             "id": "prowler",
             "label": "Prowler",
-            "description": "You’re an expert hunter and thrive at range. Your enemies are your prey, and you stalk them relentlessly, striking at their weak points. You’re accompanied by a fiercely loyal animal. Companions cannot be attacked; they’re mechanically a part of the Prowler.",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "attributeModifiers": [
                 { "key": "brawn", "value": 0 },
                 { "key": "agility", "value": 1 },
@@ -30,7 +30,7 @@
         {
             "id": "whisper",
             "label": "Whisper",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "attributeModifiers": [
                 { "key": "brawn", "value": -1 },
                 { "key": "agility", "value": 0 },
@@ -41,7 +41,7 @@
         {
             "id": "artificer",
             "label": "Artificer",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "attributeModifiers": [
                 { "key": "brawn", "value": 0 },
                 { "key": "agility", "value": -1 },

@@ -7,7 +7,7 @@
             </div>
         </template>
         <div class="flex flex-col gap-2">
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-2 max-h-50 overflow-y-auto pr-1">
                 <label v-for="c in availablePackages" class="cursor-pointer" :disabled="c.forced || undefined">
                     <Card :pressed="c.selected">
                         <div class="flex justify-between gap-2">

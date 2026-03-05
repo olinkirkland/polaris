@@ -62,27 +62,25 @@ export class Quest {
     }
 
     validate() {
-        // Starting condition
-        if (evaluateCondition(this.condition)) {
+        console.log('@quest.validate');
+        // Starting condition; only care if there's no activeNode (hasn't been started yet)
+        if (!this.getActiveNode() && evaluateCondition(this.condition)) {
             console.log('@quest.validate', this.id);
-            this.setActiveNode(this.entryNode.id);
+            this.gameState.setActiveNodeId(this.id, this.entryNode.id);
         }
 
-        // Condition to change the activeNode from the edges
-        this.getActiveNode().edges.forEach((e) => {
+        // Condition to advance the activeNode along its edges
+        this.getActiveNode()?.edges.forEach((e) => {
             if (evaluateCondition(e.condition)) {
                 console.log('@quest.validate', this.id, e.nodeId);
-                this.setActiveNode(e.nodeId);
+                this.gameState.setActiveNodeId(this.id, e.nodeId);
             }
         });
     }
 
-    setActiveNode(id: string) {
-        console.log('@quest.setActiveNode()', this.id, id);
-        this.gameState.setActiveNode(this.id, id);
-    }
-
-    getActiveNode(): QuestNode {
-        return this.getNode(this.gameState.getActiveNode(this.id))!;
+    getActiveNode(): QuestNode | undefined {
+        const activeNodeId = this.gameState.getActiveNodeId(this.id);
+        if (!activeNodeId) return undefined;
+        return this.getNode(activeNodeId);
     }
 }

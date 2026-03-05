@@ -1,0 +1,60 @@
+{
+    "packageDescription": {
+        "id": "origins",
+        "label": "Origin Quests",
+        "summary": "Heritages and the Origin Quests for the different character heritages"
+    },
+    "characterHeritages": [
+        {
+            "id": "scavenger",
+            "label": "Scavenger",
+            "origin": "The Reach",
+            "description": "You found a valuable relic in the Eastern Approach. Too valuable. You refused an offer from a Syndicate buyer, and they decided to take both you and the relic."
+        },
+        {
+            "id": "soldier",
+            "label": "Ex-Soldier",
+            "origin": "Polaris",
+            "description": "After refusing an order that would have lined a Syndicate captain's pockets, you were framed for theft and stripped of your rank. After that, you were easy to disappear."
+        },
+        {
+            "id": "refugee",
+            "label": "Refugee",
+            "origin": "Murmansk",
+            "description": "You fled the fall of Murmansk with nothing. Stateless and undocumented, you were exactly the kind of person the Syndicate preys on... there was nobody to report you missing."
+        },
+        {
+            "id": "steward",
+            "label": "Steward",
+            "origin": "Svea",
+            "description": "You served a wealthy household in Svea until your employer fell into catastrophic debt with the Syndicate. When they came to collect, they took the staff along with the furniture."
+        }
+    ],
+    "quests": [
+        {
+            "id": "scavenger-origin",
+            "label": "Scavenger Origin",
+            "entryNode": "name",
+            "condition": {
+                "type": "STATE",
+                "path": "flag.heritage",
+                "op": "EQ",
+                "value": "scavenger"
+            },
+            "nodes": [
+                {
+                    "id": "name",
+                    "label": "Choose a name",
+                    "description": "What should I be called? My name could be simple, or complex.",
+                    "actions": [{ "type": "user-interface", "id": "onboarding-name" }]
+                },
+                {
+                    "id": "complete",
+                    "label": "",
+                    "description": "Finished the scavenger origin quest. Now I'm on the Hand of Sorrow, in a cell, trying to find a way out.",
+                    "actions": [{ "type": "autosave" }]
+                }
+            ]
+        }
+    ]
+}

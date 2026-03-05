@@ -19,7 +19,7 @@ interface NotCondition {
 }
 
 // The actual checks
-type LeafCondition = FlagCondition;
+type LeafCondition = GameStateCondition;
 // SkillCondition
 // AttributeCondition
 // QuestCondition
@@ -27,9 +27,9 @@ type LeafCondition = FlagCondition;
 // LocationVisitedCondition
 // ItemAcquiredCondition
 
-interface FlagCondition {
-    type: 'FLAG';
-    flag: string;
+interface GameStateCondition {
+    type: 'STATE';
+    path: string;
     op: 'EQ' | 'NEQ' | 'GT' | 'LT' | 'GTE' | 'LTE';
     value: boolean | number | string;
 }
@@ -43,8 +43,8 @@ export function evaluateCondition(c: Condition): boolean {
             return c.conditions.every((d) => evaluateCondition(d));
         case 'NOT':
             return !evaluateCondition(c.condition);
-        case 'FLAG':
-            return applyOp(gameState.getValue('flags')[c.flag], c.op, c.value);
+        case 'STATE':
+            return applyOp(gameState.getValue(c.path), c.op, c.value);
     }
 }
 

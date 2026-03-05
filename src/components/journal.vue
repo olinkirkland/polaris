@@ -7,34 +7,35 @@
                 </li>
             </ul>
         </Card>
-        <ul class="flex flex-col">
+        <ul class="flex flex-col gap-2">
             <li v-for="q in gameData?.data?.quests">
-                <Card>
+                <Card v-if="gameState.getActiveNodeId(q.id)">
                     <em>{{ q.label }}</em>
                     <div class="grid grid-cols-2">
                         <ul class="flex flex-col ml-2">
                             <li v-for="n in q.nodes">
-                                <span v-if="n.label.length > 0" class="flex gap-1">
+                                <!-- v-if="n.label.length > 0" -->
+                                <span class="flex gap-1">
                                     <!-- Icon -->
                                     <i
                                         class="mt-0.5 fa-regular"
                                         :class="
                                             gameState.getQuest(q.id).traversedNodeIds.includes(n.id) &&
-                                            !(n.id === q.getActiveNode().id)
+                                            !(n.id === q.getActiveNode()?.id)
                                                 ? 'fa-circle-check'
                                                 : 'fa-circle'
                                         "
                                     ></i>
                                     <!-- Label -->
-                                    <strong v-if="n.id === q.getActiveNode().id">{{ n.label }}</strong>
+                                    <strong v-if="n.id === q.getActiveNode()?.id">{{ n.label }}</strong>
                                     <span v-else-if="gameState.getQuest(q.id).traversedNodeIds.includes(n.id)">
-                                        <span class="line-through decoration-1"> {{ n.label }}</span>
+                                        <span class="line-through decoration-1">{{ n.label }}</span>
                                     </span>
                                     <span v-else>{{ n.label }}</span>
                                 </span>
                             </li>
                         </ul>
-                        <p>{{ q.getActiveNode().description }}</p>
+                        <p>{{ q.getActiveNode()?.description }}</p>
                     </div>
                 </Card>
             </li>

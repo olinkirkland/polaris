@@ -146,13 +146,13 @@ export const useGameStateStore = defineStore('game', () => {
         });
     }
 
-    function getActiveNode(questId: string): string {
+    function getActiveNodeId(questId: string): string | undefined {
         const quests: QuestState[] = getValue('quests');
-        const questState = quests.find((q: QuestState) => q.id === questId)!;
-        return questState.activeNodeId;
+        const questState = quests.find((q: QuestState) => q.id === questId);
+        return questState?.activeNodeId;
     }
 
-    function setActiveNode(questId: string, nodeId: string) {
+    function setActiveNodeId(questId: string, nodeId: string) {
         patchValue('quests', (quests: QuestState[]) => {
             const existingQuestIndex = quests.findIndex((q) => q.id === questId);
 
@@ -170,9 +170,13 @@ export const useGameStateStore = defineStore('game', () => {
         });
 
         // Perform actions
-        const activeNode = gameData.data?.quests.find((q) => q.id === questId)?.getActiveNode();
+        const quest = gameData.data?.quests.find((q) => q.id === questId);
+        const activeNode = quest?.getActiveNode();
         const actions = activeNode?.actions;
         if (actions) actions.forEach((a) => a.act());
+
+        // Validate the quest afterwards
+        quest?.validate();
     }
 
     function getFlag(name: string): string | number | boolean {
@@ -204,10 +208,11 @@ export const useGameStateStore = defineStore('game', () => {
         patchValue,
         getCharacter,
         setCharacter,
-        getActiveNode,
-        setActiveNode,
+        getActiveNodeId,
+        setActiveNodeId,
         getFlag,
         setFlag,
-        getQuest
+        getQuest,
+        validateQuestConditions
     };
 });

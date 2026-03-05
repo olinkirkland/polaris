@@ -1,10 +1,10 @@
 <template>
-    <ModalFrame class="w-150">
+    <ModalFrame class="w-175">
         <template v-slot:header>
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
                     <i class="fas fa-person"></i>
-                    <p>What's your name?</p>
+                    <p>By what name are you known?</p>
                 </div>
             </ModalHeader>
         </template>
@@ -57,12 +57,12 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    const playerCharacter = new Character();
+    const playerCharacter = gameState.getCharacter('player') || new Character();
     playerCharacter.id = 'player';
     playerCharacter.name = characterName.value;
     gameState.setCharacter(playerCharacter);
 
-    gameState.setActiveNode('onboarding', 'heritage');
+    gameState.setActiveNodeId('onboarding', 'heritage');
     ModalController.close();
 }
 </script>

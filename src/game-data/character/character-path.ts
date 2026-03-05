@@ -15,7 +15,7 @@ export class CharacterPath {
             return {
                 key: a.key,
                 value: a.value,
-                source: p.id
+                source: `Path (${p.label})`
             };
         });
 
