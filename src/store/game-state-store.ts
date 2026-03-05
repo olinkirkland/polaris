@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
+import ModalController from '@/controllers/modal-controller';
+import SavingModal from '@/components/modals/templates/saving-modal.vue';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -71,6 +73,8 @@ export const useGameStateStore = defineStore('game', () => {
         if (!id.value) throw new Error('Missing gameId');
         if (!gameData.data) throw new Error('Missing game data');
 
+        ModalController.open(SavingModal, { message: label === 'Autosave' ? 'Autosaving' : 'Saving' });
+
         const path = id.value + '/' + saveId;
 
         // Prepare data and put it into the data object to be packed
@@ -95,6 +99,10 @@ export const useGameStateStore = defineStore('game', () => {
 
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
+
+        setTimeout(() => {
+            ModalController.close();
+        }, 500);
     }
 
     function load(path: string) {

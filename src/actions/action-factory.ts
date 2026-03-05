@@ -28,6 +28,4 @@ export function makeAction(data: any): BaseAction {
         default:
             throw new Error(`@action-factory: No such ActionType ${data.type}`);
     }
-
-    return data as BaseAction;
 }
