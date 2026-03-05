@@ -78,7 +78,6 @@ function onClickSubmit() {
     playerCharacter.name = characterName.value;
     playerCharacter.characterPathId = characterPath.value.id;
     playerCharacter.attributeModifiers = characterPath.value.attributeModifiers;
-    console.log('playercharacter', playerCharacter);
     gameState.setCharacter(playerCharacter);
 
     // Onboarding quest

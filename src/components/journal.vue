@@ -13,7 +13,20 @@
                     <em>{{ q.label }}</em>
                     <ul class="flex flex-col ml-2">
                         <li v-for="n in q.nodes">
-                            • <span :class="{ underline: n.id === q.getActiveNode().id }">{{ n.id }}</span>
+                            <strong v-if="n.id === q.getActiveNode().id">
+                                <i class="fa-regular fa-circle"></i>
+                                {{ n.id }}
+                            </strong>
+                            <span
+                                v-else-if="gameState.getQuest(q.id).traversedNodeIds.includes(n.id)"
+                            >
+                                <i class="fa-regular fa-circle-check"></i>
+                                {{ n.id }}
+                            </span>
+                            <span v-else>
+                                <i class="fa-regular fa-circle"></i>
+                                {{ n.id }}</span
+                            >
                         </li>
                     </ul>
                 </Card>

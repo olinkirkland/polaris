@@ -4,12 +4,12 @@ import ModalController from '@/controllers/modal-controller';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';
 import { getNestedValue, setNestedValue } from '@/util/object-util';
+import { wait } from '@/util/wait-util';
 import { defineStore } from 'pinia';
 import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
-import { wait } from '@/util/wait-util';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -144,13 +144,11 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function setCharacter(newCharacter: Character) {
-        console.log(getValue('party'));
         patchValue('party', (party: Character[]) => {
             const exists = party.some((c: Character) => c.id === newCharacter.id);
             if (exists) return party.map((c: Character) => (c.id === newCharacter.id ? newCharacter : c));
             else return [...party, newCharacter];
         });
-        console.log(getValue('party'));
     }
 
     function getActiveNode(questId: string): string {
@@ -162,9 +160,16 @@ export const useGameStateStore = defineStore('game', () => {
     function setActiveNode(questId: string, nodeId: string) {
         patchValue('quests', (quests: QuestState[]) => {
             const existingQuestIndex = quests.findIndex((q) => q.id === questId);
-            if (existingQuestIndex === -1) return [...quests, { id: questId, activeNodeId: nodeId }];
+
+            if (existingQuestIndex === -1)
+                return [...quests, { id: questId, activeNodeId: nodeId, traversedNodeIds: [nodeId] }];
+
             return quests.map((q, index) => {
-                if (index === existingQuestIndex) return { ...q, activeNodeId: nodeId };
+                if (index === existingQuestIndex) {
+                    const alreadyTraversed = q.traversedNodeIds?.includes(nodeId);
+                    const traversedNodeIds = alreadyTraversed ? q.traversedNodeIds : [...q.traversedNodeIds, nodeId];
+                    return { ...q, activeNodeId: nodeId, traversedNodeIds };
+                }
                 return q;
             });
         });
@@ -181,6 +186,10 @@ export const useGameStateStore = defineStore('game', () => {
 
     function setFlag(name: string, value: string | number | boolean) {
         patchValue('flags', (flags) => ({ ...flags, [name]: value }));
+    }
+
+    function getQuest(questId: string): QuestState {
+        return getValue('quests').find((q: QuestState) => q.id === questId);
     }
 
     return {
@@ -204,6 +213,7 @@ export const useGameStateStore = defineStore('game', () => {
         getActiveNode,
         setActiveNode,
         getFlag,
-        setFlag
+        setFlag,
+        getQuest
     };
 });

@@ -1,11 +1,12 @@
+import { makeAction } from '@/actions/action-factory';
 import { BaseAction } from '@/actions/base-action';
 import { useGameStateStore } from '@/store/game-state-store';
 import { Condition, evaluateCondition } from './condition';
-import { makeAction } from '@/actions/action-factory';
 
 export type QuestState = {
     id: string;
     activeNodeId: string;
+    traversedNodeIds: string[];
 };
 
 export type QuestOption = {
