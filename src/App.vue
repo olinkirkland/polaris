@@ -11,11 +11,11 @@ import Game from './components/the-game.vue';
     <TheModalContainer />
 </template>
 
+<style lang="css">
+@import 'tailwindcss';
+</style>
+
 <style lang="scss">
 @use '@/assets/styles/styles.scss';
 @use '@/assets/styles/variables.scss';
-</style>
-
-<style lang="css">
-@import 'tailwindcss';
 </style>

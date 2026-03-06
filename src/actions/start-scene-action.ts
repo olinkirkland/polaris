@@ -3,7 +3,7 @@ import { ActionType, BaseAction } from './base-action';
 import SceneModal from '@/components/modals/templates/scene-modal.vue';
 
 export class StartSceneAction extends BaseAction {
-    type = ActionType.START_SCENE;
+    type = ActionType.SCENE;
 
     id: string; // Scene Id
 

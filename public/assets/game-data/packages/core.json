@@ -28,7 +28,7 @@
             "address": { "zone": "bear-island", "point": { "x": 25, "y": 30 } },
             "label": "Old Bill Sawyer's Scrap Shop",
             "actions": [
-                { "type": "start-scene", "id": "scrap-shop" },
+                { "type": "scene", "id": "scrap-shop" },
                 { "type": "patch-state", "path": "flags.visited-sawyers-shop", "value": true }
             ]
         }
@@ -42,7 +42,7 @@
                 "type": "NOT",
                 "condition": {
                     "type": "STATE",
-                    "path": "flag.onboarding-complete",
+                    "path": "flags.onboarding-complete",
                     "op": "EQ",
                     "value": true
                 }
@@ -70,10 +70,7 @@
                     "id": "complete",
                     "label": "",
                     "description": "I created my character.",
-                    "actions": [
-                        { "type": "patch-state", "path": "flags.onboarding-complete", "value": true },
-                        { "type": "autosave" }
-                    ]
+                    "actions": [{ "type": "patch-state", "path": "flags.onboarding-complete", "value": true }]
                 }
             ]
         }

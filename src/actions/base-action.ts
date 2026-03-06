@@ -1,11 +1,11 @@
 import ActionController from '@/controllers/action-controller';
 
 export enum ActionType {
-    ONBOARDING = 'onboarding',
-    AUTOSAVE = 'autosave',
+    SAVE = 'save',
     GO_TO_ZONE = 'go-to-zone',
     GO_TO_ATLAS = 'go-to-atlas',
-    START_SCENE = 'start-scene',
+    SCENE = 'scene',
+    BATTLE = 'battle',
     PATCH_STATE = 'patch-state',
     USER_INTERFACE = 'user-interface'
 }

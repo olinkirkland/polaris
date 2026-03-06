@@ -34,25 +34,36 @@
         {
             "id": "scavenger-origin",
             "label": "Scavenger Origin",
-            "entryNode": "name",
+            "entryNode": "start",
             "condition": {
-                "type": "STATE",
-                "path": "flag.heritage",
-                "op": "EQ",
-                "value": "scavenger"
+                "type": "AND",
+                "conditions": [
+                    {
+                        "type": "STATE",
+                        "path": "flags.onboarding-complete",
+                        "op": "EQ",
+                        "value": true
+                    },
+                    {
+                        "type": "STATE",
+                        "path": "flags.heritage",
+                        "op": "EQ",
+                        "value": "scavenger"
+                    }
+                ]
             },
             "nodes": [
                 {
-                    "id": "name",
-                    "label": "Choose a name",
-                    "description": "What should I be called? My name could be simple, or complex.",
-                    "actions": [{ "type": "user-interface", "id": "onboarding-name" }]
+                    "id": "start",
+                    "label": "",
+                    "description": "Talk to Isolde.",
+                    "actions": [{"type": "save"}, { "type": "scene", "id": "talk-to-isolde" }]
                 },
                 {
                     "id": "complete",
                     "label": "",
-                    "description": "Finished the scavenger origin quest. Now I'm on the Hand of Sorrow, in a cell, trying to find a way out.",
-                    "actions": [{ "type": "autosave" }]
+                    "description": "",
+                    "actions": []
                 }
             ]
         }

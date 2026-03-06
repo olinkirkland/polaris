@@ -1,7 +1,7 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import App from './App.vue';
-import ActionButton from './components/shared/action-button.vue';
+import ActionDescription from './components/shared/action-description.vue';
 import Card from './components/shared/card.vue';
 import Button from './components/ui/button.vue';
 import Checkbox from './components/ui/checkbox.vue';
@@ -21,7 +21,7 @@ app.use(pinia);
 
 // Components
 app.component('Button', Button);
-app.component('ActionButton', ActionButton);
+app.component('ActionDescription', ActionDescription);
 app.component('Checkbox', Checkbox);
 app.component('Card', Card);
 app.component('DotBadge', DotBadge);

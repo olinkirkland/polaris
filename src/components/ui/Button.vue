@@ -24,6 +24,10 @@ button {
     }
 }
 
+:deep(span) {
+    white-space: nowrap;
+}
+
 :deep(i) {
     font-size: smaller;
 }

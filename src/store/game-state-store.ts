@@ -56,9 +56,9 @@ export const useGameStateStore = defineStore('game', () => {
 
         gameState.value = {
             party: [], // Empty party
-            zone: 'bear-island',
+            zone: null,
             quests: [],
-            pins: ['bear-island', 'bear-island.return'],
+            pins: [],
             flags: {}
         };
 
@@ -66,6 +66,7 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function validateQuestConditions() {
+        console.log('@gameState.validateQuestConditions');
         const quests = gameData.data?.quests || [];
         quests.forEach((q) => q.validate());
     }
@@ -101,7 +102,7 @@ export const useGameStateStore = defineStore('game', () => {
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
 
-        await wait(0.25);
+        await wait(250);
         ModalController.close();
     }
 
@@ -173,10 +174,11 @@ export const useGameStateStore = defineStore('game', () => {
         const quest = gameData.data?.quests.find((q) => q.id === questId);
         const activeNode = quest?.getActiveNode();
         const actions = activeNode?.actions;
+        console.log('@gameState.setActiveNodeId', questId, nodeId);
         if (actions) actions.forEach((a) => a.act());
 
-        // Validate the quest afterwards
-        quest?.validate();
+        // Validate quests afterwards
+        validateQuestConditions();
     }
 
     function getFlag(name: string): string | number | boolean {

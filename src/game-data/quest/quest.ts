@@ -62,17 +62,16 @@ export class Quest {
     }
 
     validate() {
-        console.log('@quest.validate');
         // Starting condition; only care if there's no activeNode (hasn't been started yet)
         if (!this.getActiveNode() && evaluateCondition(this.condition)) {
-            console.log('@quest.validate', this.id);
+            console.log('@quest.validate:', '[started]', this.id);
             this.gameState.setActiveNodeId(this.id, this.entryNode.id);
         }
 
         // Condition to advance the activeNode along its edges
         this.getActiveNode()?.edges.forEach((e) => {
             if (evaluateCondition(e.condition)) {
-                console.log('@quest.validate', this.id, e.nodeId);
+                console.log('@quest.validate:', '[advanced]', this.id, e.nodeId);
                 this.gameState.setActiveNodeId(this.id, e.nodeId);
             }
         });
