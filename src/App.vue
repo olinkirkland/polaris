@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import TheModalContainer from './components/modals/the-modal-container.vue';
 import Game from './components/the-game.vue';
+import SaveOverlay from './components/ui/save-overlay.vue';
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import Game from './components/the-game.vue';
         <Game />
     </div>
     <TheModalContainer />
+    <SaveOverlay />
 </template>
 
 <style lang="css">

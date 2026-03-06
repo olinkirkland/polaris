@@ -42,8 +42,10 @@
 import { useGameStateStore } from '@/store/game-state-store';
 import { useStorageStore } from '@/store/storage-store';
 import StoredGameCard from './stored-game-card.vue';
+import { useGameDataStore } from '@/store/game-data-store';
 
 const gameState = useGameStateStore();
+const gameData = useGameDataStore();
 const storage = useStorageStore();
 
 function onClickNew() {

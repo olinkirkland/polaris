@@ -69,8 +69,8 @@ async function loadPackageManifests() {
 
 async function onClickLoad() {
     isLoadingContent.value = true;
-    await wait(0.5);
     gameData.resetGameData();
+    await wait(0.25);
     const selectedContent = availablePackages.value.filter((c) => c.selected).map((p) => p.url);
     await gameData.loadGameDataPackages(selectedContent);
     isLoadingContent.value = false;

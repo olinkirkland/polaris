@@ -1,15 +1,13 @@
 <template>
     <div
-        class="modal-container w-full flex flex-col justify-center items-center absolute p-3 top-0"
+        class="modal-container fixed w-full flex flex-col justify-center items-center p-3 top-0 z-99"
         :class="{ active: !!currentModal }"
     >
         <div
             class="modal-container__background w-full h-full absolute top-0 opacity-100"
             @click="onClickBackground()"
         ></div>
-        <Transition name="modal-transition" mode="out-in">
-            <component :is="currentModal" v-bind="currentModalConfig" ref="modalRef" />
-        </Transition>
+        <component :is="currentModal" v-bind="currentModalConfig" ref="modalRef" />
     </div>
 </template>
 
@@ -84,11 +82,11 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
     height: 100dvh;
     min-height: -webkit-fill-available;
     -webkit-overflow-scrolling: touch;
-    z-index: 99;
 
     > .modal-container__background {
         z-index: -1;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(255, 255, 255, 0.8);
+        background-image: url('https://www.transparenttextures.com/patterns/ps-neutral.png');
     }
 
     &:not(.active) {

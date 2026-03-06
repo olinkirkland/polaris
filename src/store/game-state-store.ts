@@ -1,6 +1,5 @@
 import { Character } from '@/character/character';
-import SavingModal from '@/components/modals/templates/saving-modal.vue';
-import ModalController from '@/controllers/modal-controller';
+import SaveOverlayController from '@/controllers/save-overlay-controller';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';
 import { getNestedValue, setNestedValue } from '@/util/object-util';
@@ -75,7 +74,8 @@ export const useGameStateStore = defineStore('game', () => {
         if (!id.value) throw new Error('Missing gameId');
         if (!gameData.data) throw new Error('Missing game data');
 
-        ModalController.open(SavingModal, { message: label === 'Autosave' ? 'Autosaving' : 'Saving' });
+        const savingMessage = label === 'Autosave' ? 'Autosaving...' : 'Saving...';
+        SaveOverlayController.open(savingMessage);
 
         const path = id.value + '/' + saveId;
 
@@ -102,8 +102,8 @@ export const useGameStateStore = defineStore('game', () => {
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
 
-        await wait(250);
-        ModalController.close();
+        await wait(0.5);
+        SaveOverlayController.close();
     }
 
     function load(path: string) {

@@ -6,6 +6,8 @@
             <Atlas v-if="gameState.id && !gameState.zone" />
             <Zone v-if="gameState.id && gameState.zone" />
             <Journal v-if="gameState.id" />
+            <!-- <Scene /> -->
+            <!-- <Battle /> -->
         </div>
     </div>
 </template>

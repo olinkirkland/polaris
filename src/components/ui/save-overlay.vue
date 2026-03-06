@@ -1,0 +1,27 @@
+<template>
+    <div
+        v-if="visible"
+        class="overlay fixed top-0 left-0 z-99 flex justify-center items-center w-full h-full text-white p-3"
+    >
+        <span>{{ message }}</span>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import SaveOverlayController from '@/controllers/save-overlay-controller';
+
+const visible = ref(false);
+const message = ref();
+
+SaveOverlayController.getInstance().addEventListener(({ visible: v, message: m }) => {
+    visible.value = v;
+    message.value = m;
+});
+</script>
+
+<style scoped>
+.overlay {
+    background: rgba(0, 0, 0, 0.8);
+}
+</style>
