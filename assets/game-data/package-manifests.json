@@ -10,5 +10,11 @@
         "label": "Paths",
         "selected": true,
         "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/origin-quests.json",
+        "label": "Origin Quests",
+        "selected": true,
+        "forced": true
     }
 ]
