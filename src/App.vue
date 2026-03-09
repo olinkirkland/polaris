@@ -1,17 +1,22 @@
-<script setup lang="ts">
-import TheModalContainer from './components/modals/the-modal-container.vue';
-import Game from './components/the-game.vue';
-import SaveOverlay from './components/ui/save-overlay.vue';
-</script>
-
 <template>
     <div class="p-5">
         <div class="pattern"></div>
-        <Game />
+        <TheTitle v-if="!gameState.id" />
+        <Game v-else />
     </div>
     <TheModalContainer />
     <SaveOverlay />
 </template>
+
+<script setup lang="ts">
+import TheModalContainer from './components/modals/the-modal-container.vue';
+import Game from './components/the-game.vue';
+import TheTitle from './components/the-title.vue';
+import SaveOverlay from './components/ui/save-overlay.vue';
+import { useGameStateStore } from './store/game-state-store';
+
+const gameState = useGameStateStore();
+</script>
 
 <style lang="css">
 @import 'tailwindcss';

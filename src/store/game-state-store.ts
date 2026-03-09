@@ -64,6 +64,12 @@ export const useGameStateStore = defineStore('game', () => {
         validateQuestConditions();
     }
 
+    function getMostRecentSave(): StoredGameManifest | null {
+        if (storage.manifests.length === 0) return null;
+        const latestManifest = storage.manifests[0];
+        return latestManifest;
+    }
+
     function validateQuestConditions() {
         console.log('@gameState.validateQuestConditions');
         const quests = gameData.data?.quests || [];
@@ -112,6 +118,15 @@ export const useGameStateStore = defineStore('game', () => {
         // Unpack the values from the loaded file
         id.value = g.manifest.id;
         gameState.value = g.state;
+        
+        // Just setting the gameState to the raw values covers almost all cases
+        // but override some things that need class functions, e.g., party (Character)
+        
+        g.state.party.forEach((data: any) => {
+            const character = new Character();
+            Object.assign(character, data);
+            setCharacter(character);
+        });
     }
 
     function reset() {
@@ -195,6 +210,7 @@ export const useGameStateStore = defineStore('game', () => {
 
     return {
         startNewGame,
+        getMostRecentSave,
         save,
         load,
         reset,

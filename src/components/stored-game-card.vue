@@ -20,7 +20,7 @@
                 </Button>
                 <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
                     <span>Continue</span>
-                    <i class="fas fa-caret-right"></i>
+                    <i class="fas fa-chevron-right"></i>
                 </Button>
             </div>
         </div>
@@ -35,7 +35,6 @@
                         </Chip>
                     </li>
                 </ul>
-                <small class="w-full text-center">{{ manifestGroup.id }}</small>
             </div>
         </template>
     </Card>

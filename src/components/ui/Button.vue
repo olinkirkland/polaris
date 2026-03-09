@@ -1,10 +1,14 @@
 <template>
-    <button class="w-fit flex items-center gap-1.5 py-1 px-1 rounded-lg cursor-pointer">
+    <button class="w-fit flex items-center gap-1.5 py-1 px-1 rounded-lg cursor-pointer" :class="{ icon }">
         <slot></slot>
     </button>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const props = defineProps<{
+    icon?: boolean;
+}>();
+</script>
 
 <style scoped lang="scss">
 button {
@@ -13,6 +17,15 @@ button {
     transition: 0.2s box-shadow;
     height: fit-content;
     min-height: 2rem;
+
+    &.icon {
+        background-color: transparent;
+        border: none;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
 
     &:hover {
         box-shadow: var(--shadow-sm);

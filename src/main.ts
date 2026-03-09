@@ -5,7 +5,6 @@ import ActionDescription from './components/shared/action-description.vue';
 import Card from './components/shared/card.vue';
 import Button from './components/ui/button.vue';
 import Checkbox from './components/ui/checkbox.vue';
-import DotBadge from './components/ui/dot-badge.vue';
 import Flag from './components/ui/flag.vue';
 import ActionController from './controllers/action-controller';
 import { useGameStateStore } from './store/game-state-store';
@@ -24,7 +23,6 @@ app.component('Button', Button);
 app.component('ActionDescription', ActionDescription);
 app.component('Checkbox', Checkbox);
 app.component('Card', Card);
-app.component('DotBadge', DotBadge);
 app.component('Flag', Flag);
 
 // Stores
