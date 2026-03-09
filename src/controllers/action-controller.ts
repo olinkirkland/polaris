@@ -18,8 +18,6 @@ export default class ActionController {
     }
 
     public play() {
-        // TODO: Organize the queue before playing it
-
         const next = this.queue.shift();
         next?.act();
     }

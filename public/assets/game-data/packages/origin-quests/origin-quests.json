@@ -56,8 +56,12 @@
                 {
                     "id": "start",
                     "label": "",
-                    "description": "Talk to Isolde.",
-                    "actions": [{"type": "save"}, { "type": "scene", "id": "talk-to-isolde" }]
+                    "description": "",
+                    "actions": [
+                        { "type": "go-to-zone", "id": "grima" },
+                        { "type": "pin", "op": "add", "id": "grima.talk-to-isolde" },
+                        { "type": "save" }
+                    ]
                 },
                 {
                     "id": "complete",
@@ -67,5 +71,21 @@
                 }
             ]
         }
-    ]
+    ],
+    "zones": [
+        {
+            "id": "grima",
+            "label": "Grima",
+            "description": "An abandoned settlement on Aren Island. The air is thin and cold, and the old buildings have fallen into disrepair."
+        }
+    ],
+    "pins": [
+        {
+            "id": "grima.talk-to-isolde",
+            "address": { "zone": "grima", "point": { "x": 25, "y": 30 } },
+            "label": "Isolde von Solveig",
+            "actions": [{ "type": "scene", "id": "isolde-intro" }]
+        }
+    ],
+    "scenes": [{ "id": "isolde-intro", "url": "assets/game-data/packages/origin-quests/scenes/isolde-intro.ink" }]
 }

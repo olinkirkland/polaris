@@ -2,6 +2,7 @@ import { CharacterPath } from '@/game-data/character/character-path';
 import { Heritage } from '@/game-data/heritage';
 import { Pin } from '@/game-data/pin/pin';
 import { Quest } from '@/game-data/quest/quest';
+import { Scene } from '@/game-data/scene/scene';
 import { Zone } from '@/game-data/zone/zone';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
@@ -17,12 +18,11 @@ export interface BaseGameData {
     pins: Pin[];
     zones: Zone[];
     quests: Quest[];
+    scenes: Scene[];
 
     characterPaths: CharacterPath[];
     characterHeritages: Heritage[];
     nameSuggestions: string[];
-
-    // characterSkills: CharacterSkill[];
 }
 
 // Individual Content Packs, optionally loaded (DLC support)
@@ -48,8 +48,8 @@ export const useGameDataStore = defineStore('content', () => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) throw new Error(`@loadPackageData: ${response.status}`);
-                const data: any = await response.json();
-                const parsedData = unpackGameDataPackage(data);
+                const json: any = await response.json();
+                const parsedData = await unpackGameDataPackage(json);
                 result = mergePackageData(result, parsedData);
             } catch (error) {
                 console.error(`Error parsing ${url}`, error);
@@ -69,15 +69,22 @@ export const useGameDataStore = defineStore('content', () => {
         return zone;
     }
 
-    return { loadGameDataPackages, resetGameData, data, getZone };
+    function getScene(id: string): Scene {
+        const scene = data.value?.scenes.find((s) => s.id === id);
+        if (!scene) throw new Error(`@getScene: No such scene, id: ${id}`);
+        return scene as Scene;
+    }
+
+    return { loadGameDataPackages, resetGameData, data, getZone, getScene };
 });
 
-function unpackGameDataPackage(data: any): GameDataPackage {
+async function unpackGameDataPackage(data: any): Promise<GameDataPackage> {
     const g: GameDataPackage = {
         packageDescription: data.packageDescription,
         pins: [],
         quests: [],
         zones: [],
+        scenes: [],
         characterPaths: [],
         characterHeritages: [],
         nameSuggestions: []
@@ -85,6 +92,7 @@ function unpackGameDataPackage(data: any): GameDataPackage {
 
     g.pins = (data.pins || []).map((p: any) => Pin.unpack(p));
     g.quests = (data.quests || []).map((q: any) => Quest.unpack(q));
+    g.scenes = await Promise.all((data.scenes || []).map((s: any) => Scene.unpack(s)));
     g.zones = (data.zones || []).map((z: any) => Zone.unpack(z));
     g.characterPaths = (data.characterPaths || []).map((p: any) => CharacterPath.unpack(p));
     g.characterHeritages = data.characterHeritages || [];
@@ -94,7 +102,7 @@ function unpackGameDataPackage(data: any): GameDataPackage {
 }
 
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
-    const listsToMerge = ['pins', 'quests', 'zones', 'characterPaths', 'characterHeritages'];
+    const listsToMerge = ['pins', 'quests', 'zones', 'characterPaths', 'characterHeritages', 'scenes'];
     listsToMerge.forEach((k) => {
         const key = k as keyof BaseGameData;
         const listA = a[key] as { id: string }[];
@@ -127,6 +135,7 @@ function makeEmptyGameData(): GameData {
         pins: [],
         zones: [],
         quests: [],
+        scenes: [],
         characterPaths: [],
         characterHeritages: [],
         nameSuggestions: []

@@ -8,7 +8,6 @@ export class Character {
     attributeModifiers: AttributeModifier[];
 
     get characterPath() {
-        console.log('characterPath', this.characterPathId);
         return useGameDataStore().data?.characterPaths.find((p) => p.id === this.characterPathId);
     }
 }

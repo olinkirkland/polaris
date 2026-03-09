@@ -10,13 +10,12 @@
                 <p v-html="props.message"></p>
 
                 <div class="choices">
-                    <Button @click="onClickCancel" :fullWidthMobile="true">
+                    <Button @click="onClickCancel">
                         <span>{{ props.cancelText || 'Cancel' }}</span>
                     </Button>
                     <Button
                         :primary="props.isConfirmButtonPrimary"
                         :danger="props.isConfirmButtonDanger"
-                        :fullWidthMobile="true"
                         @click="props.onConfirm"
                     >
                         <span>{{ props.confirmText || 'Confirm' }}</span>

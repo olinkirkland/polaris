@@ -7,7 +7,8 @@ export enum ActionType {
     SCENE = 'scene',
     BATTLE = 'battle',
     PATCH_STATE = 'patch-state',
-    USER_INTERFACE = 'user-interface'
+    USER_INTERFACE = 'user-interface',
+    PIN = 'pin',
 }
 
 export abstract class BaseAction {

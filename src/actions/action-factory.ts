@@ -2,6 +2,7 @@ import { ActionType, BaseAction } from './base-action';
 import { GoToAtlasAction } from './go-to-atlas-action';
 import { GoToZoneAction } from './go-to-zone-action';
 import { PatchStateAction } from './patch-state-action';
+import { AddPinAction } from './pin-action';
 import { SaveAction } from './save-action';
 import { StartBattleAction } from './start-battle-action';
 import { StartSceneAction } from './start-scene-action';
@@ -25,6 +26,8 @@ export function makeAction(data: any): BaseAction {
             return PatchStateAction.unpack(data);
         case ActionType.USER_INTERFACE:
             return UserInterfaceAction.unpack(data);
+        case ActionType.PIN:
+            return AddPinAction.unpack(data);
         default:
             throw new Error(`@action-factory: No such ActionType ${data.type}`);
     }

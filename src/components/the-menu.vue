@@ -1,18 +1,19 @@
 <template>
     <Card>
-        <template #header>
-            <span>Menu</span>
-            <div class="flex gap-2 ml-auto">
+        <div class="flex justify-between">
+            <div>
+                <p>
+                    {{ player?.name }} <em class="muted">• {{ player?.characterPath?.label }}</em>
+                </p>
+                <small>{{ gameState.id }}</small>
+            </div>
+            <div class="flex gap-2">
                 <Button @click="onClickSave">
                     <i class="fas fa-save"></i>
                     <span>Quick Save</span></Button
                 >
                 <Button @click="onClickExit"><span>Exit to Main Menu</span></Button>
             </div>
-        </template>
-        <div>
-            <p>{{ player?.name }} <em class="muted">• {{ player?.characterPath?.label }}</em></p>
-            <small>{{ gameState.id }}</small>
         </div>
     </Card>
 </template>
