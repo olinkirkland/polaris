@@ -1,8 +1,5 @@
 <template>
-    <div
-        v-if="visible"
-        class="overlay fixed top-0 left-0 z-99 flex justify-center items-center w-full h-full text-white p-3"
-    >
+    <div v-if="visible" class="overlay fixed top-0 left-0 z-99 flex justify-center items-center w-full h-full">
         <span>{{ message }}</span>
     </div>
 </template>
@@ -22,6 +19,6 @@ SaveOverlayController.getInstance().addEventListener(({ visible: v, message: m }
 
 <style scoped>
 .overlay {
-    background: rgba(0, 0, 0, 0.8);
+    background: white;
 }
 </style>
