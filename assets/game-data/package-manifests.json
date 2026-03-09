@@ -12,7 +12,7 @@
         "forced": true
     },
     {
-        "url": "assets/game-data/packages/origin-quests.json",
+        "url": "assets/game-data/packages/origin-quests/origin-quests.json",
         "label": "Origin Quests",
         "selected": true,
         "forced": true
