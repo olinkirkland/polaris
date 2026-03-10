@@ -1,9 +1,9 @@
 <template>
-    <Panel layout="full" class="p-3 h-full">
-        <div class="flex h-full gap-2">
+    <Panel class="p-3">
+        <div class="flex h-full gap-5">
             <small>{{ id }}</small>
             <div class="ml-auto">
-                <h2>{{ speaker }}</h2>
+                <h2 class="relative top-1/5">{{ speaker }}</h2>
             </div>
             <Card class="w-2/5">
                 <div ref="scrollContainer" class="flex flex-col gap-5 dialogue-scroll">
@@ -153,6 +153,9 @@ onMounted(() => {
 
 .panel > div > small {
     color: var(--color-white);
+}
+.panel > div > div > h2 {
+    text-shadow: 1px 1px 2px white;
 }
 
 .fade-enter-active,

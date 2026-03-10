@@ -1,28 +1,34 @@
 <template>
-    <Card>
-        <div class="flex justify-between items-center">
-            <div class="flex items-center mr-2">
-                <div class="mr-5">
-                    <p>
-                        {{ player?.name }} <em class="muted">• {{ player?.characterPath?.label }}</em>
-                    </p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <Button @click="$emit('clickPanel', 'journal')" :class="{ pressed: panels.includes('journal') }">
-                        <i class="fas fa-book"></i>
-                        <span>Journal</span>
-                    </Button>
-                </div>
+    <div class="flex justify-between items-center p-3">
+        <div class="flex items-center mr-2">
+            <div class="mr-5">
+                <p>
+                    {{ player?.name }} <em class="muted">• {{ player?.characterPath?.label }}</em>
+                </p>
             </div>
-            <div class="flex gap-2">
-                <Button @click="onClickSave">
-                    <i class="fas fa-save"></i>
-                    <span>Save</span>
+            <div class="flex items-center gap-2">
+                <Button @click="$emit('clickPanel', 'journal')" :class="{ pressed: currentPanel === 'journal' }">
+                    <i class="fas fa-book"></i>
+                    <span>Journal</span>
                 </Button>
-                <Button @click="onClickExit"><span>Exit</span></Button>
+                <Button @click="$emit('clickPanel', 'party')" :class="{ pressed: currentPanel === 'party' }">
+                    <i class="fas fa-user-group"></i>
+                    <span>Party</span>
+                </Button>
+                <Button @click="$emit('clickPanel', 'inventory')" :class="{ pressed: currentPanel === 'inventory' }">
+                    <i class="fas fa-box-open"></i>
+                    <span>Inventory</span>
+                </Button>
             </div>
         </div>
-    </Card>
+        <div class="flex gap-2">
+            <Button @click="onClickSave">
+                <i class="fas fa-save"></i>
+                <span>Save</span>
+            </Button>
+            <Button @click="onClickExit"><span>Exit</span></Button>
+        </div>
+    </div>
 </template>
 
 <script setup lang="ts">
@@ -33,7 +39,7 @@ const gameState = useGameStateStore();
 const player = computed(() => gameState.getCharacter('player'));
 
 const props = defineProps<{
-    panels: string[];
+    currentPanel?: string;
 }>();
 
 function onClickSave() {
