@@ -1,10 +1,9 @@
-import { BaseAction } from '@/actions/base-action';
+import { ActionType, BaseAction } from '@/actions/base-action';
 import { Subject } from 'rxjs';
 
 export default class ActionController {
     private static instance: ActionController | null = null;
     private subject: Subject<BaseAction> = new Subject<BaseAction>();
-    private queue: BaseAction[] = [];
 
     private constructor() {}
 
@@ -12,22 +11,15 @@ export default class ActionController {
         return this.instance || (this.instance = new this());
     }
 
-    public add(action: BaseAction): void {
-        const instance = ActionController.getInstance();
-        instance.queue.push(action);
-    }
-
-    public play() {
-        const next = this.queue.shift();
-        next?.act();
-    }
-
-    private dispatch(d: BaseAction): void {
+    public broadcast(d: BaseAction): void {
+        console.log('@broadcast', d);
         this.subject.next(d);
     }
 
-    public addEventListener(callback: (d: BaseAction) => void): void {
-        this.subject.subscribe(callback);
+    public addEventListener(type: ActionType, callback: (d: BaseAction) => void): void {
+        this.subject.subscribe((action) => {
+            if (action.type === type) callback(action);
+        });
     }
 
     public removeEventListener(): void {

@@ -8,7 +8,7 @@ export enum ActionType {
     BATTLE = 'battle',
     PATCH_STATE = 'patch-state',
     USER_INTERFACE = 'user-interface',
-    PIN = 'pin',
+    PIN = 'pin'
 }
 
 export abstract class BaseAction {
@@ -16,6 +16,5 @@ export abstract class BaseAction {
 
     act() {
         console.log('@act:', this.type);
-        ActionController.getInstance().add(this);
     }
 }

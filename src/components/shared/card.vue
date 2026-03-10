@@ -49,6 +49,7 @@ const hasFooter = computed(() => !!slots.footer);
     header,
     footer {
         min-height: 2rem;
+        flex-shrink: 0;
     }
 }
 </style>

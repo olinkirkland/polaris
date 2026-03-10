@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-col gap-3">
         <TheMenu />
-        <div v-if="gameData.data" class="flex flex-col gap-5">
+        <div v-if="gameData.data" class="flex flex-col gap-5 relative">
             <Atlas v-if="gameState.id && !gameState.zone" />
             <Zone v-if="gameState.id && gameState.zone" />
             <Journal v-if="gameState.id" />
-            <!-- <Scene /> -->
+            <Scene />
             <!-- <Battle /> -->
         </div>
     </div>
@@ -18,6 +18,8 @@ import Atlas from './atlas/atlas.vue';
 import Journal from './journal.vue';
 import Zone from './zone/zone.vue';
 import TheMenu from './the-menu.vue';
+import Scene from './scene/scene.vue';
+import { ref } from 'vue';
 
 const gameData = useGameDataStore();
 const gameState = useGameStateStore();

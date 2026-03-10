@@ -1,6 +1,6 @@
 import ModalController from '@/controllers/modal-controller';
 import { ActionType, BaseAction } from './base-action';
-import SceneModal from '@/components/modals/templates/scene-modal.vue';
+import ActionController from '@/controllers/action-controller';
 
 export class StartSceneAction extends BaseAction {
     type = ActionType.SCENE;
@@ -14,7 +14,7 @@ export class StartSceneAction extends BaseAction {
     }
 
     override act() {
-        ModalController.open(SceneModal, { id: this.id });
         super.act();
+        ActionController.getInstance().broadcast(this);
     }
 }
