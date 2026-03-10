@@ -10,6 +10,7 @@ The land around the blighted township of Grima looks just like what you expected
 
 === gangway ===
 Isolde is already at the gangway when you reach it.
+# speaker:Isolde
 
 "Stay close until we know what we're dealing with," she says tightly.
 

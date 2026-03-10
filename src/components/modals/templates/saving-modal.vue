@@ -12,12 +12,9 @@
 <script setup lang="ts">
 import ModalFrame from '../modal-frame.vue';
 
-const props = defineProps({
-    message: {
-        type: String,
-        required: false
-    }
-});
+const props = defineProps<{
+    message: string;
+}>();
 </script>
 
 <style scoped lang="scss"></style>

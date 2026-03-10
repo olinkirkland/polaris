@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2 p-5">
         <Card>
             <template #header class="justify-between debug">
                 <span>Main Menu</span>
@@ -43,7 +43,7 @@
 <script setup lang="ts">
 import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifest, useStorageStore } from '@/store/storage-store';
-import Card from './shared/card.vue';
+import Card from './ui/card.vue';
 import StoredGameCard from './stored-game-card.vue';
 import TheLoader from './the-content-loader.vue';
 import { useGameDataStore } from '@/store/game-data-store';

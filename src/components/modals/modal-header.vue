@@ -10,10 +10,10 @@
 <script setup lang="ts">
 import ModalController from '@/controllers/modal-controller';
 
-const props = defineProps({
-    closeButton: Boolean,
-    closeButtonAction: Function
-});
+const props = defineProps<{
+    closeButton?: boolean;
+    closeButtonAction?: Function;
+}>();
 
 function onClickClose() {
     props.closeButtonAction ? props.closeButtonAction() : ModalController.close();

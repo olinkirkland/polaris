@@ -27,7 +27,7 @@
 
 <script lang="ts" setup>
 import { useGameStateStore } from '@/store/game-state-store';
-import Card from '../shared/card.vue';
+import Card from '../ui/card.vue';
 import { computed } from 'vue';
 
 const gameState = useGameStateStore();

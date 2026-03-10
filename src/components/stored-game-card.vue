@@ -54,8 +54,8 @@ const gameData = useGameDataStore();
 
 const props = defineProps({
     manifestGroup: {
-        required: true,
-        type: Object as PropType<StoredGameManifestGroup>
+        type: Object as PropType<StoredGameManifestGroup>,
+        required: true
     }
 });
 

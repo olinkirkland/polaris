@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import Card from '../shared/card.vue';
+import Card from '../ui/card.vue';
 </script>
 
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <template>
-    <div class="p-5">
+    <div>
         <div class="pattern"></div>
         <TheTitle v-if="!gameState.id" />
         <Game v-else />

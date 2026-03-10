@@ -86,7 +86,7 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
     > .modal-container__background {
         z-index: -1;
         background-color: rgba(255, 255, 255, 0.8);
-        background-image: url('https://www.transparenttextures.com/patterns/ps-neutral.png');
+        background-image: url('/assets/images/tiles.png');
     }
 
     &:not(.active) {

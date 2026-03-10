@@ -1,5 +1,5 @@
 <template>
-    <button class="w-fit flex items-center gap-1.5 py-1 px-1 rounded-lg cursor-pointer" :class="{ icon }">
+    <button class="w-fit flex items-center gap-1.5 py-1 px-1 rounded-lg cursor-pointer" :class="{ icon, pressed }">
         <slot></slot>
     </button>
 </template>
@@ -7,6 +7,7 @@
 <script setup lang="ts">
 const props = defineProps<{
     icon?: boolean;
+    pressed?: boolean;
 }>();
 </script>
 
@@ -29,6 +30,12 @@ button {
 
     &:hover {
         box-shadow: var(--shadow-sm);
+    }
+
+    &.pressed,
+    &.pressed:hover {
+        filter: brightness(0.97);
+        box-shadow: none;
     }
 
     &:active {
