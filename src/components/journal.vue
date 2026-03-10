@@ -1,5 +1,5 @@
 <template>
-    <Panel layout="full" class="p-3">
+    <Panel class="p-3">
         <Card class="h-full">
             <Card>
                 <ul class="flex flex-wrap gap-2">

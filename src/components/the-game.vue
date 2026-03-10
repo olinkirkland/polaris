@@ -5,11 +5,12 @@
             <Zone v-if="gameState.zone" />
             <Atlas v-else />
 
-            <!-- Full Panels -->
+            <!-- Panels -->
             <Journal v-if="currentPanel === 'journal'" />
             <Scene v-if="currentPanel === 'scene'" :id="sceneId" />
+            <TheInventory v-if="currentPanel === 'inventory'" />
+            <TheParty v-if="currentPanel === 'party'" />
         </div>
-        <!-- <code class="mx-5">{{ activePanels.map((p) => p.id).join(', ') }}</code> -->
 
         <TheMenu :currentPanel="currentPanel" @clickPanel="togglePanel" />
     </div>
@@ -26,6 +27,8 @@ import Journal from './journal.vue';
 import Scene from './scene/scene.vue';
 import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
+import TheInventory from './inventory-panel/the-inventory.vue';
+import TheParty from './party-panel/the-party.vue';
 
 const gameState = useGameStateStore();
 
