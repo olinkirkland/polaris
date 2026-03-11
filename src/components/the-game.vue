@@ -12,7 +12,11 @@
             <TheParty v-if="currentPanel === 'party'" />
         </div>
 
-        <TheMenu :currentPanel="currentPanel" @clickPanel="togglePanel" />
+        <TheMenu
+            :currentPanel="currentPanel"
+            @clickPanel="togglePanel"
+            :isLocked="currentPanel === 'scene'"
+        />
     </div>
 </template>
 

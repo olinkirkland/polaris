@@ -7,22 +7,34 @@
                 </p>
             </div>
             <div class="flex items-center gap-2">
-                <Button @click="$emit('clickPanel', 'journal')" :class="{ pressed: currentPanel === 'journal' }">
+                <Button
+                    @click="$emit('clickPanel', 'journal')"
+                    :class="{ pressed: currentPanel === 'journal' }"
+                    :disabled="isLocked"
+                >
                     <i class="fas fa-book"></i>
                     <span>Journal</span>
                 </Button>
-                <Button @click="$emit('clickPanel', 'party')" :class="{ pressed: currentPanel === 'party' }">
+                <Button
+                    @click="$emit('clickPanel', 'party')"
+                    :class="{ pressed: currentPanel === 'party' }"
+                    :disabled="isLocked"
+                >
                     <i class="fas fa-user-group"></i>
                     <span>Party</span>
                 </Button>
-                <Button @click="$emit('clickPanel', 'inventory')" :class="{ pressed: currentPanel === 'inventory' }">
+                <Button
+                    @click="$emit('clickPanel', 'inventory')"
+                    :class="{ pressed: currentPanel === 'inventory' }"
+                    :disabled="isLocked"
+                >
                     <i class="fas fa-box-open"></i>
                     <span>Inventory</span>
                 </Button>
             </div>
         </div>
         <div class="flex gap-2">
-            <Button @click="onClickSave">
+            <Button @click="onClickSave" :disabled="isLocked">
                 <i class="fas fa-save"></i>
                 <span>Save</span>
             </Button>
@@ -40,6 +52,7 @@ const player = computed(() => gameState.getCharacter('player'));
 
 const props = defineProps<{
     currentPanel?: string;
+    isLocked?: boolean;
 }>();
 
 function onClickSave() {
@@ -50,5 +63,3 @@ function onClickExit() {
     gameState.reset();
 }
 </script>
-
-<style lang="scss" scoped></style>
