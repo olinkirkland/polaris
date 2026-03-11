@@ -23,12 +23,12 @@ import ActionController from '@/controllers/action-controller';
 import { useGameStateStore } from '@/store/game-state-store';
 import { onMounted, ref } from 'vue';
 import Atlas from './atlas/atlas.vue';
+import TheInventory from './inventory-panel/the-inventory.vue';
 import Journal from './journal.vue';
+import TheParty from './party-panel/the-party.vue';
 import Scene from './scene/scene.vue';
 import TheMenu from './the-menu.vue';
 import Zone from './zone/zone.vue';
-import TheInventory from './inventory-panel/the-inventory.vue';
-import TheParty from './party-panel/the-party.vue';
 
 const gameState = useGameStateStore();
 
