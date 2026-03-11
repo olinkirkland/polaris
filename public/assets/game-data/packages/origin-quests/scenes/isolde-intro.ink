@@ -5,6 +5,7 @@ VAR asked_about_artifact = false
 VAR asked_about_father = false
 
 The midday sun hangs high in a gray polar sky when Isolde's Skyship <em>the Intrepid</em> makes a graceful landing near the edge of town with a soft <em>thunk</em>.
+# speaker:Isolde #speaker_description:Sharp-eyed and impatient.<br />Overdressed for this.
 ~ setPortrait("isolde", "guarded")
 
 The land around the blighted township of Grima looks just like what you expected: a desolate, gray wasteland, just like the rest of the Sundered Lands. Time to get to work.

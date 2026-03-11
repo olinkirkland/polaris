@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <Card class="m-3">
         <template #header>
             <div class="w-full flex items-center justify-between">
                 <span>{{ gameState.zone?.label }}</span>

@@ -2,8 +2,9 @@
     <Panel class="p-3">
         <div class="flex h-full gap-5">
             <small>{{ id }}</small>
-            <div class="ml-auto">
-                <h2 class="relative top-1/5">{{ speaker }}</h2>
+            <div class="ml-auto flex flex-col relative top-1/5">
+                <h2 class="text-right mb-2" v-html="speaker"></h2>
+                <small class="max-w-60 text-right" v-html="speakerDescription"></small>
             </div>
             <Card class="w-2/5">
                 <div ref="scrollContainer" class="flex flex-col gap-5 dialogue-scroll">
@@ -49,6 +50,7 @@ const choices = ref<string[]>([]);
 const scrollContainer = ref<HTMLElement | null>(null);
 
 const speaker = ref<string>();
+const speakerDescription = ref<string>();
 
 const props = defineProps<{
     id: string;
@@ -91,6 +93,8 @@ function processTags(tags: string[]) {
             case 'speaker':
                 speaker.value = value;
                 break;
+            case 'speaker_description':
+                speakerDescription.value = value;
             default:
                 console.warn('Warning: Unrecognized tag', key, 'in', props.id);
                 break;
@@ -156,6 +160,9 @@ onMounted(() => {
 }
 .panel > div > div > h2 {
     text-shadow: 1px 1px 2px white;
+    & + p {
+        text-shadow: 1px 1px 2px white;
+    }
 }
 
 .fade-enter-active,

@@ -1,5 +1,5 @@
 <template>
-    <Card>
+    <Card class="m-3">
         <template #header>Atlas (World Map)</template>
         <p>
             From up here in your <em>Skyship</em>, the world looks small and simple. But there are many places to
