@@ -2,7 +2,7 @@
     <Panel class="p-3">
         <div class="flex h-full gap-5">
             <small>{{ id }}</small>
-            <div class="ml-auto flex flex-col relative top-1/5">
+            <div class="ml-auto flex flex-col relative top-1/5 h-fit">
                 <h2 class="text-right mb-2" v-html="speaker"></h2>
                 <small class="max-w-60 text-right" v-html="speakerDescription"></small>
             </div>
