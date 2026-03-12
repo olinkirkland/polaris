@@ -1,4 +1,4 @@
-import { CalculatedStat, StatsRegister } from '@/stats/stats-register';
+import { Stat, StatsRegister } from '@/stats/stats-register';
 import { useGameDataStore } from '@/store/game-data-store';
 
 export class Character {
@@ -9,31 +9,31 @@ export class Character {
 
     constructor() {
         // Attributes
-        this.stats.registerStat(new CalculatedStat('brawn'));
-        this.stats.registerStat(new CalculatedStat('agility'));
-        this.stats.registerStat(new CalculatedStat('wits'));
-        this.stats.registerStat(new CalculatedStat('aura'));
+        this.stats.registerStat(new Stat('brawn'));
+        this.stats.registerStat(new Stat('agility'));
+        this.stats.registerStat(new Stat('wits'));
+        this.stats.registerStat(new Stat('aura'));
 
         // Skills
-        this.stats.registerStat(new CalculatedStat('prowess'));
-        this.stats.registerStat(new CalculatedStat('endurance'));
-        this.stats.registerStat(new CalculatedStat('skirmish'));
-        this.stats.registerStat(new CalculatedStat('evasion'));
-        this.stats.registerStat(new CalculatedStat('reflex'));
-        this.stats.registerStat(new CalculatedStat('tinker'));
-        this.stats.registerStat(new CalculatedStat('medicine'));
-        this.stats.registerStat(new CalculatedStat('focus'));
-        this.stats.registerStat(new CalculatedStat('conduit'));
-        this.stats.registerStat(new CalculatedStat('insight'));
+        this.stats.registerStat(new Stat('prowess'));
+        this.stats.registerStat(new Stat('endurance'));
+        this.stats.registerStat(new Stat('skirmish'));
+        this.stats.registerStat(new Stat('evasion'));
+        this.stats.registerStat(new Stat('reflex'));
+        this.stats.registerStat(new Stat('tinker'));
+        this.stats.registerStat(new Stat('medicine'));
+        this.stats.registerStat(new Stat('focus'));
+        this.stats.registerStat(new Stat('conduit'));
+        this.stats.registerStat(new Stat('insight'));
 
         // Core
-        this.stats.registerStat(new CalculatedStat('health'));
-        this.stats.registerStat(new CalculatedStat('mana'));
-        this.stats.registerStat(new CalculatedStat('defense'));
-        this.stats.registerStat(new CalculatedStat('criticalChance'));
-        this.stats.registerStat(new CalculatedStat('criticalDamageMultiplier'));
-        this.stats.registerStat(new CalculatedStat('guard'));
-        this.stats.registerStat(new CalculatedStat('barrier'));
+        this.stats.registerStat(new Stat('health'));
+        this.stats.registerStat(new Stat('mana'));
+        this.stats.registerStat(new Stat('defense'));
+        this.stats.registerStat(new Stat('criticalChance'));
+        this.stats.registerStat(new Stat('criticalDamageMultiplier'));
+        this.stats.registerStat(new Stat('guard'));
+        this.stats.registerStat(new Stat('barrier'));
     }
 
     // slashingResistance: ModifierStack;
