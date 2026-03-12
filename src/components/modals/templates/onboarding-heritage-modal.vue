@@ -40,11 +40,11 @@
 </template>
 
 <script setup lang="ts">
-import { Character } from '@/character/character';
+import { Character } from '@/game-data/character/character';
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
-import { Heritage } from '@/game-data/heritage';
+import { Heritage } from '@/game-data/character/heritage';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';

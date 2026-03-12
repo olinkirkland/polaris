@@ -22,8 +22,8 @@
                         <em>{{ p.description }}</em>
                         <template #footer>
                             <ul class="flex flex-wrap gap-1">
-                                <li v-for="attributeModifier in p.attributeModifiers">
-                                    <Flag :flag-name="attributeModifier.key" :flag-value="attributeModifier.value" />
+                                <li v-for="attributeModifier in p.modifiers">
+                                    <Flag :flag-name="attributeModifier.target" :flag-value="attributeModifier.value" />
                                 </li>
                             </ul>
                         </template>
@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import { Character } from '@/character/character';
+import { Character } from '@/game-data/character/character';
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import Flag from '@/components/ui/flag.vue';
@@ -68,7 +68,7 @@ function onClickSubmit() {
     const playerCharacter = gameState.getCharacter('player') || new Character();
     playerCharacter.id = 'player';
     playerCharacter.characterPathId = characterPath.value!.id;
-    playerCharacter.attributeModifiers = characterPath.value!.attributeModifiers;
+    // playerCharacter.modifiers = characterPath.value!.modifiers;
     gameState.setCharacter(playerCharacter);
 
     gameState.setActiveNodeId('onboarding', 'complete');

@@ -1,4 +1,4 @@
-import { Character } from '@/character/character';
+import { Character } from '@/game-data/character/character';
 import SaveOverlayController from '@/controllers/save-overlay-controller';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';

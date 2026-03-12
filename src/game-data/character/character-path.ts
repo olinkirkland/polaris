@@ -1,20 +1,22 @@
-import { AttributeModifier } from '../attribute';
+import { Modifier } from './modifier-stack';
 
 export class CharacterPath {
     id: string;
     label: string;
     description: string;
-    attributeModifiers: AttributeModifier[];
+    attributes: {};
+
+    modifiers: Modifier[];
 
     static unpack(data: any): CharacterPath {
         const p = new CharacterPath();
         p.id = data.id;
         p.label = data.label;
         p.description = data.description;
-        p.attributeModifiers = data.attributeModifiers.map((a: any) => {
+        p.modifiers = data.modifiers.map((m: any) => {
             return {
-                key: a.key,
-                value: a.value,
+                key: m.key,
+                value: m.value,
                 source: `Path (${p.label})`
             };
         });

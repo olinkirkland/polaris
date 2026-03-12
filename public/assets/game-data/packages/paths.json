@@ -9,7 +9,7 @@
             "id": "vanguard",
             "label": "Vanguard",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            "attributeModifiers": [
+            "modifiers": [
                 { "key": "brawn", "value": 1 },
                 { "key": "agility", "value": 0 },
                 { "key": "aura", "value": 0 },
@@ -20,7 +20,7 @@
             "id": "prowler",
             "label": "Prowler",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            "attributeModifiers": [
+            "modifiers": [
                 { "key": "brawn", "value": 0 },
                 { "key": "agility", "value": 1 },
                 { "key": "aura", "value": -1 },
@@ -31,7 +31,7 @@
             "id": "whisper",
             "label": "Whisper",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            "attributeModifiers": [
+            "modifiers": [
                 { "key": "brawn", "value": -1 },
                 { "key": "agility", "value": 0 },
                 { "key": "aura", "value": 1 },
@@ -42,7 +42,7 @@
             "id": "artificer",
             "label": "Artificer",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
-            "attributeModifiers": [
+            "modifiers": [
                 { "key": "brawn", "value": 0 },
                 { "key": "agility", "value": -1 },
                 { "key": "aura", "value": 0 },
