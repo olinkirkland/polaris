@@ -1,4 +1,4 @@
-import { Modifier } from './modifier-stack';
+import { CalculatedModifier } from '@/stats/stats-register';
 
 export class CharacterPath {
     id: string;
@@ -6,7 +6,7 @@ export class CharacterPath {
     description: string;
     attributes: {};
 
-    modifiers: Modifier[];
+    modifiers: CalculatedModifier[];
 
     static unpack(data: any): CharacterPath {
         const p = new CharacterPath();
