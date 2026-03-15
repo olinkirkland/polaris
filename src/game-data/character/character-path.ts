@@ -13,13 +13,7 @@ export class CharacterPath {
         p.id = data.id;
         p.label = data.label;
         p.description = data.description;
-        p.modifiers = data.modifiers.map((m: any) => {
-            return {
-                key: m.key,
-                value: m.value,
-                source: `Path (${p.label})`
-            };
-        });
+        p.modifiers = data.modifiers;
 
         return p;
     }

@@ -10,10 +10,8 @@
             "label": "Vanguard",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "modifiers": [
-                { "key": "brawn", "value": 1 },
-                { "key": "agility", "value": 0 },
-                { "key": "aura", "value": 0 },
-                { "key": "wits", "value": -1 }
+                { "source": "path:vanguard", "target": "brawn", "op": "SUM", "rawValue": 1 },
+                { "source": "path:vanguard", "target": "wits", "op": "SUM", "rawValue": -1 }
             ]
         },
         {
@@ -21,10 +19,8 @@
             "label": "Prowler",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "modifiers": [
-                { "key": "brawn", "value": 0 },
-                { "key": "agility", "value": 1 },
-                { "key": "aura", "value": -1 },
-                { "key": "wits", "value": 0 }
+                { "source": "path:prowler", "target": "agility", "op": "SUM", "rawValue": 1 },
+                { "source": "path:prowler", "target": "aura", "op": "SUM", "rawValue": -1 }
             ]
         },
         {
@@ -32,10 +28,8 @@
             "label": "Whisper",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "modifiers": [
-                { "key": "brawn", "value": -1 },
-                { "key": "agility", "value": 0 },
-                { "key": "aura", "value": 1 },
-                { "key": "wits", "value": 0 }
+                { "source": "path:whisper", "target": "brawn", "op": "SUM", "rawValue": -1 },
+                { "source": "path:whisper", "target": "aura", "op": "SUM", "rawValue": 1 }
             ]
         },
         {
@@ -43,10 +37,8 @@
             "label": "Artificer",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
             "modifiers": [
-                { "key": "brawn", "value": 0 },
-                { "key": "agility", "value": -1 },
-                { "key": "aura", "value": 0 },
-                { "key": "wits", "value": 1 }
+                { "source": "path:artificer", "target": "agility", "op": "SUM", "rawValue": -1 },
+                { "source": "path:artificer", "target": "wits", "op": "SUM", "rawValue": 1 }
             ]
         }
     ]

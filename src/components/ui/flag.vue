@@ -1,5 +1,5 @@
 <template>
-    <div class="w-fit flex gap-1.5 items-center py-1 px-1 rounded-lg" :class="flagType"">
+    <div class="w-fit flex gap-1.5 items-center py-1 px-1 rounded-lg" :class="flagClass" :style="customStyle">
         <span class="flag-name ml-1">{{ flagName }}</span>
         <mark>{{ flagValue }}</mark>
     </div>
@@ -11,12 +11,26 @@ import { computed } from 'vue';
 const props = defineProps<{
     flagName: string;
     flagValue: string | number | boolean;
+    flagColor?: string;
 }>();
 
 const flagType = computed<'string' | 'number' | 'boolean'>(() => {
     if (typeof props.flagValue === 'number') return 'number';
     if (typeof props.flagValue === 'boolean') return 'boolean';
     return 'string';
+});
+
+const flagClass = computed(() => {
+    return props.flagColor ? 'custom' : flagType.value;
+});
+
+const customStyle = computed(() => {
+    if (!props.flagColor) return {};
+    return {
+        '--bg': `var(--color-${props.flagColor}-100)`,
+        '--mark-bg': `var(--color-${props.flagColor}-700)`,
+        '--mark-color': `var(--color-${props.flagColor}-100)`,
+    };
 });
 </script>
 
@@ -42,6 +56,14 @@ const flagType = computed<'string' | 'number' | 'boolean'>(() => {
     > mark {
         background-color: var(--color-purple-700);
         color: var(--color-purple-100);
+    }
+}
+
+.custom {
+    background-color: var(--bg);
+    > mark {
+        background-color: var(--mark-bg);
+        color: var(--mark-color);
     }
 }
 </style>

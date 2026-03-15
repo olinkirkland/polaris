@@ -103,7 +103,11 @@ export const useGameStateStore = defineStore('game', () => {
             summary
         };
 
-        const data: StoredGame = { manifest, state: gameState.value };
+        const state = {
+            ...gameState.value,
+            party: gameState.value.party.map((c: Character) => c.pack())
+        };
+        const data: StoredGame = { manifest, state };
 
         localStorage.setItem(path, JSON.stringify(data));
         storage.saveManifest(manifest);
@@ -118,14 +122,12 @@ export const useGameStateStore = defineStore('game', () => {
         // Unpack the values from the loaded file
         id.value = g.manifest.id;
         gameState.value = g.state;
-        
+
         // Just setting the gameState to the raw values covers almost all cases
         // but override some things that need class functions, e.g., party (Character)
-        
+
         g.state.party.forEach((data: any) => {
-            const character = new Character();
-            Object.assign(character, data);
-            setCharacter(character);
+            setCharacter(Character.unpack(data));
         });
     }
 
