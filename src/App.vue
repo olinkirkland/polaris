@@ -20,6 +20,7 @@ const gameState = useGameStateStore();
 
 <style lang="css">
 @import 'tailwindcss';
+@source inline("{hover:,}bg-red-{50,{100..900..100},950}");
 </style>
 
 <style lang="scss">

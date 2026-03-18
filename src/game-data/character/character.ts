@@ -7,6 +7,11 @@ export class Character {
     characterPathId: string;
     stats: StatsRegister;
 
+    // Points can be spent on upgrades
+    attributePoints: number;
+    skillPoints: number;
+    talentPoints: number;
+
     constructor() {
         this.stats = new StatsRegister();
 
@@ -43,7 +48,10 @@ export class Character {
             id: this.id,
             name: this.name,
             characterPathId: this.characterPathId,
-            stats: this.stats.pack()
+            stats: this.stats.pack(),
+            attributePoints: this.attributePoints,
+            skillPoints: this.skillPoints,
+            talentPoints: this.talentPoints
         };
     }
 
@@ -53,6 +61,9 @@ export class Character {
         c.name = data.name;
         c.characterPathId = data.characterPathId;
         c.stats = StatsRegister.unpack(data.stats); // restores modifiers
+        c.attributePoints = data.attributePoints;
+        c.skillPoints = data.skillPoints;
+        c.talentPoints = data.talentPoints;
         return c;
     }
 
