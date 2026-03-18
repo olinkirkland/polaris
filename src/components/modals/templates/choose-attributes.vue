@@ -36,14 +36,10 @@
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
-import { Character } from '@/game-data/character/character';
-import { Modifier } from '@/stats/stats-register';
-import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';
 
 const gameState = useGameStateStore();
-const gameData = useGameDataStore();
 
 const props = defineProps<{
     characterId: string;
@@ -52,16 +48,16 @@ const props = defineProps<{
 const character = gameState.getCharacter(props.characterId)!;
 const attributePoints = ref(0);
 
-const selectedTalents = ref<Modifier[]>();
-
 function onClickCancel() {
     gameState.reset();
     ModalController.close();
 }
 
 function onClickSubmit() {
-    const playerCharacter = gameState.getCharacter('player') || new Character();
-    playerCharacter.id = 'player';
+    const playerCharacter = gameState.getCharacter('player');
+
+    // Apply the attributes
+
     gameState.setCharacter(playerCharacter);
 
     // TODO: Add attributes

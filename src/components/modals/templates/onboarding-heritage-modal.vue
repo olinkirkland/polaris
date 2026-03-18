@@ -61,10 +61,8 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    const playerCharacter = gameState.getCharacter('player') || new Character();
-    playerCharacter.id = 'player';
-    gameState.setCharacter(playerCharacter);
-    gameState.setValue('flags.heritage', heritage.value!.id);
+    if (!heritage.value) return;
+    gameState.setValue('flags.heritage', heritage.value.id);
 
     gameState.setActiveNodeId('onboarding', 'path');
     ModalController.close();

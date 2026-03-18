@@ -11,7 +11,7 @@
                 <div class="grid grid-cols-4 gap-2">
                     <Card v-for="k in ['brawn', 'agility', 'wits', 'aura']">
                         <h2 class="capitalize text-center">
-                            <mark>{{ selectedCharacter.stats.getValue(k) }}</mark> {{ k }}
+                            <span>{{ selectedCharacter.stats.getValue(k) }}</span> {{ k }}
                         </h2>
                         <ul class="flex flex-wrap gap-2">
                             <li v-for="(m, index) in selectedCharacter.stats.getStat(k).getModifiers()" :key="index">
@@ -40,7 +40,7 @@
                         ]"
                     >
                         <h3 class="capitalize text-center">
-                            <mark>{{ selectedCharacter.stats.getValue(k) }}</mark> {{ k }}
+                            <span>{{ selectedCharacter.stats.getValue(k) }}</span> {{ k }}
                         </h3>
                         <ul class="flex flex-wrap gap-2">
                             <li v-for="(m, index) in selectedCharacter.stats.getStat(k).getModifiers()" :key="index">
@@ -55,13 +55,13 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { useGameStateStore } from '@/store/game-state-store';
-import Panel from '../ui/panel.vue';
-import Button from '../ui/button.vue';
 import { Character } from '@/game-data/character/character';
-import ModifierFlag from '../ui/modifier-flag.vue';
+import { useGameStateStore } from '@/store/game-state-store';
+import { ref } from 'vue';
+import Button from '../ui/button.vue';
 import Card from '../ui/card.vue';
+import ModifierFlag from '../ui/modifier-flag.vue';
+import Panel from '../ui/panel.vue';
 
 const gameState = useGameStateStore();
 

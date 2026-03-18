@@ -41,6 +41,11 @@ export class Character {
         this.stats.register(new Stat('criticalDamageMultiplier'));
         this.stats.register(new Stat('guard'));
         this.stats.register(new Stat('barrier'));
+
+        // Points
+        this.attributePoints = 0;
+        this.talentPoints = 0;
+        this.skillPoints = 0;
     }
 
     pack() {

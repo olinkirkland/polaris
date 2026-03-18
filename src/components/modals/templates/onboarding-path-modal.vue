@@ -69,10 +69,10 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    const playerCharacter = gameState.getCharacter('player') || new Character();
-    playerCharacter.id = 'player';
-    playerCharacter.characterPathId = characterPath.value!.id;
-    playerCharacter.stats.applyModifiers(characterPath.value!.modifiers);
+    if (!characterPath.value) return;
+    const playerCharacter = gameState.getCharacter('player');
+    playerCharacter.characterPathId = characterPath.value.id;
+    playerCharacter.stats.applyModifiers(characterPath.value.modifiers);
     gameState.setCharacter(playerCharacter);
 
     gameState.setActiveNodeId('onboarding', 'complete');

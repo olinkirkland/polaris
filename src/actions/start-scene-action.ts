@@ -1,6 +1,5 @@
-import ModalController from '@/controllers/modal-controller';
-import { ActionType, BaseAction } from './base-action';
 import ActionController from '@/controllers/action-controller';
+import { ActionType, BaseAction } from './base-action';
 
 export class StartSceneAction extends BaseAction {
     type = ActionType.SCENE;

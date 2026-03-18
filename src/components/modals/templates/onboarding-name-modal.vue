@@ -37,10 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { Character } from '@/game-data/character/character';
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
+import { Character } from '@/game-data/character/character';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';
@@ -57,7 +57,7 @@ function onClickCancel() {
 }
 
 function onClickSubmit() {
-    const playerCharacter = gameState.getCharacter('player') || new Character();
+    const playerCharacter = new Character();
     playerCharacter.id = 'player';
     playerCharacter.name = characterName.value;
     gameState.setCharacter(playerCharacter);

@@ -1,5 +1,8 @@
-import { Character } from '@/game-data/character/character';
+import InfoModal from '@/components/modals/templates/info-modal.vue';
+import ModalController from '@/controllers/modal-controller';
 import SaveOverlayController from '@/controllers/save-overlay-controller';
+import { Character } from '@/game-data/character/character';
+import { getExperienceToNextLevel, getRewardsForLevel } from '@/game-data/level';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';
 import { getNestedValue, setNestedValue } from '@/util/object-util';
@@ -58,10 +61,41 @@ export const useGameStateStore = defineStore('game', () => {
             zone: null,
             quests: [],
             pins: [],
-            flags: {}
+            flags: {},
+            level: 0,
+            experience: -1
         };
 
         validateQuestConditions();
+    }
+
+    function addExperience(value: number) {
+        const currentLevel = getValue('level');
+        const experience = getValue('experience');
+        const experienceToNextLevel = getExperienceToNextLevel(currentLevel);
+        const newExperience = experience + value;
+        if (newExperience >= experienceToNextLevel) {
+            const newLevel = currentLevel + 1;
+            // Level Up
+            setValue('experience', newExperience - experienceToNextLevel);
+            setValue('level', newLevel);
+            const rewards = getRewardsForLevel(newLevel);
+            getParty().forEach((c) => {
+                c.attributePoints += rewards.attributePoints || 0;
+                c.talentPoints += rewards.talentPoints || 0;
+                c.skillPoints += rewards.skillPoints || 0;
+                setCharacter(c);
+            });
+
+            // Trigger the modal for leveling up
+            ModalController.open(InfoModal, {
+                title: 'Leveled Up!',
+                message: 'You leveled up from ' + currentLevel + ' to ' + newLevel
+            });
+        } else {
+            // Don't level up
+            setValue('experience', newExperience);
+        }
     }
 
     function getMostRecentSave(): StoredGameManifest | null {
@@ -151,9 +185,15 @@ export const useGameStateStore = defineStore('game', () => {
         return { active, inactive };
     }
 
-    function getCharacter(id: string): Character | null {
+    function getParty(): Character[] {
+        return getValue('party') as Character[];
+    }
+
+    function getCharacter(id: string): Character {
         const party = getValue('party') as Character[];
-        return party.find((c) => c.id === id) || null;
+        const character = party.find((c) => c.id === id);
+        if (!character) throw new Error(`Character does not exist: ${id}`);
+        return character;
     }
 
     function setCharacter(newCharacter: Character) {
@@ -162,6 +202,11 @@ export const useGameStateStore = defineStore('game', () => {
             if (exists) return party.map((c: Character) => (c.id === newCharacter.id ? newCharacter : c));
             else return [...party, newCharacter];
         });
+    }
+
+    function removeCharacter(id: string) {
+        // TODO
+        throw new Error('Function not implemented!');
     }
 
     function getActiveNodeId(questId: string): string | undefined {
@@ -233,6 +278,7 @@ export const useGameStateStore = defineStore('game', () => {
         getFlag,
         setFlag,
         getQuest,
-        validateQuestConditions
+        validateQuestConditions,
+        addExperience
     };
 });
