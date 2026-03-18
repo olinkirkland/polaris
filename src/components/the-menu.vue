@@ -20,8 +20,7 @@
                     :class="{ pressed: currentPanel === 'party' }"
                     :disabled="isLocked"
                 >
-                    <i class="fas fa-user-group"></i>
-                    <span>Party</span>
+                    <ExperienceBar />
                 </Button>
                 <Button
                     @click="$emit('clickPanel', 'inventory')"
@@ -46,6 +45,7 @@
 <script setup lang="ts">
 import { useGameStateStore } from '@/store/game-state-store';
 import { computed } from 'vue';
+import ExperienceBar from './experience-bar.vue';
 
 const gameState = useGameStateStore();
 const player = computed(() => gameState.getCharacter('player'));

@@ -273,6 +273,8 @@ export const useGameStateStore = defineStore('game', () => {
         patchValue,
         getCharacter,
         setCharacter,
+        removeCharacter,
+        getParty,
         getActiveNodeId,
         setActiveNodeId,
         getFlag,

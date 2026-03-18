@@ -2,7 +2,7 @@
     <div>
         <div class="pattern"></div>
         <TheTitle v-if="!gameState.id" />
-        <Game v-else />
+        <Game v-else-if="gameState.getParty().length > 0" />
     </div>
     <TheModalContainer />
     <SaveOverlay />

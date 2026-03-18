@@ -26,7 +26,7 @@
 
 <script lang="ts" setup>
 import { useGameStateStore } from '@/store/game-state-store';
-import ActionDescription from '../shared/action-description.vue';
+import ActionDescription from '../ui/action-description.vue';
 
 const gameState = useGameStateStore();
 </script>
