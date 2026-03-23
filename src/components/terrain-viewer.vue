@@ -8,8 +8,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
 import { Water } from 'three/examples/jsm/objects/Water.js';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const props = defineProps({
     src: {
@@ -18,7 +18,7 @@ const props = defineProps({
     },
     waterLevel: {
         type: Number,
-        default: 0.01 // offset from terrain bottom, in world units
+        default: 0.008 // offset from terrain bottom, in world units
     }
 });
 
@@ -28,10 +28,9 @@ let animationId: number;
 let scene: THREE.Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
-let model: THREE.Group;
+let terrain: THREE.Group;
 let controls: OrbitControls;
 let water: Water;
-let foam: THREE.Mesh;
 
 function init() {
     const el = container.value!;
@@ -65,36 +64,37 @@ function init() {
     loader.setDRACOLoader(dracoLoader);
 
     loader.load(props.src, (gltf) => {
-        model = gltf.scene;
-        scene.add(model);
+        terrain = gltf.scene;
+        scene.add(terrain);
 
-        const box = new THREE.Box3().setFromObject(model);
+        const box = new THREE.Box3().setFromObject(terrain);
         const center = box.getCenter(new THREE.Vector3());
-        model.position.sub(center);
+        terrain.position.sub(center);
 
         // Re-compute box after centering
-        const centeredBox = new THREE.Box3().setFromObject(model);
-        createWaterPlane(centeredBox);
-        createFoamPlane(centeredBox);
+        const terrainBounds = new THREE.Box3().setFromObject(terrain);
+        createWaterPlane(terrainBounds);
+
         createSkybox();
         createControls();
     });
 
     window.addEventListener('resize', onResize);
 
-    function animate() {
-        controls?.update();
-
-        if (water) water.material.uniforms['time'].value += 0.1 / 60;
-
-        animationId = requestAnimationFrame(animate);
-        renderer.render(scene, camera);
-    }
     animate();
 }
 
-function createWaterPlane(terrainBox: THREE.Box3) {
-    const size = terrainBox.getSize(new THREE.Vector3());
+function animate() {
+    controls?.update();
+
+    if (water) water.material.uniforms['time'].value += 0.1 / 60;
+
+    animationId = requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+}
+
+function createWaterPlane(terrainBounds: THREE.Box3) {
+    const size = terrainBounds.getSize(new THREE.Vector3());
     const geometry = new THREE.PlaneGeometry(size.x, size.z);
 
     water = new Water(geometry, {
@@ -111,73 +111,12 @@ function createWaterPlane(terrainBox: THREE.Box3) {
     });
 
     water.rotation.x = -Math.PI / 2;
-    water.position.y = terrainBox.min.y + props.waterLevel;
+    water.position.y = terrainBounds.min.y + props.waterLevel;
 
     water.material.uniforms['size'].value = 100;
+    water.material.depthWrite = true;
 
     scene.add(water);
-}
-
-function createFoamPlane(terrainBox: THREE.Box3) {
-    const size = terrainBox.getSize(new THREE.Vector3());
-
-    const geometry = new THREE.PlaneGeometry(size.x, size.z, 1, 1);
-
-    const heightMap = new THREE.TextureLoader().load('/assets/terrain/svalbard-1-height.png');
-    heightMap.wrapS = heightMap.wrapT = THREE.ClampToEdgeWrapping;
-
-    const terrainHeight = terrainBox.max.y - terrainBox.min.y;
-    const waterYNormalized = props.waterLevel / terrainHeight;
-
-    const material = new THREE.ShaderMaterial({
-        transparent: true,
-        depthWrite: false,
-        uniforms: {
-            tHeight: { value: heightMap },
-            waterYNormalized: { value: waterYNormalized },
-            foamColor: { value: new THREE.Color(0xffffff) },
-            foamThreshold: { value: 0.05 },
-            foamFalloff: { value: 0.03 },
-            waterColor: { value: new THREE.Color(0x095859) },
-            waterOpacity: { value: 0.85 }
-        },
-        vertexShader: `
-            varying vec2 vUv;
-            void main() {
-                vUv = uv;
-                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-            }
-        `,
-        fragmentShader: `
-            uniform sampler2D tHeight;
-            uniform float waterYNormalized;
-            uniform vec3 foamColor;
-            uniform float foamThreshold;
-            uniform float foamFalloff;
-            uniform vec3 waterColor;
-            uniform float waterOpacity;
-
-            varying vec2 vUv;
-
-            void main() {
-                float g = texture2D(tHeight, vUv).g;
-                float diff = abs(g - waterYNormalized);
-
-                float foam = 1.0 - smoothstep(0.0, foamThreshold, diff);
-                foam *= smoothstep(0.0, foamFalloff, foam);
-
-                vec3 color = mix(waterColor, foamColor, foam);
-                float alpha = mix(waterOpacity, 1.0, foam);
-
-                gl_FragColor = vec4(color, alpha);
-            }
-        `
-    });
-
-    foam = new THREE.Mesh(geometry, material);
-    foam.rotation.x = -Math.PI / 2;
-    foam.position.y = terrainBox.min.y + props.waterLevel + 0.1;
-    scene.add(foam);
 }
 
 function createSkybox() {
@@ -218,8 +157,6 @@ onBeforeUnmount(() => {
     controls?.dispose();
     water?.geometry.dispose();
     (water?.material as THREE.Material)?.dispose();
-    foam?.geometry.dispose();
-    (foam?.material as THREE.Material)?.dispose();
 
     renderer?.dispose();
 });
