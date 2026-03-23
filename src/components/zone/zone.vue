@@ -21,11 +21,13 @@
                 </Card>
             </li>
         </ul>
+        <TerrainViewer src="assets/terrain/svalbard-1.glb" style="height: 500px" />
     </Card>
 </template>
 
 <script lang="ts" setup>
 import { useGameStateStore } from '@/store/game-state-store';
+import TerrainViewer from '../terrain-viewer.vue';
 import ActionDescription from '../ui/action-description.vue';
 
 const gameState = useGameStateStore();

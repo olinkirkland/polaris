@@ -22,3 +22,4 @@ const color = computed(() => {
     return rawValue > 0 ? 'blue' : 'red';
 });
 </script>
+    

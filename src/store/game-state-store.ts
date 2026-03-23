@@ -100,7 +100,8 @@ export const useGameStateStore = defineStore('game', () => {
 
     function getMostRecentSave(): StoredGameManifest | null {
         if (storage.manifests.length === 0) return null;
-        const latestManifest = storage.manifests[0];
+        const sortedManifests = storage.manifests.sort((a, b) => b.date - a.date);
+        const latestManifest = sortedManifests[0];
         return latestManifest;
     }
 

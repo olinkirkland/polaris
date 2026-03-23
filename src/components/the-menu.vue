@@ -1,11 +1,6 @@
 <template>
     <div class="flex justify-between items-center p-3">
         <div class="flex items-center mr-2">
-            <div class="mr-5">
-                <p>
-                    {{ player?.name }} <em class="muted">• {{ player?.characterPath?.label }}</em>
-                </p>
-            </div>
             <div class="flex items-center gap-2">
                 <Button
                     @click="$emit('clickPanel', 'journal')"
