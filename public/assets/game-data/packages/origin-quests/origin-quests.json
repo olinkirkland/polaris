@@ -82,7 +82,7 @@
     "pins": [
         {
             "id": "grima.talk-to-isolde",
-            "address": { "zone": "grima", "point": { "x": 25, "y": 30 } },
+            "address": { "zone": "grima", "point": { "x": -0.04334874738788064, "y": -0.08656008557641037 } },
             "label": "Isolde von Solveig",
             "actions": [{ "type": "scene", "id": "isolde-intro" }]
         }
