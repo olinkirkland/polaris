@@ -1,8 +1,11 @@
 <template>
-    <div ref="container" class="w-full h-full"></div>
+    <div class="relative w-full h-full">
+        <div ref="container" class="three-container w-full h-full"></div>
+    </div>
 </template>
 
 <script lang="ts" setup>
+import ModalController from '@/controllers/modal-controller';
 import { Pin } from '@/game-data/pin/pin';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -11,6 +14,7 @@ import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
 const props = defineProps({
@@ -33,6 +37,7 @@ const props = defineProps({
 });
 
 const hideTerrain = true;
+const isLoaded = ref(false);
 
 const container = ref<HTMLDivElement>();
 let animationId: number;
@@ -56,6 +61,7 @@ watch(
 onMounted(async () => {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1a1a1a);
+    ModalController.open(BusyModal, { message: 'Loading' });
 
     // Renderer
     const el = container.value!;
@@ -80,6 +86,11 @@ onMounted(async () => {
     if ((window as any).debug) addMouseTarget();
 
     animate();
+
+    isLoaded.value = true;
+    requestAnimationFrame(() => {
+        ModalController.close();
+    });
 });
 
 async function loadAndAddTerrain(): Promise<THREE.Group> {

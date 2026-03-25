@@ -23,7 +23,6 @@ import Card from '../ui/card.vue';
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow-sm);
-    border-radius: var(--radius-md);
     height: fit-content;
     overflow: hidden;
 
