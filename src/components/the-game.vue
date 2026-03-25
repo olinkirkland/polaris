@@ -2,7 +2,7 @@
     <div class="flex flex-col h-dvh">
         <div class="flex-1 flex flex-col relative">
             <!-- Always there -->
-            <Zone v-if="gameState.zone" />
+            <Zone v-if="gameState.zone" :currentPanel="currentPanel" />
             <Atlas v-else />
 
             <!-- Panels -->

@@ -10,7 +10,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
 const props = defineProps({
@@ -22,11 +22,17 @@ const props = defineProps({
         type: Array<Pin>,
         required: true
     },
+    isMapEnabled: {
+        type: Boolean,
+        required: true
+    },
     waterLevel: {
         type: Number,
         default: 0.008
     }
 });
+
+const hideTerrain = true;
 
 const container = ref<HTMLDivElement>();
 let animationId: number;
@@ -34,10 +40,18 @@ let scene: THREE.Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
 let terrain: THREE.Group;
+let pins: THREE.Sprite[];
 let controls: OrbitControls;
 let water: Water;
 
 const pinPoints: THREE.Vector3[] = [];
+
+watch(
+    () => props.isMapEnabled,
+    (newValue, oldValue) => {
+        pins.forEach((p) => (p.visible = newValue));
+    }
+);
 
 onMounted(async () => {
     scene = new THREE.Scene();
@@ -52,12 +66,12 @@ onMounted(async () => {
     el.appendChild(renderer.domElement);
 
     await loadAndAddTerrain();
-    // terrain.visible = false;
+    if (hideTerrain) terrain.visible = false;
 
     addCamera();
     addLights();
-    addWaterPlane();
-    addSkybox();
+    if (!hideTerrain) addWaterPlane();
+    if (!hideTerrain) addSkybox();
     addControls();
     addPins();
 
@@ -162,6 +176,7 @@ function addControls() {
 }
 
 function addPins() {
+    pins = [];
     props.pins.forEach((p) => {
         const point = p.address.point;
         const map = new THREE.TextureLoader().load('assets/images/pin.png');
@@ -171,6 +186,7 @@ function addPins() {
         pin.position.set(point.x, height + 0.02, point.y);
         pin.scale.set(0.05, 0.05, 0.05);
         pinPoints.push(pin.position);
+        pins.push(pin);
         scene.add(pin);
     });
 }

@@ -7,27 +7,31 @@
             </div>
         </template>
         <p class="mb-2">{{ zone.description }}</p>
-        <ul v-if="zone" class="grid grid-cols-3 gap-2">
-            <li v-for="pin in gameState.getPinsInZone(zone.id)">
-                <Card>
-                    <Button @click="pin.actions.forEach((a) => a.act())" class="w-full justify-center">
-                        <span>{{ pin.label }}</span>
-                    </Button>
-                    <Card v-if="pin.actions.length">
-                        <ul class="mt-1 flex flex-wrap gap-1">
-                            <li v-for="action in pin.actions"><ActionDescription :action="action" /></li>
-                        </ul>
-                    </Card>
-                </Card>
-            </li>
-        </ul>
         <div class="relative w-full flex-1">
-            <TerrainViewer :zoneId="zone.id" :pins="gameState.getPinsInZone(zone.id)" style="height: 500px" />
+            <TerrainViewer
+                :zoneId="zone.id"
+                :pins="gameState.getPinsInZone(zone.id)"
+                style="height: 500px"
+                :isMapEnabled="isMapEnabled"
+            />
             <div class="overlay">
                 <div class="relative w-full h-full">
-                    <span v-for="p in pinLabels" class="pin-label" :style="{ left: p.x + 'px', top: p.y + 'px' }">
-                        <span v-html="p.label"></span>
-                    </span>
+                    <div
+                        v-for="(pin, index) in gameState.getPinsInZone(zone.id)"
+                        :class="{ 'opacity-0': !isMapEnabled }"
+                        class="pin-label"
+                        :style="{
+                            left: pin.labelPoint?.x + 'px',
+                            top: `calc(${pin.labelPoint?.y + 'px'} - 1.5rem)`,
+                            'transition-delay': `${index * 0.2}s`
+                        }"
+                        @click="pin.actions.forEach((a) => a.act())"
+                    >
+                        <div class="flex flex-col items-start gap-2">
+                            <span v-html="pin.label"></span>
+                            <ActionDescription v-for="action in pin.actions" :action="action" />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -35,26 +39,20 @@
 </template>
 
 <script lang="ts" setup>
-import { Pin } from '@/game-data/pin/pin';
 import { useGameStateStore } from '@/store/game-state-store';
-import { Point } from '@/util/math-util';
 import { computed } from 'vue';
 import TerrainViewer from '../terrain-viewer.vue';
 import ActionDescription from '../ui/action-description.vue';
 
+const props = defineProps({
+    currentPanel: {
+        type: String
+    }
+});
+
 const gameState = useGameStateStore();
 const zone = computed(() => gameState.zone);
-const pinLabels = computed<(Point & { label: string })[]>(() => {
-    if (!zone.value) return [];
-    const pins: Pin[] = gameState.getPinsInZone(zone.value.id);
-    const pinLabelObjects = pins.map((p) => {
-        return { x: p.labelPoint?.x || 0, y: p.labelPoint?.y || 0, label: p.label };
-    });
-
-    // TODO: Make sure they don't overlap
-
-    return pinLabelObjects;
-});
+const isMapEnabled = computed(() => !props.currentPanel);
 </script>
 
 <style lang="scss" scoped>
@@ -64,15 +62,39 @@ const pinLabels = computed<(Point & { label: string })[]>(() => {
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: 0;
 }
 
 .pin-label {
+    pointer-events: all;
     position: absolute;
-    background-color: rgba(255, 255, 255, 0.5);
-    color: black;
-    padding: 0.5rem 1rem;
-    transform: translate(-50%, -175%);
-    transition: all 0.2s;
-    border-radius: 99px;
+    transform: translateX(-50%) translateY(-100%);
+    transition: opacity 0.5s;
+
+    > div {
+        border: 1px solid transparent;
+        color: white;
+        background-color: rgba($color: #000000, $alpha: 0.5);
+        padding: 0.5rem 1rem;
+        transition:
+            top 0.2s,
+            left 0.2s,
+            scale 0.2s;
+        border-radius: 5px;
+        scale: 0.97;
+    }
+
+    &:hover {
+        cursor: pointer;
+        z-index: 1;
+        > div {
+            border: 1px solid white;
+            scale: 1;
+            > span {
+                text-underline-offset: 0.2rem;
+                text-decoration: underline;
+            }
+        }
+    }
 }
 </style>

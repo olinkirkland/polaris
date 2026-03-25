@@ -1,5 +1,5 @@
 <template>
-    <span class="inline-flex gap-1 items-center">
+    <div class="inline-flex gap-1 items-center">
         <template v-if="props.action.type === ActionType.GO_TO_ATLAS">
             <i class="fas fa-level-up-alt"></i>
             <mark>
@@ -22,7 +22,7 @@
         <template v-else>
             <span>[{{ props.action.type }}]</span>
         </template>
-    </span>
+    </div>
 </template>
 
 <script lang="ts" setup>
