@@ -1,5 +1,5 @@
-import { BaseAction } from '@/actions/base-action';
 import { makeAction } from '@/actions/action-factory';
+import { BaseAction } from '@/actions/base-action';
 import { Point } from '@/util/math-util';
 
 export class Pin {
@@ -10,6 +10,8 @@ export class Pin {
     };
     label: string;
     actions: BaseAction[];
+
+    labelPoint?: Point;
 
     static unpack(data: any): Pin {
         const p = new Pin();

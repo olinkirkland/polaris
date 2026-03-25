@@ -11,7 +11,7 @@ import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
-import { getHeightAtPoint } from './zone/terrain-util';
+import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
 const props = defineProps({
     zoneId: {
@@ -37,6 +37,8 @@ let terrain: THREE.Group;
 let controls: OrbitControls;
 let water: Water;
 
+const pinPoints: THREE.Vector3[] = [];
+
 onMounted(async () => {
     scene = new THREE.Scene();
     scene.background = new THREE.Color(0x1a1a1a);
@@ -50,6 +52,7 @@ onMounted(async () => {
     el.appendChild(renderer.domElement);
 
     await loadAndAddTerrain();
+    // terrain.visible = false;
 
     addCamera();
     addLights();
@@ -159,16 +162,15 @@ function addControls() {
 }
 
 function addPins() {
-    const pins = props.pins;
-    console.log(pins);
-    pins.forEach((p) => {
+    props.pins.forEach((p) => {
         const point = p.address.point;
+        const map = new THREE.TextureLoader().load('assets/images/pin.png');
+        const material = new THREE.SpriteMaterial({ map });
+        const pin = new THREE.Sprite(material);
         const height = getHeightAtPoint(terrain, point);
-
-        const geometry = new THREE.CircleGeometry(0.01, 16);
-        const material = new THREE.MeshBasicMaterial({ color: 0xff0000, side: THREE.DoubleSide });
-        const pin = new THREE.Mesh(geometry, material);
-        pin.position.set(point.x, height, point.y);
+        pin.position.set(point.x, height + 0.02, point.y);
+        pin.scale.set(0.05, 0.05, 0.05);
+        pinPoints.push(pin.position);
         scene.add(pin);
     });
 }
@@ -178,6 +180,12 @@ function animate() {
 
     // Animate water
     if (water) water.material.uniforms['time'].value += 0.1 / 60;
+
+    // Update the pin's labelPoints
+    props.pins.forEach((pin, index) => {
+        const p = pinPoints[index];
+        pin.labelPoint = getViewportPoint(p, camera, renderer);
+    });
 
     animationId = requestAnimationFrame(animate);
     renderer.render(scene, camera);

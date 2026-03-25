@@ -60,6 +60,8 @@
                     "actions": [
                         { "type": "go-to-zone", "id": "grima" },
                         { "type": "pin", "op": "add", "id": "grima.talk-to-isolde" },
+                        { "type": "pin", "op": "add", "id": "grima.foo" },
+                        { "type": "pin", "op": "add", "id": "grima.bar" },
                         { "type": "save" }
                     ]
                 },
@@ -85,6 +87,18 @@
             "address": { "zone": "grima", "point": { "x": -0.04334874738788064, "y": -0.08656008557641037 } },
             "label": "Isolde von Solveig",
             "actions": [{ "type": "scene", "id": "isolde-intro" }]
+        },
+        {
+            "id": "grima.foo",
+            "address": { "zone": "grima", "point": { "x": -0.03666259714881415, "y": 0.0719237990026344 } },
+            "label": "Foo",
+            "actions": []
+        },
+        {
+            "id": "grima.bar",
+            "address": { "zone": "grima", "point": { "x": 0.04107138585101422, "y": -0.09981612829311337 } },
+            "label": "Bar",
+            "actions": []
         }
     ],
     "scenes": [{ "id": "isolde-intro", "url": "assets/game-data/packages/origin-quests/scenes/isolde-intro.ink" }]

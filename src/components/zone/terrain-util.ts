@@ -16,3 +16,19 @@ export function getHeightAtPoint(mesh: THREE.Group<THREE.Object3DEventMap>, p: P
     if (intersections.length > 0) return intersections[0].point.y;
     return 0;
 }
+
+export function getViewportPoint(
+    worldPoint: THREE.Vector3,
+    camera: THREE.Camera,
+    renderer: THREE.WebGLRenderer
+): Point {
+    const vector = worldPoint.clone().project(camera);
+    const width = renderer.domElement.width;
+    const height = renderer.domElement.height;
+
+    const x = Math.floor((vector.x + 1) * (width / 2));
+    const y = Math.floor(-(vector.y - 1) * (height / 2)); // Invert y for screen coordinates
+
+    console.log(`${worldPoint.x}, ${worldPoint.x}, ${worldPoint.x} => ${x}, ${y}`);
+    return { x, y };
+}
