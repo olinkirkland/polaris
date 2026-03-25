@@ -4,9 +4,7 @@ VAR asked_about_objective = false
 VAR asked_about_artifact = false
 VAR asked_about_father = false
 
-The midday sun hangs high in a gray polar sky when Isolde's Skyship <em>the Intrepid</em> makes a graceful landing near the edge of town with a soft <em>thunk</em>.
-# speaker:Isolde #speaker_description:Sharp-eyed and impatient.<br />Overdressed for this.
-~ setPortrait("isolde", "guarded")
+The midday sun hangs high in a gray polar sky when Isolde's Skyship <em>the Intrepid</em> makes its landing near the edge of town with a soft <em>thunk</em>.
 
 The land around the blighted township of Grima looks just like what you expected: a desolate, gray wasteland, just like the rest of the Sundered Lands. Time to get to work.
 
@@ -14,9 +12,18 @@ The land around the blighted township of Grima looks just like what you expected
     -> gangway
 
 === gangway ===
+# speaker:Isolde #speaker_description:Sharp-eyed and impatient.<br />Overdressed for this.
+~ setPortrait("isolde", "guarded")
+
 Isolde is already at the gangway when you reach it.
 
 "Stay close until we know what we're dealing with," she says tightly.
+-> gangway_comments
+
+=== gangway_comments ===
+* ["Nice landing."]
+    She nods, barely acknowledging the compliment. Her thoughts are elsewhere.
+    -> gangway_comments
 
 * ["You've been here before?"]
     She shakes her head. "Grima? I've never been west of Svea, or north of Polaris. I've read everything my father wrote about this town, though. I know what it used to be."
@@ -33,6 +40,7 @@ As you step onto the rocks at the base of the gangway, you're hit by the sour sm
 
 * [Enter the blighted town.]
     -> streets
+
 
 === streets ===
 

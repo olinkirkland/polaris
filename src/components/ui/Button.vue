@@ -1,5 +1,5 @@
 <template>
-    <button class="w-fit flex items-center gap-1.5 py-1 px-1 rounded-lg cursor-pointer" :class="{ icon, pressed }">
+    <button class="w-fit flex items-center gap-1.5 py-1 px-1 cursor-pointer" :class="{ icon, pressed }">
         <slot></slot>
     </button>
 </template>

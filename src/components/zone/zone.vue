@@ -1,29 +1,21 @@
 <template>
-    <Card class="m-3" v-if="zone">
-        <template #header>
-            <div class="w-full flex items-center justify-between">
-                <span>{{ zone.label }}</span>
-                <small>Zone</small>
-            </div>
-        </template>
-        <p class="mb-2">{{ zone.description }}</p>
-        <div class="relative w-full flex-1">
-            <TerrainViewer
-                :zoneId="zone.id"
-                :pins="gameState.getPinsInZone(zone.id)"
-                style="height: 500px"
-                :isMapEnabled="isMapEnabled"
-            />
-            <div class="overlay">
+    <div v-if="zone" class="h-full flex relative">
+        <div class="relative flex-1">
+            <TerrainViewer :zoneId="zone.id" :pins="gameState.getPinsInZone(zone.id)" :isMapEnabled="isMapEnabled" />
+            <div class="overlay" :class="{ 'overlay--disabled': !isMapEnabled }">
                 <div class="relative w-full h-full">
                     <div
-                        v-for="(pin, index) in gameState.getPinsInZone(zone.id)"
+                        v-for="(pin, index) in gameState
+                            .getPinsInZone(zone.id)
+                            .slice()
+                            .sort((a, b) => (a.labelPoint?.y || 0) - (b.labelPoint?.y || 0))"
                         :class="{ 'opacity-0': !isMapEnabled }"
                         class="pin-label"
                         :style="{
                             left: pin.labelPoint?.x + 'px',
                             top: `calc(${pin.labelPoint?.y + 'px'} - 1.5rem)`,
-                            'transition-delay': `${index * 0.2}s`
+                            'transition-delay': `${index * 0.2}s`,
+                            'z-index': index
                         }"
                         @click="pin.actions.forEach((a) => a.act())"
                     >
@@ -35,7 +27,12 @@
                 </div>
             </div>
         </div>
-    </Card>
+        <div class="zone-description m-2 p-5 absolute bottom-0" :class="{ 'opacity-0': !isMapEnabled }">
+            <p>
+                <strong>{{ zone.label }}</strong> &mdash; {{ zone.description }}
+            </p>
+        </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -65,6 +62,10 @@ const isMapEnabled = computed(() => !props.currentPanel);
     z-index: 0;
 }
 
+.zone-description {
+    transition: opacity 0.5s;
+}
+
 .pin-label {
     pointer-events: all;
     position: absolute;
@@ -80,14 +81,14 @@ const isMapEnabled = computed(() => !props.currentPanel);
             top 0.2s,
             left 0.2s,
             scale 0.2s;
-        border-radius: 5px;
         scale: 0.97;
     }
 
     &:hover {
         cursor: pointer;
-        z-index: 1;
+        z-index: 99 !important;
         > div {
+            background-color: rgba($color: #000000, $alpha: 0.8);
             border: 1px solid white;
             scale: 1;
             > span {
@@ -96,5 +97,10 @@ const isMapEnabled = computed(() => !props.currentPanel);
             }
         }
     }
+}
+
+.zone-description {
+    background-color: var(--color-transparent-black);
+    color: white;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <div class="card rounded-lg flex flex-col" :class="{ pressed: props.pressed }">
+    <div class="card flex flex-col" :class="{ pressed: props.pressed }">
         <header v-if="hasHeader" class="p-3 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
@@ -27,8 +27,8 @@ const hasFooter = computed(() => !!slots.footer);
 
 <style lang="scss" scoped>
 .card {
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-base-faint);
+    background-color: var(--color-transparent-black);
+    backdrop-filter: blur(10px);
 
     &.pressed {
         background-color: var(--color-surface-raised);

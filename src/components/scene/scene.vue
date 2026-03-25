@@ -1,36 +1,36 @@
 <template>
-    <Panel class="p-3">
-        <div class="flex h-full gap-5">
-            <small>{{ id }}</small>
-            <div class="ml-auto flex flex-col relative top-1/5 h-fit">
+    <Panel class="flex w-full h-full">
+        <div class="speaker-overlay relative ml-auto w-20 h-full">
+            <div class="ml-auto flex flex-col relative h-fit">
                 <h2 class="text-right mb-2" v-html="speaker"></h2>
                 <small class="max-w-60 text-right" v-html="speakerDescription"></small>
             </div>
-            <Card class="w-2/5">
-                <div ref="scrollContainer" class="flex flex-col gap-5 dialogue-scroll">
-                    <div>
-                        <transition-group name="fade" tag="ul" class="flex flex-col gap-5">
-                            <li
-                                v-for="(entry, index) in history"
-                                :key="index"
-                                class="flex flex-col gap-2"
-                                :class="{ muted: isOld(index) }"
-                            >
-                                <span v-html="entry.text"></span>
-                            </li>
-                        </transition-group>
-                    </div>
-
-                    <div v-if="choices.length > 0" class="choices pt-5">
-                        <ul class="flex flex-col gap-2">
-                            <li v-for="(option, index) in choices" :key="index">
-                                <p @click="choose(index)" class="w-full">❖ <span v-html="option"></span></p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </Card>
+            <div class="speaker-overlay__background absolute top-0 right-0 w-full h-full"></div>
         </div>
+        <Card class="w-2/5">
+            <div ref="scrollContainer" class="flex flex-col gap-5 dialogue-scroll">
+                <div>
+                    <transition-group name="fade" tag="ul" class="flex flex-col gap-5">
+                        <li
+                            v-for="(entry, index) in history"
+                            :key="index"
+                            class="flex flex-col gap-2"
+                            :class="{ muted: isOld(index) }"
+                        >
+                            <span v-html="entry.text"></span>
+                        </li>
+                    </transition-group>
+                </div>
+            </div>
+            <div v-if="choices.length > 0" class="choices pt-5">
+                <ul class="flex flex-col gap-2">
+                    <li v-for="(option, index) in choices" :key="index">
+                        <p @click="choose(index)" class="w-full">❖ <span v-html="option"></span></p>
+                    </li>
+                </ul>
+            </div>
+        </Card>
+        <small class="absolute top-0 left-0 m-3">{{ id }}</small>
     </Panel>
 </template>
 
@@ -140,6 +140,7 @@ onMounted(() => {
 .panel {
     background-color: rgba(0, 0, 0, 0.4);
     background-image: url('/assets/images/tiles.png');
+    color: white;
 }
 
 .choices {
@@ -155,21 +156,20 @@ onMounted(() => {
     }
 }
 
-.panel > div > small {
-    color: var(--color-white);
-}
-.panel > div > div > h2 {
-    text-shadow: 1px 1px 2px white;
-    & + p {
-        text-shadow: 1px 1px 2px white;
+.speaker-overlay {
+    color: white;
+    text-shadow: 1px 1px 2px black;
+
+    .speaker-overlay__background {
+        background: linear-gradient(to right, transparent, black);
     }
 }
 
 .fade-enter-active,
 .fade-leave-active {
     transition:
-        opacity 500ms ease,
-        transform 500ms ease;
+        opacity 0.5s ease,
+        transform 0.5s ease;
 }
 
 .fade-enter-from {

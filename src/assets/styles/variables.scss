@@ -32,4 +32,7 @@
     --color-surface: #ffffff; // default surface
     --color-surface-raised: #f5f5f5; // raised surface
     --color-surface-reverse: #1b1b1b; // dark surface
+
+    --color-transparent-black: rgba(0, 0, 0, 0.5); // Used for backgrounds etc.
+    --color-black: #000000;
 }
