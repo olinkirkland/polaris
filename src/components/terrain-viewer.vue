@@ -74,11 +74,10 @@ onMounted(async () => {
     await loadAndAddTerrain();
     if (hideTerrain) terrain.visible = false;
 
-    addCamera();
+    addCameraControls();
     addLights();
     if (!hideTerrain) addWaterPlane();
     if (!hideTerrain) addSkybox();
-    addControls();
     addPins();
 
     window.addEventListener('resize', onResize);
@@ -121,14 +120,45 @@ async function loadAndAddTerrain(): Promise<THREE.Group> {
     });
 }
 
-function addCamera() {
+function addCameraControls() {
     const el = container.value!;
     const width = el.clientWidth;
     const height = el.clientHeight;
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
+
+    // TODO: Replace the following
     camera.position.set(0.5, 0.5, 0.5);
     camera.lookAt(0, 0, 0);
+
+    // TODO: I want the camera to be restricted, click-and-drag should not do anything. However, moving the mouse up and down or left and right should tilt the camera slightly in that direction, but no further than a little bit.
+    // This way the camera cannot be turned to look away from the terrain but still tilted to give the user some sense of movement and control in the 3D environment.
+    // Assume there are spline points defined in the JSON, camera will start at first point.
+    // Allow movement along the spline by scroll wheel or arrow keys (up/left vs down/right)
+
+    // Camera should have a spline for movement, and a spline for the "lookAt" part. Two sets of points/splines.
+
+    // SPLINE EXAMPLE google search: "threejs move along spline"
+    // const curve = new THREE.CatmullRomCurve3([
+    //     new THREE.Vector3(-10, 0, 10),
+    //     new THREE.Vector3(-5, 5, 5),
+    //     new THREE.Vector3(0, 0, 0),
+    //     new THREE.Vector3(5, -5, 5),
+    //     new THREE.Vector3(10, 0, 10)
+    // ]);
+
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.minDistance = 0.1;
+    controls.maxDistance = 500;
+    controls.maxPolarAngle = Math.PI / 2;
 }
+
+// Todo: Zoom in on a pin, but center the pin on the left 2/3s of the screen
+function zoomToPin() {}
+
+// Todo: Zoom back to the original camera point
+function zoomOut() {}
 
 function addLights() {
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);
@@ -177,15 +207,6 @@ function addSkybox() {
     });
 }
 
-function addControls() {
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.minDistance = 0.1;
-    controls.maxDistance = 500;
-    controls.maxPolarAngle = Math.PI / 2;
-}
-
 function addPins() {
     pins = [];
     const pinScale = 0.03;
@@ -210,10 +231,9 @@ function animate() {
     // Animate water
     if (water) water.material.uniforms['time'].value += 0.1 / 60;
 
-    
     animationId = requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    
+
     // Update the pin's labelPoints
     props.pins.forEach((pin, index) => {
         const p = pinPoints[index];
