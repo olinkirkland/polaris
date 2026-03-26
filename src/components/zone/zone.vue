@@ -2,7 +2,7 @@
     <div v-if="zone" class="h-full flex relative">
         <div class="relative flex-1">
             <TerrainViewer :zoneId="zone.id" :pins="gameState.getPinsInZone(zone.id)" :isMapEnabled="isMapEnabled" />
-            <div class="overlay border-2" :class="{ 'overlay--disabled': !isMapEnabled }">
+            <div class="overlay" :class="{ 'overlay--disabled': !isMapEnabled }">
                 <div class="relative w-full h-full">
                     <div
                         v-for="(pin, index) in gameState
@@ -78,8 +78,8 @@ const isMapEnabled = computed(() => !props.currentPanel);
         background-color: rgba($color: #000000, $alpha: 0.5);
         padding: 0.5rem 1rem;
         transition:
-            top 0.2s,
-            left 0.2s,
+            // top 0.2s,
+            // left 0.2s,
             scale 0.2s;
         scale: 0.97;
     }

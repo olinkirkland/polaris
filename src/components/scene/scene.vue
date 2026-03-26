@@ -1,11 +1,11 @@
 <template>
     <Panel class="flex w-full h-full">
-        <div class="speaker-overlay relative ml-auto w-20 h-full">
-            <div class="ml-auto flex flex-col relative h-fit">
+        <div class="speaker-overlay relative ml-auto flex-1 h-full">
+            <div class="speaker-overlay__background absolute top-0 right-0 w-full h-full"></div>
+            <div class="ml-auto flex flex-col relative h-fit p-5">
                 <h2 class="text-right mb-2" v-html="speaker"></h2>
                 <small class="max-w-60 text-right" v-html="speakerDescription"></small>
             </div>
-            <div class="speaker-overlay__background absolute top-0 right-0 w-full h-full"></div>
         </div>
         <Card class="w-2/5">
             <div ref="scrollContainer" class="flex flex-col gap-5 dialogue-scroll">
@@ -159,6 +159,17 @@ onMounted(() => {
 .speaker-overlay {
     color: white;
     text-shadow: 1px 1px 2px black;
+    text-align: right;
+    * {
+        max-width: 20rem;
+        width: 100%;
+    }
+
+    h2 {
+        color: white;
+        opacity: 0.75;
+        font-size: 3rem;
+    }
 
     .speaker-overlay__background {
         background: linear-gradient(to right, transparent, black);

@@ -188,6 +188,7 @@ function addControls() {
 
 function addPins() {
     pins = [];
+    const pinScale = 0.03;
     props.pins.forEach((p) => {
         const point = p.address.point;
         const map = new THREE.TextureLoader().load('assets/images/pin.png');
@@ -195,7 +196,8 @@ function addPins() {
         const pin = new THREE.Sprite(material);
         const height = getHeightAtPoint(terrain, point);
         pin.position.set(point.x, height + 0.02, point.y);
-        pin.scale.set(0.05, 0.05, 0.05);
+
+        pin.scale.set(pinScale, pinScale, pinScale);
         pinPoints.push(pin.position);
         pins.push(pin);
         scene.add(pin);
@@ -208,14 +210,15 @@ function animate() {
     // Animate water
     if (water) water.material.uniforms['time'].value += 0.1 / 60;
 
+    
+    animationId = requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+    
     // Update the pin's labelPoints
     props.pins.forEach((pin, index) => {
         const p = pinPoints[index];
         pin.labelPoint = getViewportPoint(p, camera, renderer);
     });
-
-    animationId = requestAnimationFrame(animate);
-    renderer.render(scene, camera);
 }
 
 function onResize() {
