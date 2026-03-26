@@ -23,8 +23,8 @@ export function getViewportPoint(
     renderer: THREE.WebGLRenderer
 ): Point {
     const vector = worldPoint.clone().project(camera);
-    const width = renderer.domElement.width;
-    const height = renderer.domElement.height;
+    const width = renderer.domElement.clientWidth;
+    const height = renderer.domElement.clientHeight;
 
     const x = Math.floor((vector.x + 1) * (width / 2));
     const y = Math.floor(-(vector.y - 1) * (height / 2)); // Invert y for screen coordinates

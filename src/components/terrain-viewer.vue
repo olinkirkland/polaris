@@ -36,7 +36,7 @@ const props = defineProps({
     }
 });
 
-const hideTerrain = true;
+const hideTerrain = false;
 const isLoaded = ref(false);
 
 const container = ref<HTMLDivElement>();
