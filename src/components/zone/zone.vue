@@ -1,7 +1,12 @@
 <template>
     <div v-if="zone" class="h-full flex relative">
         <div class="relative flex-1">
-            <TerrainViewer :zoneId="zone.id" :pins="gameState.getPinsInZone(zone.id)" :isMapEnabled="isMapEnabled" />
+            <TerrainViewer
+                :zoneId="zone.id"
+                :pins="gameState.getPinsInZone(zone.id)"
+                :cameraSpline="zone.cameraSpline"
+                :isMapEnabled="isMapEnabled"
+            />
             <div class="overlay" :class="{ 'overlay--disabled': !isMapEnabled }">
                 <div class="relative w-full h-full">
                     <div

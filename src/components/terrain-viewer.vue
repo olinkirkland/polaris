@@ -33,6 +33,10 @@ const props = defineProps({
     waterLevel: {
         type: Number,
         default: 0.008
+    },
+    cameraSpline: {
+        type: Array<{ position: THREE.Vector3; rotation: THREE.Quaternion }>,
+        required: true
     }
 });
 
@@ -74,15 +78,17 @@ onMounted(async () => {
     await loadAndAddTerrain();
     if (hideTerrain) terrain.visible = false;
 
-    addCameraControls();
+    if ((window as any).debug) addDebugCameraControls();
+    else addCameraControls();
+
+    if ((window as any).debug) addMouseTarget();
+
     addLights();
     if (!hideTerrain) addWaterPlane();
     if (!hideTerrain) addSkybox();
     addPins();
 
     window.addEventListener('resize', onResize);
-
-    if ((window as any).debug) addMouseTarget();
 
     animate();
 
@@ -120,38 +126,135 @@ async function loadAndAddTerrain(): Promise<THREE.Group> {
     });
 }
 
+function addDebugCameraControls() {
+    // Setup camera
+    const el = container.value!;
+    const width = el.clientWidth;
+    const height = el.clientHeight;
+    camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
+
+    // Initial position and rotation
+    camera.position.set(0.5, 0.5, 0.5);
+    camera.lookAt(0, 0, 0);
+    controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = false;
+    controls.minDistance = 0.1;
+    controls.maxDistance = 500;
+    controls.maxPolarAngle = Math.PI / 2;
+
+    const moveSpeed = 0.01;
+    const keysHeld = new Set<string>();
+
+    window.addEventListener('keydown', (e: KeyboardEvent) => keysHeld.add(e.key));
+    window.addEventListener('keyup', (e: KeyboardEvent) => keysHeld.delete(e.key));
+
+    // Use debugUpdate function later in the animate function
+    (window as any).debugUpdate = () => {
+        if (keysHeld.size === 0) return;
+
+        const forward = new THREE.Vector3();
+        camera.getWorldDirection(forward);
+        forward.y = 0;
+        forward.normalize();
+
+        const right = new THREE.Vector3();
+        right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+        const delta = new THREE.Vector3();
+        if (keysHeld.has('ArrowUp')) delta.addScaledVector(forward, moveSpeed);
+        if (keysHeld.has('ArrowDown')) delta.addScaledVector(forward, -moveSpeed);
+        if (keysHeld.has('ArrowLeft')) delta.addScaledVector(right, -moveSpeed);
+        if (keysHeld.has('ArrowRight')) delta.addScaledVector(right, moveSpeed);
+
+        camera.position.add(delta);
+        controls.target.add(delta);
+    };
+}
+
 function addCameraControls() {
     const el = container.value!;
     const width = el.clientWidth;
     const height = el.clientHeight;
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
 
-    // TODO: Replace the following
-    camera.position.set(0.5, 0.5, 0.5);
-    camera.lookAt(0, 0, 0);
+    const cameraPositionsAndQuaternions: { position: THREE.Vector3; rotation: THREE.Quaternion }[] = props.cameraSpline;
 
-    // TODO: I want the camera to be restricted, click-and-drag should not do anything. However, moving the mouse up and down or left and right should tilt the camera slightly in that direction, but no further than a little bit.
-    // This way the camera cannot be turned to look away from the terrain but still tilted to give the user some sense of movement and control in the 3D environment.
-    // Assume there are spline points defined in the JSON, camera will start at first point.
-    // Allow movement along the spline by scroll wheel or arrow keys (up/left vs down/right)
+    const positionSpline = new THREE.CatmullRomCurve3(
+        cameraPositionsAndQuaternions.map((p) => p.position),
+        false,
+        'catmullrom',
+        0.5
+    );
 
-    // Camera should have a spline for movement, and a spline for the "lookAt" part. Two sets of points/splines.
+    let t = 0;
+    let velocity = 0;
+    const friction = 0.95;
+    const scrollSpeed = 0.00002;
 
-    // SPLINE EXAMPLE google search: "threejs move along spline"
-    // const curve = new THREE.CatmullRomCurve3([
-    //     new THREE.Vector3(-10, 0, 10),
-    //     new THREE.Vector3(-5, 5, 5),
-    //     new THREE.Vector3(0, 0, 0),
-    //     new THREE.Vector3(5, -5, 5),
-    //     new THREE.Vector3(10, 0, 10)
-    // ]);
+    // Mouse tilt state
+    const mouse = { x: 0, y: 0 };
+    const targetTilt = { x: 0, y: 0 };
+    const currentTilt = { x: 0, y: 0 };
+    const tiltIntensity = 0.1; // Max radians to tilt
+    const tiltLerp = 0.02; // Smoothness of the tilt
 
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
-    controls.minDistance = 0.1;
-    controls.maxDistance = 500;
-    controls.maxPolarAngle = Math.PI / 2;
+    function onMouseMove(event: MouseEvent) {
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+        targetTilt.x = mouse.y * tiltIntensity;
+        targetTilt.y = -mouse.x * tiltIntensity;
+    }
+
+    function update() {
+        t += velocity;
+        if (t <= 0 || t >= 1) {
+            t = Math.max(0, Math.min(1, t));
+            velocity = 0;
+        }
+        velocity *= friction;
+
+        currentTilt.x += (targetTilt.x - currentTilt.x) * tiltLerp;
+        currentTilt.y += (targetTilt.y - currentTilt.y) * tiltLerp;
+
+        updateCameraFromT(t);
+
+        const tiltQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(currentTilt.x, currentTilt.y, 0));
+        camera.quaternion.multiply(tiltQuaternion);
+
+        requestAnimationFrame(update);
+    }
+
+    function updateCameraFromT(tVal: number) {
+        tVal = Math.max(0, Math.min(1, tVal));
+
+        // Interpolate position along the spline
+        camera.position.copy(positionSpline.getPoint(tVal));
+
+        // Find the two surrounding keyframes for quaternion SLERP
+        const count = cameraPositionsAndQuaternions.length;
+        const scaledT = tVal * (count - 1);
+        const lower = Math.floor(scaledT);
+        const upper = Math.min(lower + 1, count - 1);
+        const alpha = scaledT - lower;
+
+        camera.quaternion
+            .copy(cameraPositionsAndQuaternions[lower].rotation)
+            .slerp(cameraPositionsAndQuaternions[upper].rotation, alpha);
+    }
+
+    // Set initial camera position
+    updateCameraFromT(t);
+
+    // Scroll handler — move forwards/backwards along the spline
+    function onWheel(event: WheelEvent) {
+        event.preventDefault();
+        velocity += event.deltaY * scrollSpeed;
+    }
+
+    window.addEventListener('mousemove', onMouseMove);
+    el.addEventListener('wheel', onWheel, { passive: false });
+
+    update();
 }
 
 // Todo: Zoom in on a pin, but center the pin on the left 2/3s of the screen
@@ -226,8 +329,6 @@ function addPins() {
 }
 
 function animate() {
-    controls?.update();
-
     // Animate water
     if (water) water.material.uniforms['time'].value += 0.1 / 60;
 
@@ -239,6 +340,9 @@ function animate() {
         const p = pinPoints[index];
         pin.labelPoint = getViewportPoint(p, camera, renderer);
     });
+
+    if ((window as any).debugUpdate) (window as any).debugUpdate();
+    controls?.update();
 }
 
 function onResize() {
@@ -283,9 +387,22 @@ function addMouseTarget() {
         cursor.visible = true;
     }, 250);
 
-    window.addEventListener('click', onMouseClick);
-    function onMouseClick(event: MouseEvent) {
-        console.log(cursor.position.x, cursor.position.z); // Just the x and z, since pins are stored in 2D
+    window.addEventListener('keydown', onPressKey);
+    function onPressKey(event: KeyboardEvent) {
+        switch (event.key) {
+            case 'c':
+                console.log('cursor:', cursor.position.x, cursor.position.z);
+                break;
+
+            case 'v':
+                console.log('camera position:');
+                const positionAndRotation = {
+                    position: camera.position,
+                    rotation: camera.quaternion
+                };
+                console.log(JSON.stringify(positionAndRotation));
+                break;
+        }
     }
 }
 

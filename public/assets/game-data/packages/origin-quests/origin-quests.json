@@ -78,7 +78,21 @@
         {
             "id": "grima",
             "label": "Grima",
-            "description": "An abandoned settlement on Aren Island. The air is thin and cold, and the old buildings have fallen into disrepair."
+            "description": "An abandoned settlement on Aren Island. The air is thin and cold, and the old buildings have fallen into disrepair.",
+            "cameraSpline": [
+                {
+                    "position": { "x": 0.3177303550191025, "y": 0.3025689250721299, "z": 0.12421981324327344 },
+                    "rotation": [-0.2930707266032372, 0.5271641178042987, 0.2000935959587483, 0.7721205184193484]
+                },
+                {
+                    "position": { "x": 0.1801281474417982, "y": 0.22951059472665383, "z": 0.9292902182309744 },
+                    "rotation": [-0.252051641220777, 0.24621487200826744, 0.06647952182198662, 0.9335034440955133]
+                },
+                {
+                    "position": { "x": -0.6023962057160133, "y": 0.3679717331344366, "z": 1.0822095260465625 },
+                    "rotation": [-0.22830659785750132, -0.5974692233763496, -0.1826831631955406, 0.746681649953758]
+                }
+            ]
         }
     ],
     "pins": [
