@@ -4,7 +4,7 @@
             <TerrainViewer
                 :zoneId="zone.id"
                 :pins="gameState.getPinsInZone(zone.id)"
-                :cameraSpline="zone.cameraSpline"
+                :cameraSplines="zone.cameraSplines"
                 :isMapEnabled="isMapEnabled"
             />
             <div class="overlay" :class="{ 'overlay--disabled': !isMapEnabled }">

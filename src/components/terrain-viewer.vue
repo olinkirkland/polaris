@@ -34,8 +34,8 @@ const props = defineProps({
         type: Number,
         default: 0.008
     },
-    cameraSpline: {
-        type: Array<{ position: THREE.Vector3; rotation: THREE.Quaternion }>,
+    cameraSplines: {
+        type: Array<{ cameraPosition: THREE.Vector3; targetPosition: THREE.Vector3 }>,
         required: true
     }
 });
@@ -177,26 +177,34 @@ function addCameraControls() {
     const height = el.clientHeight;
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
 
-    const cameraPositionsAndQuaternions: { position: THREE.Vector3; rotation: THREE.Quaternion }[] = props.cameraSpline;
+    console.log(props.cameraSplines);
 
-    const positionSpline = new THREE.CatmullRomCurve3(
-        cameraPositionsAndQuaternions.map((p) => p.position),
+    const cameraSpline = new THREE.CatmullRomCurve3(
+        props.cameraSplines.map((p) => p.cameraPosition),
         false,
         'catmullrom',
         0.5
     );
 
-    let t = 0;
-    let velocity = 0;
+    const targetSpline = new THREE.CatmullRomCurve3(
+        props.cameraSplines.map((p) => p.targetPosition),
+        false,
+        'catmullrom',
+        0.5
+    );
+
+    // Modifiers
     const friction = 0.95;
     const scrollSpeed = 0.00002;
+    const tiltIntensity = 0.1;
+    const tiltSpeed = 0.02;
 
-    // Mouse tilt state
+    // Vars
     const mouse = { x: 0, y: 0 };
     const targetTilt = { x: 0, y: 0 };
     const currentTilt = { x: 0, y: 0 };
-    const tiltIntensity = 0.1; // Max radians to tilt
-    const tiltLerp = 0.02; // Smoothness of the tilt
+    let t = 0;
+    let velocity = 0;
 
     function onMouseMove(event: MouseEvent) {
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -213,8 +221,8 @@ function addCameraControls() {
         }
         velocity *= friction;
 
-        currentTilt.x += (targetTilt.x - currentTilt.x) * tiltLerp;
-        currentTilt.y += (targetTilt.y - currentTilt.y) * tiltLerp;
+        currentTilt.x += (targetTilt.x - currentTilt.x) * tiltSpeed;
+        currentTilt.y += (targetTilt.y - currentTilt.y) * tiltSpeed;
 
         updateCameraFromT(t);
 
@@ -226,20 +234,11 @@ function addCameraControls() {
 
     function updateCameraFromT(tVal: number) {
         tVal = Math.max(0, Math.min(1, tVal));
+        const currentPos = cameraSpline.getPoint(tVal);
+        const currentTarget = targetSpline.getPoint(tVal);
 
-        // Interpolate position along the spline
-        camera.position.copy(positionSpline.getPoint(tVal));
-
-        // Find the two surrounding keyframes for quaternion SLERP
-        const count = cameraPositionsAndQuaternions.length;
-        const scaledT = tVal * (count - 1);
-        const lower = Math.floor(scaledT);
-        const upper = Math.min(lower + 1, count - 1);
-        const alpha = scaledT - lower;
-
-        camera.quaternion
-            .copy(cameraPositionsAndQuaternions[lower].rotation)
-            .slerp(cameraPositionsAndQuaternions[upper].rotation, alpha);
+        camera.position.copy(currentPos);
+        camera.lookAt(currentTarget);
     }
 
     // Set initial camera position
@@ -395,12 +394,22 @@ function addMouseTarget() {
                 break;
 
             case 'v':
-                console.log('camera position:');
-                const positionAndRotation = {
-                    position: camera.position,
-                    rotation: camera.quaternion
+                const c = camera.position;
+                const t = new THREE.Vector3(0, 0, -1).applyQuaternion(camera.quaternion).add(camera.position);
+
+                const cameraAndTarget = {
+                    cameraPosition: {
+                        x: parseFloat(c.x.toFixed(6)),
+                        y: parseFloat(c.y.toFixed(6)),
+                        z: parseFloat(c.z.toFixed(6))
+                    },
+                    targetPosition: {
+                        x: parseFloat(t.x.toFixed(6)),
+                        y: parseFloat(t.y.toFixed(6)),
+                        z: parseFloat(t.z.toFixed(6))
+                    }
                 };
-                console.log(JSON.stringify(positionAndRotation));
+                console.log(JSON.stringify(cameraAndTarget));
                 break;
         }
     }
