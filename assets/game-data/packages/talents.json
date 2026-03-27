@@ -1,0 +1,15 @@
+{
+    "packageDescription": {
+        "id": "talents",
+        "label": "Talents",
+        "summary": "Character Talents"
+    },
+    "characterSkills": [
+        {
+            "id": "",
+            "label": "",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            "attributeModifiers": [{ "key": "brawn", "value": 1 }]
+        }
+    ]
+}
