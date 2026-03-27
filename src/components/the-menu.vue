@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-between items-center p-3">
+    <div class="the-menu flex justify-between items-center p-3">
         <div class="flex items-center mr-2">
             <div class="flex items-center gap-2">
                 <Button
@@ -58,3 +58,9 @@ function onClickExit() {
     gameState.reset();
 }
 </script>
+
+<style lang="scss" scoped>
+.the-menu {
+    background-color: black;
+}
+</style>

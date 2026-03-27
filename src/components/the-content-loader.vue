@@ -2,7 +2,7 @@
     <Card>
         <template #header>
             <div class="flex items-center gap-2">
-                <span>Content</span>
+                <span>Game Content</span>
             </div>
         </template>
         <div class="flex items-center">
@@ -11,23 +11,12 @@
                 <span>Loading...</span>
             </div>
             <div v-else class="flex flex-col gap-2">
-                <p>Packages</p>
                 <!-- Packages -->
                 <ul class="flex items-center gap-2">
-                    <li v-for="p in gameData.data?.packageDescriptions">
+                    <li v-for="d in gameData.data?.packageDescriptions">
                         <Chip>
                             <i class="text-sm fas fa-cube"></i>
-                            <span>{{ p.id }}</span>
-                        </Chip>
-                    </li>
-                </ul>
-                <!-- Scenes -->
-                <p>Scenes</p>
-                <ul class="flex items-center gap-2">
-                    <li v-for="s in gameData.data?.scenes">
-                        <Chip>
-                            <i class="text-sm fas fa-panorama"></i>
-                            <span>{{ s.id }}</span>
+                            <span>{{ d.id }}</span>
                         </Chip>
                     </li>
                 </ul>
@@ -35,8 +24,8 @@
         </div>
         <template #footer>
             <Button @click="onClickManage">
-                <i class="fas fa-box"></i>
-                <span>Select Content</span>
+                <i class="fa-solid fa-tools"></i>
+                <span>Manage Content</span>
             </Button>
         </template>
     </Card>

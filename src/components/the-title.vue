@@ -7,7 +7,7 @@
             <ul class="flex flex-wrap gap-2">
                 <li>
                     <Button @click="gameState.startNewGame()">
-                        <i class="fas fa-circle-plus"></i>
+                        <i class="fas fa-plus"></i>
                         <span>New Game</span>
                     </Button>
                 </li>
@@ -18,7 +18,6 @@
                         :disabled="!arePackagesLoaded(recentSave!)"
                     >
                         <span>{{ `Continue as ${recentSave.summary.name}` }}</span>
-                        <i class="fas fa-chevron-right"></i>
                     </Button>
                 </li>
             </ul>
@@ -41,13 +40,13 @@
 </template>
 
 <script setup lang="ts">
+import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifest, useStorageStore } from '@/store/storage-store';
-import Card from './ui/card.vue';
+import { computed } from 'vue';
 import StoredGameCard from './stored-game-card.vue';
 import TheLoader from './the-content-loader.vue';
-import { useGameDataStore } from '@/store/game-data-store';
-import { computed } from 'vue';
+import Card from './ui/card.vue';
 
 const gameState = useGameStateStore();
 const gameData = useGameDataStore();

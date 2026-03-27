@@ -1,5 +1,6 @@
 <template>
     <div class="card flex flex-col" :class="{ pressed: props.pressed }">
+        <div class="background"></div>
         <header v-if="hasHeader" class="p-3 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
@@ -27,20 +28,20 @@ const hasFooter = computed(() => !!slots.footer);
 
 <style lang="scss" scoped>
 .card {
-    background-color: var(--color-transparent-black);
-    backdrop-filter: blur(10px);
-
+    position: relative;
     &.pressed {
-        background-color: var(--color-surface-raised);
-        border: 1px solid var(--color-base-faint);
+        .background {
+            border-image: url('assets/images/ui-textures/default/transparent-center/panel-transparent-center-005.png')
+                15 fill stretch;
+        }
     }
 
     header {
-        border-bottom: 1px solid var(--color-base-faint);
+        border-bottom: 1px solid rgba($color: #ffffff, $alpha: 0.2);
     }
 
     footer {
-        border-top: 1px solid var(--color-base-faint);
+        border-top: 1px solid rgba($color: #ffffff, $alpha: 0.2);
     }
 
     header,
@@ -48,5 +49,16 @@ const hasFooter = computed(() => !!slots.footer);
         min-height: 2rem;
         flex-shrink: 0;
     }
+}
+
+.background {
+    position: absolute;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    border: 7px solid transparent;
+    border-image: url('assets/images/ui-textures/default/panel/panel-005.png') 15 fill stretch;
+    filter: invert(1);
+    opacity: 0.8;
 }
 </style>

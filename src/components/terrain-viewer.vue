@@ -207,6 +207,7 @@ function addCameraControls() {
     let velocity = 0;
 
     function onMouseMove(event: MouseEvent) {
+        if (!props.isMapEnabled) return;
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         targetTilt.x = mouse.y * tiltIntensity;
@@ -323,7 +324,7 @@ function addPins() {
         pin.scale.set(pinScale, pinScale, pinScale);
         pinPoints.push(pin.position);
         pins.push(pin);
-        scene.add(pin);
+        // scene.add(pin);
     });
 }
 

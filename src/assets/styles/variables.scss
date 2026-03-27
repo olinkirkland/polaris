@@ -34,5 +34,8 @@
     --color-surface-reverse: #1b1b1b; // dark surface
 
     --color-transparent-black: rgba(0, 0, 0, 0.5); // Used for backgrounds etc.
+    --color-transparent-faint-black: rgba(0, 0, 0, 0.1); // Used for backgrounds etc.
+    --color-transparent-white: rgba(255, 255, 255, 0.5); // Used for backgrounds etc.
+    --color-transparent-faint-white: rgba(255, 255, 255, 0.1); // Used for backgrounds etc.
     --color-black: #000000;
 }

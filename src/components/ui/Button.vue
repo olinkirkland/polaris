@@ -1,6 +1,9 @@
 <template>
-    <button class="w-fit flex items-center gap-1.5 py-1 px-1 cursor-pointer" :class="{ icon, pressed }">
-        <slot></slot>
+    <button class="relative flex cursor-pointer" :class="{ icon, pressed }">
+        <div class="content flex items-center gap-1.5">
+            <slot></slot>
+        </div>
+        <div class="background"></div>
     </button>
 </template>
 
@@ -13,15 +16,36 @@ const props = defineProps<{
 
 <style scoped lang="scss">
 button {
-    background-color: var(--color-surface-raised);
-    border: 1px solid var(--color-base-faint);
-    transition: 0.2s box-shadow;
     height: fit-content;
-    min-height: 2rem;
+    color: white;
+
+    .content {
+        padding: 0.25rem 0.75rem;
+    }
+
+    .background {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border: 7px solid transparent;
+        border-image: url('assets/images/ui-textures/default/border/panel-border-013.png') 10 fill stretch;
+    }
 
     &.icon {
         background-color: transparent;
         border: none;
+
+        .content {
+            padding: 0.25rem !important;
+        }
+
+        :deep(i) {
+            margin: 0;
+        }
+
+        .background {
+            display: none;
+        }
 
         &:hover {
             box-shadow: none;
@@ -29,7 +53,10 @@ button {
     }
 
     &:hover {
-        box-shadow: var(--shadow-sm);
+        :deep(span) {
+            text-underline-offset: 0.2rem;
+            text-decoration: underline;
+        }
     }
 
     &.pressed,

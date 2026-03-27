@@ -19,14 +19,13 @@
                         :style="{
                             left: pin.labelPoint?.x + 'px',
                             top: `calc(${pin.labelPoint?.y + 'px'} - 1.5rem)`,
-                            'transition-delay': `${index * 0.2}s`,
                             'z-index': index
                         }"
                         @click="pin.actions.forEach((a) => a.act())"
                     >
                         <div class="flex flex-col items-start gap-2">
                             <span v-html="pin.label"></span>
-                            <ActionDescription v-for="action in pin.actions" :action="action" />
+                            <!-- <ActionDescription v-for="action in pin.actions" :action="action" /> -->
                         </div>
                     </div>
                 </div>
@@ -44,7 +43,6 @@
 import { useGameStateStore } from '@/store/game-state-store';
 import { computed } from 'vue';
 import TerrainViewer from '../terrain-viewer.vue';
-import ActionDescription from '../ui/action-description.vue';
 
 const props = defineProps({
     currentPanel: {
@@ -76,17 +74,15 @@ const isMapEnabled = computed(() => !props.currentPanel);
     position: absolute;
     transform: translateX(-50%) translateY(-100%);
     transition: opacity 0.5s;
+    width: max-content;
+    max-width: 20rem;
+    text-align: center;
 
     > div {
         border: 1px solid transparent;
         color: white;
         background-color: rgba($color: #000000, $alpha: 0.5);
         padding: 0.5rem 1rem;
-        transition:
-            // top 0.2s,
-            // left 0.2s,
-            scale 0.2s;
-        scale: 0.97;
     }
 
     &:hover {
@@ -95,7 +91,6 @@ const isMapEnabled = computed(() => !props.currentPanel);
         > div {
             background-color: rgba($color: #000000, $alpha: 0.8);
             border: 1px solid white;
-            scale: 1;
             > span {
                 text-underline-offset: 0.2rem;
                 text-decoration: underline;

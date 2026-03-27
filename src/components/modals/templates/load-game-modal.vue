@@ -20,7 +20,6 @@
                             </div>
                             <Button class="ml-auto" @click="onClickLoad(m.path)">
                                 <span>Load</span>
-                                <i class="fas fa-chevron-right"></i>
                             </Button>
                         </div>
                         <template #footer v-if="!arePackagesLoaded(m)">

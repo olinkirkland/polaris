@@ -26,8 +26,8 @@ export function getViewportPoint(
     const width = renderer.domElement.clientWidth;
     const height = renderer.domElement.clientHeight;
 
-    const x = Math.floor((vector.x + 1) * (width / 2));
-    const y = Math.floor(-(vector.y - 1) * (height / 2)); // Invert y for screen coordinates
+    const x = (vector.x + 1) * (width / 2);
+    const y = -(vector.y - 1) * (height / 2); // Invert y for screen coordinates
 
     // console.log(`${worldPoint.x}, ${worldPoint.x}, ${worldPoint.x} => ${x}, ${y}`);
     return { x, y };
