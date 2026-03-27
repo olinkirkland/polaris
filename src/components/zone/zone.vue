@@ -63,6 +63,7 @@ const isMapEnabled = computed(() => !props.currentPanel);
     height: 100%;
     pointer-events: none;
     z-index: 0;
+    overflow: hidden;
 }
 
 .zone-description {
