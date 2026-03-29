@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col gap-2 p-5">
+    <div class="relative h-dvh flex flex-col gap-2 p-2 items-center justify-center">
         <Card>
             <template #header class="justify-between debug">
                 <span>Main Menu</span>
@@ -35,7 +35,7 @@
                 </ul>
             </div>
         </Card>
-        <TheLoader />
+        <TheLoader class="absolute! bottom-2 right-2" />
     </div>
 </template>
 

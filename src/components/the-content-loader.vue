@@ -1,18 +1,13 @@
 <template>
-    <Card>
-        <template #header>
-            <div class="flex items-center gap-2">
-                <span>Game Content</span>
-            </div>
-        </template>
+    <Card class="max-w-80">
         <div class="flex items-center">
             <div v-if="isLoadingContent">
                 <i class="fas fa-circle-notch fa-spin mr-2"></i>
                 <span>Loading...</span>
             </div>
-            <div v-else class="flex flex-col gap-2">
+            <div v-else class="flex flex-col gap-2 items-start">
                 <!-- Packages -->
-                <ul class="flex items-center gap-2">
+                <ul class="flex items-center gap-2 flex-wrap">
                     <li v-for="d in gameData.data?.packageDescriptions">
                         <Chip>
                             <i class="text-sm fas fa-cube"></i>
@@ -20,14 +15,12 @@
                         </Chip>
                     </li>
                 </ul>
+                <Button @click="onClickManage">
+                    <i class="fa-solid fa-tools"></i>
+                    <span>Manage Content</span>
+                </Button>
             </div>
         </div>
-        <template #footer>
-            <Button @click="onClickManage">
-                <i class="fa-solid fa-tools"></i>
-                <span>Manage Content</span>
-            </Button>
-        </template>
     </Card>
 </template>
 

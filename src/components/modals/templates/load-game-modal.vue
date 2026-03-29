@@ -18,7 +18,7 @@
                                 <!-- <small>Level 99, Lorem Ipsum</small> -->
                                 <small>{{ new Date(m.date).toLocaleString() }}</small>
                             </div>
-                            <Button class="ml-auto" @click="onClickLoad(m.path)">
+                            <Button @click="onClickLoad(m.path)" class="ml-auto">
                                 <span>Load</span>
                             </Button>
                         </div>
@@ -42,10 +42,9 @@
                 </li>
             </ul>
             <Card pressed>
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 items-start">
                     <span>Permanently delete this character?</span>
                     <Button @click="onClickRemove()">
-                        <i class="fas fa-trash"></i>
                         <span>Delete this Character</span>
                     </Button>
                 </div>
