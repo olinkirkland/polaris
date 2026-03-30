@@ -25,15 +25,16 @@
                     >
                         <div class="flex flex-col items-start gap-2">
                             <span v-html="pin.label"></span>
-                            <!-- <ActionDescription v-for="action in pin.actions" :action="action" /> -->
+                            <ActionDescription v-for="action in pin.actions" :action="action" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="zone-description m-2 p-5 absolute bottom-0" :class="{ 'opacity-0': !isMapEnabled }">
+        <div class="zone-description m-2 p-3 max-w-2/3 absolute top-0" :class="{ 'opacity-0': !isMapEnabled }">
+            <h2 class="opacity-50 mb-1">{{ zone.label }}</h2>
             <p>
-                <strong>{{ zone.label }}</strong> &mdash; {{ zone.description }}
+                {{ zone.description }}
             </p>
         </div>
     </div>
@@ -66,15 +67,10 @@ const isMapEnabled = computed(() => !props.currentPanel);
     overflow: hidden;
 }
 
-.zone-description {
-    transition: opacity 0.5s;
-}
-
 .pin-label {
     pointer-events: all;
     position: absolute;
     transform: translateX(-50%) translateY(-100%);
-    transition: opacity 0.5s;
     width: max-content;
     max-width: 20rem;
     text-align: center;

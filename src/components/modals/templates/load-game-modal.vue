@@ -3,7 +3,6 @@
         <template v-slot:header>
             <ModalHeader closeButton>
                 <div class="flex w-full gap-2 items-center">
-                    <i class="fas fa-folder-open"></i>
                     <p>{{ name }}</p>
                 </div>
             </ModalHeader>

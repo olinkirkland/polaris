@@ -61,6 +61,9 @@ function onClickExit() {
 
 <style lang="scss" scoped>
 .the-menu {
-    background-color: black;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
 }
 </style>

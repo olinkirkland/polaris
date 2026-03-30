@@ -1,6 +1,6 @@
 <template>
     <button class="relative flex cursor-pointer" :class="{ icon, pressed }">
-        <div class="content flex items-center gap-1.5">
+        <div class="content flex items-center justify-center w-full gap-1.5">
             <slot></slot>
         </div>
         <div class="background"></div>

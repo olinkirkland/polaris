@@ -84,4 +84,8 @@ export class Character {
     get characterPath() {
         return useGameDataStore().data?.characterPaths.find((p) => p.id === this.characterPathId);
     }
+
+    hasLevelUp() {
+        return this.attributePoints + this.skillPoints + this.talentPoints > 0;
+    }
 }
