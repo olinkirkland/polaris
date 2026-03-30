@@ -1,69 +1,38 @@
 <template>
-    <div class="the-menu flex justify-between items-center p-3">
+    <div class="the-menu flex items-center p-3 w-full justify-center">
         <div class="flex items-center mr-2">
             <div class="flex items-center gap-2">
-                <Button
-                    @click="$emit('clickPanel', 'journal')"
-                    :class="{ pressed: currentPanel === 'journal' }"
-                    :disabled="isLocked"
-                >
+                <Button @click="$emit('clickPanel', 'journal')">
                     <i class="fas fa-book"></i>
                     <span>Journal</span>
                 </Button>
-                <Button
-                    @click="$emit('clickPanel', 'party')"
-                    :class="{ pressed: currentPanel === 'party' }"
-                    :disabled="isLocked"
-                >
+                <Button @click="$emit('clickPanel', 'party')">
                     <ExperienceBar />
                 </Button>
-                <Button
-                    @click="$emit('clickPanel', 'inventory')"
-                    :class="{ pressed: currentPanel === 'inventory' }"
-                    :disabled="isLocked"
-                >
+                <Button @click="$emit('clickPanel', 'inventory')">
                     <i class="fas fa-box-open"></i>
                     <span>Inventory</span>
                 </Button>
             </div>
         </div>
         <div class="flex gap-2">
-            <Button @click="onClickSave" :disabled="isLocked">
-                <i class="fas fa-save"></i>
-                <span>Save</span>
+            <Button @click="ModalController.open(PauseModal)">
+                <span>Menu</span>
             </Button>
-            <Button @click="onClickExit"><span>Exit</span></Button>
         </div>
     </div>
 </template>
 
 <script setup lang="ts">
-import { useGameStateStore } from '@/store/game-state-store';
-import { computed } from 'vue';
+import ModalController from '@/controllers/modal-controller';
 import ExperienceBar from './experience-bar.vue';
-
-const gameState = useGameStateStore();
-const player = computed(() => gameState.getCharacter('player'));
-
-const props = defineProps<{
-    currentPanel?: string;
-    isLocked?: boolean;
-}>();
-
-function onClickSave() {
-    gameState.save('quicksave', 'Quicksave');
-}
-
-function onClickExit() {
-    gameState.reset();
-}
+import PauseModal from './modals/templates/pause-modal.vue';
 </script>
 
 <style lang="scss" scoped>
 .the-menu {
     position: absolute;
-    width: 100%;
-    bottom: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
+    top: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8));
 }
 </style>

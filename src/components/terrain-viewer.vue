@@ -16,6 +16,7 @@ import { Water } from 'three/examples/jsm/objects/Water.js';
 import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
+import { usePauseStore } from '@/store/pause-store';
 
 const props = defineProps({
     zoneId: {
@@ -24,10 +25,6 @@ const props = defineProps({
     },
     pins: {
         type: Array<Pin>,
-        required: true
-    },
-    isMapEnabled: {
-        type: Boolean,
         required: true
     },
     waterLevel: {
@@ -54,13 +51,6 @@ let controls: OrbitControls;
 let water: Water;
 
 const pinPoints: THREE.Vector3[] = [];
-
-watch(
-    () => props.isMapEnabled,
-    (newValue, oldValue) => {
-        pins.forEach((p) => (p.visible = newValue));
-    }
-);
 
 onMounted(async () => {
     scene = new THREE.Scene();
@@ -207,7 +197,7 @@ function addCameraControls() {
     let velocity = 0;
 
     function onMouseMove(event: MouseEvent) {
-        if (!props.isMapEnabled) return;
+        if (usePauseStore().isGamePaused) return;
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         targetTilt.x = mouse.y * tiltIntensity;

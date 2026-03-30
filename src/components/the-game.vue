@@ -2,7 +2,7 @@
     <div class="flex flex-col h-dvh">
         <div class="flex-1 flex flex-col relative">
             <!-- Always there -->
-            <Zone v-if="gameState.zone" :currentPanel="currentPanel" />
+            <Zone v-if="gameState.zone" />
             <Atlas v-else />
 
             <!-- Panels -->
@@ -11,7 +11,7 @@
             <TheInventory v-if="currentPanel === 'inventory'" />
             <TheParty v-if="currentPanel === 'party'" />
         </div>
-        <TheMenu :currentPanel="currentPanel" @clickPanel="togglePanel" :isLocked="currentPanel === 'scene'" />
+        <TheMenu v-if="!usePauseStore().isGamePaused" @clickPanel="setPanel" />
     </div>
 </template>
 
@@ -20,6 +20,7 @@ import { ActionType, BaseAction } from '@/actions/base-action';
 import { StartSceneAction } from '@/actions/start-scene-action';
 import ActionController from '@/controllers/action-controller';
 import { useGameStateStore } from '@/store/game-state-store';
+import { usePauseStore } from '@/store/pause-store';
 import { onMounted, ref } from 'vue';
 import Atlas from './atlas/atlas.vue';
 import TheInventory from './inventory-panel/the-inventory.vue';
@@ -45,12 +46,14 @@ function onSceneAction(action: BaseAction) {
     console.log('@onSceneAction:', action);
     const sceneAction = action as StartSceneAction;
     sceneId.value = sceneAction.id;
-    togglePanel('scene');
+    setPanel('scene');
 }
 
-function togglePanel(panel: string) {
-    if (currentPanel.value === panel && panel !== 'scene') return (currentPanel.value = undefined);
+function setPanel(panel: string) {
     currentPanel.value = panel;
+
+    if (currentPanel.value) usePauseStore().pause();
+    else usePauseStore().resume();
 }
 </script>
 

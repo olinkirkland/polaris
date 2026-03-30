@@ -1,7 +1,7 @@
 <template>
-    <div class="card flex flex-col" :class="{ pressed: props.pressed }">
+    <div class="card relative z-1 flex flex-col" :class="{ pressed: props.pressed }">
         <div class="background"></div>
-        <header v-if="hasHeader" class="p-3 w-full flex items-center gap-2">
+        <header v-if="hasHeader" class="p-3 pb-2 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
         <div class="flex flex-col p-3 gap-2 flex-1" v-if="$slots.default">

@@ -5,16 +5,14 @@
                 :zoneId="zone.id"
                 :pins="gameState.getPinsInZone(zone.id)"
                 :cameraSplines="zone.cameraSplines"
-                :isMapEnabled="isMapEnabled"
             />
-            <div class="overlay" :class="{ 'overlay--disabled': !isMapEnabled }">
+            <div class="overlay" v-if="!usePauseStore().isGamePaused">
                 <div class="relative w-full h-full">
-                    <div
+                    <Card
                         v-for="(pin, index) in gameState
                             .getPinsInZone(zone.id)
                             .slice()
                             .sort((a, b) => (a.labelPoint?.y || 0) - (b.labelPoint?.y || 0))"
-                        :class="{ 'opacity-0': !isMapEnabled }"
                         class="pin-label"
                         :style="{
                             left: pin.labelPoint?.x + 'px',
@@ -27,12 +25,12 @@
                             <span v-html="pin.label"></span>
                             <ActionDescription v-for="action in pin.actions" :action="action" />
                         </div>
-                    </div>
+                    </Card>
                 </div>
             </div>
         </div>
-        <div class="zone-description m-2 p-3 max-w-2/3 absolute top-0" :class="{ 'opacity-0': !isMapEnabled }">
-            <h2 class="opacity-50 mb-1">{{ zone.label }}</h2>
+        <div v-if="!usePauseStore().isGamePaused" class="zone-description m-2 p-3 max-w-2/3 absolute bottom-0">
+            <h2 class="opacity-30 mb-1">{{ zone.label }}</h2>
             <p>
                 {{ zone.description }}
             </p>
@@ -44,16 +42,12 @@
 import { useGameStateStore } from '@/store/game-state-store';
 import { computed } from 'vue';
 import TerrainViewer from '../terrain-viewer.vue';
-
-const props = defineProps({
-    currentPanel: {
-        type: String
-    }
-});
+import ActionDescription from '../ui/action-description.vue';
+import Card from '../ui/card.vue';
+import { usePauseStore } from '@/store/pause-store';
 
 const gameState = useGameStateStore();
 const zone = computed(() => gameState.zone);
-const isMapEnabled = computed(() => !props.currentPanel);
 </script>
 
 <style lang="scss" scoped>
@@ -85,19 +79,15 @@ const isMapEnabled = computed(() => !props.currentPanel);
     &:hover {
         cursor: pointer;
         z-index: 99 !important;
-        > div {
-            background-color: rgba($color: #000000, $alpha: 0.8);
-            border: 1px solid white;
-            > span {
-                text-underline-offset: 0.2rem;
-                text-decoration: underline;
-            }
+        span {
+            text-underline-offset: 0.2rem;
+            text-decoration: underline;
         }
     }
 }
 
 .zone-description {
-    background-color: var(--color-transparent-black);
+    background-color: var(--color-transparent-faint-black);
     color: white;
 }
 </style>

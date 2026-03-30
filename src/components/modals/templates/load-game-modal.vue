@@ -32,7 +32,7 @@
                                     </li>
                                 </ul>
                                 <small>
-                                    <strong>Caution!</strong> Not all content expected by this save are loaded. You can
+                                    <strong>Caution!</strong>Not all content expected by this save is loaded. You can
                                     load anyway, but there may be unintended consequences.
                                 </small>
                             </div>
