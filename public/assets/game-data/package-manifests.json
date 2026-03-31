@@ -6,8 +6,26 @@
         "forced": true
     },
     {
-        "url": "assets/game-data/packages/paths.json",
-        "label": "Paths",
+        "url": "assets/game-data/packages/paths/vanguard.json",
+        "label": "Vanguard Path",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/paths/prowler.json",
+        "label": "Prowler Path",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/paths/artificer.json",
+        "label": "Artificer Path",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/paths/whisper.json",
+        "label": "Whisper Path",
         "selected": true,
         "forced": true
     },

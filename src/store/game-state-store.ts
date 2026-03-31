@@ -2,7 +2,7 @@ import InfoModal from '@/components/modals/templates/info-modal.vue';
 import ModalController from '@/controllers/modal-controller';
 import SaveOverlayController from '@/controllers/save-overlay-controller';
 import { Character } from '@/game-data/character/character';
-import { getExperienceToNextLevel, getRewardsForLevel } from '@/game-data/level';
+import { getExperienceToNextLevel } from '@/game-data/level';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';
 import { getNestedValue, setNestedValue } from '@/util/object-util';
@@ -70,20 +70,22 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function addExperience(value: number) {
-        const currentLevel = getValue('level');
-        const experience = getValue('experience');
-        const experienceToNextLevel = getExperienceToNextLevel(currentLevel);
+        const currentLevel: number = getValue('level');
+        const experience: number = getValue('experience');
+        const experienceToNextLevel: number = getExperienceToNextLevel(currentLevel);
         const newExperience = experience + value;
         if (newExperience >= experienceToNextLevel) {
             const newLevel = currentLevel + 1;
+
             // Level Up
             setValue('experience', newExperience - experienceToNextLevel);
             setValue('level', newLevel);
-            const rewards = getRewardsForLevel(newLevel);
+
             getParty().forEach((c) => {
-                c.attributePoints += rewards.attributePoints || 0;
-                c.talentPoints += rewards.talentPoints || 0;
-                c.skillPoints += rewards.skillPoints || 0;
+                const levelReward = c.characterPath?.progression[newLevel] || {};
+                c.attributePoints += levelReward.attributePoints || 0;
+                c.talentPoints += levelReward.talentPoints || 0;
+                c.skillPoints += levelReward.skillPoints || 0;
                 setCharacter(c);
             });
 

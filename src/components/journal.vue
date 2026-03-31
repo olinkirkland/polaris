@@ -4,7 +4,7 @@
             <Card>
                 <ul class="flex flex-wrap gap-2">
                     <li v-for="(flagValue, flagName) in gameState.getValue('flags')">
-                        <Flag :flag-name="flagName.toString()" :flag-value="flagValue" />
+                        <Flag :flagLabel="flagName.toString()" :flag-value="flagValue" />
                     </li>
                 </ul>
             </Card>

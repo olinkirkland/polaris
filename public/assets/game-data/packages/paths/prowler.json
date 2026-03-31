@@ -1,0 +1,73 @@
+{
+    "packageDescription": {
+        "id": "prowler-path",
+        "label": "Prowler Path",
+        "summary": ""
+    },
+    "characterPaths": [
+        {
+            "id": "prowler",
+            "label": "Prowler",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            "progression": [
+                {
+                    "modifiers": [
+                        { "source": null, "target": "agility", "op": "SUM", "rawValue": 1 },
+                        { "source": null, "target": "aura", "op": "SUM", "rawValue": -1 },
+                        { "source": null, "target": "health", "op": "SUM", "rawValue": 90 }
+                    ],
+                    "skillPoints": 2,
+                    "attributePoints": 2,
+                    "talentPoints": 1
+                },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1
+                },
+                { "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }], "skillPoints": 2 },
+                {
+                    "modifiers": [{ "source": null, "target": "health", "op": "SUM", "rawvalue": 5 }],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                }
+            ]
+        }
+    ]
+}

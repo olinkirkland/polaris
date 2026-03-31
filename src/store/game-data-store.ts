@@ -23,6 +23,7 @@ export interface BaseGameData {
     characterPaths: CharacterPath[];
     characterHeritages: Heritage[];
     nameSuggestions: string[];
+    experienceRequiredPerLevel: number[];
 }
 
 // Individual Content Packs, optionally loaded (DLC support)
@@ -87,7 +88,8 @@ async function unpackGameDataPackage(data: any): Promise<GameDataPackage> {
         scenes: [],
         characterPaths: [],
         characterHeritages: [],
-        nameSuggestions: []
+        nameSuggestions: [],
+        experienceRequiredPerLevel: []
     };
 
     g.pins = (data.pins || []).map((p: any) => Pin.unpack(p));
@@ -97,11 +99,13 @@ async function unpackGameDataPackage(data: any): Promise<GameDataPackage> {
     g.characterPaths = (data.characterPaths || []).map((p: any) => CharacterPath.unpack(p));
     g.characterHeritages = data.characterHeritages || [];
     g.nameSuggestions = data.nameSuggestions || [];
+    g.experienceRequiredPerLevel = data.experienceRequiredPerLevel || [];
 
     return g;
 }
 
 function mergePackageData(a: GameData, b: GameDataPackage): GameData {
+    // These lists will be merged; items with the same id get replaced
     const listsToMerge = ['pins', 'quests', 'zones', 'characterPaths', 'characterHeritages', 'scenes'];
     listsToMerge.forEach((k) => {
         const key = k as keyof BaseGameData;
@@ -115,12 +119,21 @@ function mergePackageData(a: GameData, b: GameDataPackage): GameData {
         });
     });
 
+    // These lists are concatenated; the arrays are combined end to end with no overlap
     const listsToConcatenate = ['nameSuggestions'];
     listsToConcatenate.forEach((k) => {
         const key = k as keyof BaseGameData;
         const listA = a[key] as any[];
         const listB = b[key] as any[];
         a[key] = listA.concat(listB);
+    });
+
+    // These lists are replaced
+    const listsToReplace = ['experienceRequiredPerLevel'];
+    listsToReplace.forEach((k) => {
+        const key = k as keyof BaseGameData;
+        const listB = b[key] as any[];
+        a[key] = listB;
     });
 
     // Package Descriptions
@@ -138,6 +151,7 @@ function makeEmptyGameData(): GameData {
         scenes: [],
         characterPaths: [],
         characterHeritages: [],
-        nameSuggestions: []
+        nameSuggestions: [],
+        experienceRequiredPerLevel: []
     };
 }

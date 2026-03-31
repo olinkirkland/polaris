@@ -1,5 +1,5 @@
 <template>
-    <Flag :flag-name="label" :flag-value="value" :flag-color="color" />
+    <Flag :flagLabel="modifier.target || modifier.source" :flag-value="value" :flag-color="color" />
 </template>
 
 <script setup lang="ts">
@@ -8,8 +8,6 @@ import { computed } from 'vue';
 import Flag from './flag.vue';
 
 const props = defineProps<{ modifier: Modifier }>();
-
-const label = computed(() => props.modifier.source);
 
 const value = computed(() => {
     const sign = (props.modifier.rawValue ?? 0) >= 0 ? '+' : ''; // Minus comes from the number itself

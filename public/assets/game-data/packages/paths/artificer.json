@@ -1,0 +1,143 @@
+{
+    "packageDescription": {
+        "id": "artificer-path",
+        "label": "Artificer Path",
+        "summary": ""
+    },
+    "characterPaths": [
+        {
+            "id": "artificer",
+            "label": "Artificer",
+            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+            "progression": [
+                {
+                    "modifiers": [
+                        { "source": null, "target": "agility", "op": "SUM", "rawValue": -1 },
+                        { "source": null, "target": "wits", "op": "SUM", "rawValue": 1 },
+                        { "source": null, "target": "health", "op": "SUM", "rawValue": 85 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawValue": 55 }
+                    ],
+                    "skillPoints": 2,
+                    "attributePoints": 2,
+                    "talentPoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "skillPoints": 2
+                },
+                {
+                    "modifiers": [
+                        { "source": null, "target": "health", "op": "SUM", "rawvalue": 5 },
+                        { "source": null, "target": "mana", "op": "SUM", "rawvalue": 3 }
+                    ],
+                    "talentPoints": 1,
+                    "attributePoints": 1
+                }
+            ]
+        }
+    ]
+}

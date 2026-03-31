@@ -26,7 +26,7 @@
                         <em>{{ path.description }}</em>
                         <template #footer>
                             <ul class="flex flex-wrap gap-1">
-                                <li v-for="(modifier, index) in path.modifiers" :key="index">
+                                <li v-for="(modifier, index) in path.progression[0].modifiers" :key="index">
                                     <ModifierFlag :modifier="modifier" />
                                 </li>
                             </ul>
@@ -51,7 +51,6 @@ import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModifierFlag from '@/components/ui/modifier-flag.vue';
 import ModalController from '@/controllers/modal-controller';
-import { Character } from '@/game-data/character/character';
 import { CharacterPath } from '@/game-data/character/character-path';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
@@ -72,7 +71,8 @@ function onClickSubmit() {
     if (!characterPath.value) return;
     const playerCharacter = gameState.getCharacter('player');
     playerCharacter.characterPathId = characterPath.value.id;
-    playerCharacter.stats.applyModifiers(characterPath.value.modifiers);
+    const modifiers = characterPath.value.progression[0].modifiers; // Apply modifiers from level 0
+    if (modifiers) playerCharacter.stats.applyModifiers(modifiers);
     gameState.setCharacter(playerCharacter);
 
     gameState.setActiveNodeId('onboarding', 'complete');

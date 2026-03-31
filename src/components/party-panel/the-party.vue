@@ -7,6 +7,33 @@
                 </Button>
             </div>
             <Card>
+                <template #header>Stats</template>
+                <div class="grid grid-cols-7 gap-2">
+                    <Card
+                        v-for="k in [
+                            'health',
+                            'mana',
+                            'defense',
+                            'criticalChance',
+                            'criticalDamageMultiplier',
+                            'guard',
+                            'barrier'
+                        ]"
+                    >
+                        <span class="capitalize text-center">
+                            <h2>{{ selectedCharacter.stats.getValue(k) }}</h2>
+                            {{ k }}
+                        </span>
+
+                        <ul class="flex flex-wrap gap-2">
+                            <li v-for="(m, index) in selectedCharacter.stats.getStat(k).getModifiers()" :key="index">
+                                <ModifierFlag :modifier="m" />
+                            </li>
+                        </ul>
+                    </Card>
+                </div>
+            </Card>
+            <Card>
                 <template #header>Attributes ({{ selectedCharacter.attributePoints }} Points)</template>
                 <div class="grid grid-cols-4 gap-2">
                     <Card v-for="k in ['brawn', 'agility', 'wits', 'aura']">

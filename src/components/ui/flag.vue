@@ -1,6 +1,6 @@
 <template>
     <div class="w-fit flex gap-1.5 items-center py-1 px-1 rounded-lg" :class="flagClass" :style="customStyle">
-        <span class="flag-name ml-1">{{ flagName }}</span>
+        <span class="ml-1" v-html="flagLabel"></span>
         <mark>{{ flagValue }}</mark>
     </div>
 </template>
@@ -9,7 +9,7 @@
 import { computed } from 'vue';
 
 const props = defineProps<{
-    flagName: string;
+    flagLabel: string;
     flagValue: string | number | boolean;
     flagColor?: string;
 }>();
