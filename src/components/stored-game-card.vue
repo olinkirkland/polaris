@@ -16,10 +16,10 @@
             <div class="flex gap-2 justify-center">
                 <Button @click="onClickLoad()">
                     <i class="fas fa-archive"></i>
-                    <span>View</span>
+                    <span>{{ t('stored_game.view_game') }}</span>
                 </Button>
                 <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
-                    <span>Continue</span>
+                    <span>{{ t('stored_game.continue_game') }}</span>
                 </Button>
             </div>
         </div>
@@ -47,6 +47,7 @@ import { computed, PropType } from 'vue';
 import LoadGameModal from './modals/templates/load-game-modal.vue';
 import Chip from './ui/chip.vue';
 import { useGameDataStore } from '@/store/game-data-store';
+import { t } from '@/i18n/locale';
 
 const gameState = useGameStateStore();
 const gameData = useGameDataStore();
