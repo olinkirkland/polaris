@@ -7,14 +7,14 @@
                 @click="gameState.load(recentSave!.path)"
                 :disabled="!arePackagesLoaded(recentSave!)"
             >
-                <span>{{ t(`Continue as {name}`, { name: recentSave.summary.name! }) }}</span>
+                <span>{{ t(`home.continue_game_button`, { name: recentSave.summary.name! }) }}</span>
             </Button>
             <div class="flex gap-2">
                 <Button @click="gameState.startNewGame()">
                     <span>{{ t('home.new_game_button') }}</span>
                 </Button>
                 <Button v-if="storage.manifestGroups.length > 0" @click="showLoadGamePanel = !showLoadGamePanel">
-                    <span>{{ t('home.load_game') }}</span>
+                    <span>{{ t('home.load_game_button') }}</span>
                 </Button>
             </div>
         </Card>

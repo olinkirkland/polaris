@@ -2,8 +2,7 @@
     <Card class="max-w-80">
         <div class="flex items-center">
             <div v-if="isLoadingContent">
-                <i class="fas fa-circle-notch fa-spin mr-2"></i>
-                <span>Loading...</span>
+                <i class="fas fa-circle-notch fa-spin"></i>
             </div>
             <div v-else class="flex flex-col gap-2 items-start">
                 <!-- Packages -->
@@ -17,7 +16,7 @@
                 </ul>
                 <Button @click="onClickManage">
                     <i class="fa-solid fa-tools"></i>
-                    <span>Manage Content</span>
+                    <span>{{ t('content_loader.manage_button') }}</span>
                 </Button>
             </div>
         </div>
@@ -32,6 +31,7 @@ import { wait } from '@/util/wait-util';
 import { ref } from 'vue';
 import LoadContentModal from './modals/templates/load-content-modal.vue';
 import Chip from './ui/chip.vue';
+import { t } from '@/i18n/locale';
 
 const gameData = useGameDataStore();
 const availablePackages = ref<PackageManifest[]>([]);

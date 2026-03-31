@@ -16,10 +16,10 @@
             <div class="flex gap-2 justify-center">
                 <Button @click="onClickLoad()">
                     <i class="fas fa-archive"></i>
-                    <span>{{ t('stored_game.view_game') }}</span>
+                    <span>{{ t('stored_game.view_game_button') }}</span>
                 </Button>
                 <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
-                    <span>{{ t('stored_game.continue_game') }}</span>
+                    <span>{{ t('stored_game.continue_game_button') }}</span>
                 </Button>
             </div>
         </div>

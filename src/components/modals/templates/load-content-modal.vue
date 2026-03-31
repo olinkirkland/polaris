@@ -4,7 +4,7 @@
             <ModalHeader close-button>
                 <div class="flex w-full gap-2 items-center">
                     <i class="fa-solid fa-tools"></i>
-                    <p>Manage Content</p>
+                    <p>{{ t('modals.load_content.heading') }}</p>
                 </div>
             </ModalHeader>
         </template>
@@ -28,7 +28,7 @@
         </template>
         <template #footer>
             <Button @click="onClickConfirm" class="ml-auto">
-                <span>Load Selected Content</span>
+                <span>{{ t('modals.load_content.load_selected_content_button') }}</span>
             </Button>
         </template>
     </ModalFrame>
@@ -38,8 +38,8 @@
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
+import { t } from '@/i18n/locale';
 import { PackageManifest } from '@/package-manifest';
-import { useGameDataStore } from '@/store/game-data-store';
 
 const props = defineProps<{
     availablePackages: PackageManifest[];

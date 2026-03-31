@@ -18,7 +18,7 @@
                                 <small>{{ new Date(m.date).toLocaleString() }}</small>
                             </div>
                             <Button @click="onClickLoad(m.path)" class="ml-auto">
-                                <span>Load</span>
+                                <span>{{ t('modals.load_game.load_button') }}</span>
                             </Button>
                         </div>
                         <template #footer v-if="!arePackagesLoaded(m)">
@@ -32,8 +32,9 @@
                                     </li>
                                 </ul>
                                 <small>
-                                    <strong>Caution!</strong>Not all content expected by this save is loaded. You can
-                                    load anyway, but there may be unintended consequences.
+                                    {{ t('modals.load_game.package_mismatch_warning') }}
+                                    <!-- <strong>Caution!</strong>Not all content expected by this save is loaded. You can
+                                    load anyway, but there may be unintended consequences. -->
                                 </small>
                             </div>
                         </template>
@@ -42,9 +43,10 @@
             </ul>
             <Card pressed>
                 <div class="flex flex-col gap-1 items-start">
-                    <span>Permanently delete this character?</span>
+                    <span>{{ t('modals.load_game.permanently_delete_character_label') }}</span>
+                    <!-- Permanently delete this character? -->
                     <Button @click="onClickRemove()">
-                        <span>Delete this Character</span>
+                        <span>{{ t('modals.load_game.permanently_delete_character_button') }}</span>
                     </Button>
                 </div>
             </Card>
@@ -60,6 +62,7 @@ import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import Chip from '@/components/ui/chip.vue';
 import ModalController from '@/controllers/modal-controller';
+import { t } from '@/i18n/locale';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifest, StoredGameManifestGroup, useStorageStore } from '@/store/storage-store';
