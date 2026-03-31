@@ -13,9 +13,12 @@ import TheModalContainer from './components/modals/the-modal-container.vue';
 import Game from './components/the-game.vue';
 import TheTitle from './components/the-title.vue';
 import SaveOverlay from './components/ui/save-overlay.vue';
+import { initializeI18nInstance } from './i18n/locale';
 import { useGameStateStore } from './store/game-state-store';
 
 const gameState = useGameStateStore();
+
+initializeI18nInstance();
 </script>
 
 <style lang="css">

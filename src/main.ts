@@ -2,11 +2,12 @@ import { createPinia } from 'pinia';
 import { createApp } from 'vue';
 import App from './App.vue';
 import ActionDescription from './components/ui/action-description.vue';
-import Card from './components/ui/card.vue';
 import Button from './components/ui/button.vue';
+import Card from './components/ui/card.vue';
 import Checkbox from './components/ui/checkbox.vue';
 import Flag from './components/ui/flag.vue';
 import ActionController from './controllers/action-controller';
+import i18n from './i18n/locale';
 import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
 
@@ -15,7 +16,7 @@ const app = createApp(App);
 const pinia = createPinia();
 
 // Plugins
-// app.use(i18n);
+app.use(i18n);
 app.use(pinia);
 
 // Components
