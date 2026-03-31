@@ -7,12 +7,14 @@
                 </Button>
             </div>
             <Card>
-                <template #header>Attributes</template>
+                <template #header>Attributes ({{ selectedCharacter.attributePoints }} Points)</template>
                 <div class="grid grid-cols-4 gap-2">
                     <Card v-for="k in ['brawn', 'agility', 'wits', 'aura']">
-                        <h2 class="capitalize text-center">
-                            <span>{{ selectedCharacter.stats.getValue(k) }}</span> {{ k }}
-                        </h2>
+                        <span class="capitalize text-center">
+                            <h2>{{ selectedCharacter.stats.getValue(k) }}</h2>
+                            {{ k }}
+                        </span>
+
                         <ul class="flex flex-wrap gap-2">
                             <li v-for="(m, index) in selectedCharacter.stats.getStat(k).getModifiers()" :key="index">
                                 <ModifierFlag :modifier="m" />
@@ -22,26 +24,29 @@
                 </div>
             </Card>
             <Card>
-                <template #header>Skills</template>
+                <template #header>Skills ({{ selectedCharacter.skillPoints }} Points)</template>
 
-                <div class="grid grid-cols-5 gap-2">
+                <div class="grid grid-cols-8 gap-2">
                     <Card
                         v-for="k in [
                             'prowess',
                             'endurance',
                             'skirmish',
                             'evasion',
-                            'reflex',
                             'tinker',
                             'medicine',
                             'focus',
                             'conduit',
+                            'reflex',
                             'insight'
                         ]"
+                        :class="{ 'col-span-4': k === 'reflex' || k === 'insight' }"
                     >
-                        <h3 class="capitalize text-center">
-                            <span>{{ selectedCharacter.stats.getValue(k) }}</span> {{ k }}
-                        </h3>
+                        <span class="capitalize text-center">
+                            <h2>{{ selectedCharacter.stats.getValue(k) }}</h2>
+                            {{ k }}
+                        </span>
+
                         <ul class="flex flex-wrap gap-2">
                             <li v-for="(m, index) in selectedCharacter.stats.getStat(k).getModifiers()" :key="index">
                                 <ModifierFlag :modifier="m" />
@@ -50,6 +55,7 @@
                     </Card>
                 </div>
             </Card>
+            <Card></Card>
         </Card>
     </Panel>
 </template>

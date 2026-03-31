@@ -29,7 +29,7 @@ const customStyle = computed(() => {
     return {
         '--bg': `var(--color-${props.flagColor}-100)`,
         '--mark-bg': `var(--color-${props.flagColor}-700)`,
-        '--mark-color': `var(--color-${props.flagColor}-100)`,
+        '--mark-color': `var(--color-${props.flagColor}-100)`
     };
 });
 </script>
@@ -37,6 +37,7 @@ const customStyle = computed(() => {
 <style scoped lang="scss">
 .number {
     background-color: var(--color-blue-100);
+    color: var(--color-blue-700);
     > mark {
         background-color: var(--color-blue-700);
         color: var(--color-blue-100);
@@ -45,6 +46,7 @@ const customStyle = computed(() => {
 
 .string {
     background-color: var(--color-green-100);
+    color: var(--color-green-700);
     > mark {
         background-color: var(--color-green-700);
         color: var(--color-green-100);
@@ -53,6 +55,7 @@ const customStyle = computed(() => {
 
 .boolean {
     background-color: var(--color-purple-100);
+    color: var(--color-purple-700);
     > mark {
         background-color: var(--color-purple-700);
         color: var(--color-purple-100);
@@ -61,6 +64,7 @@ const customStyle = computed(() => {
 
 .custom {
     background-color: var(--bg);
+    color: var(--mark-bg);
     > mark {
         background-color: var(--mark-bg);
         color: var(--mark-color);

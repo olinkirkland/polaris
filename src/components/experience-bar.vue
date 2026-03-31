@@ -1,11 +1,9 @@
 <template>
+    <i v-if="isLevelUpAvailable" class="fa-solid fa-angles-up fa-fade"></i>
     <span class="flex items-center">
-        <span v-if="isLevelUpAvailable">
-            <i class="fa-solid fa-angles-up fa-fade"></i>
-        </span>
         <span class="mr-2">Level {{ level }}</span>
         <ProgressBar :value="animatedExperience / experienceToNextLevel" />
-        <span class="min-w-28">{{ Math.round(animatedExperience) }} / {{ experienceToNextLevel }} XP</span>
+        <!-- <span class="min-w-28">{{ Math.round(animatedExperience) }} / {{ experienceToNextLevel }} XP</span> -->
     </span>
 </template>
 

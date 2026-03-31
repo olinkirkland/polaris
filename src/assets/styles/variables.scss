@@ -15,24 +15,12 @@
     --color-accent: #face00; // highlighting or emphasis
 
     --color-base: #62666a; // base color for informational messages
-    --color-base-strong: #3b3e40;
-    --color-base-weak: #7b8083;
-    --color-base-weaker: #acaeaf;
-    --color-base-faint: #e9e9e9;
-
-    --color-ink: #1b1b1b; // default non-text, non-surface elements on a light background
-    --color-ink-reverse: #f5f5f5; // default non-text, non-surface elements on a dark background
-
-    --color-text: #1b1b1b; // default text color on surface or surface-raised
-    --color-text-weaker: #acaeaf;
-    --color-text-weak: #4a4d4f;
-    --color-text-reverse: #f5f5f5; // default text color on dark surfaces
-    --color-text-reverse-weak: #d0d0ce;
 
     --color-surface: #ffffff; // default surface
     --color-surface-raised: #f5f5f5; // raised surface
-    --color-surface-reverse: #1b1b1b; // dark surface
 
     --color-transparent-black: rgba(0, 0, 0, 0.5); // Used for backgrounds etc.
-    --color-black: #000000;
+    --color-transparent-faint-black: rgba(0, 0, 0, 0.1); // Used for backgrounds etc.
+    --color-transparent-white: rgba(255, 255, 255, 0.5); // Used for backgrounds etc.
+    --color-transparent-faint-white: rgba(255, 255, 255, 0.1); // Used for backgrounds etc.
 }

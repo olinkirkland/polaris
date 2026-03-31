@@ -3,7 +3,7 @@
         <template v-slot:header>
             <ModalHeader close-button>
                 <div class="flex w-full gap-2 items-center">
-                    <i class="fas fa-box"></i>
+                    <i class="fa-solid fa-tools"></i>
                     <p>Manage Content</p>
                 </div>
             </ModalHeader>
@@ -11,14 +11,15 @@
         <template v-slot:content>
             <div class="flex flex-col gap-2">
                 <div class="flex flex-col gap-2 max-h-50 overflow-y-auto pr-1">
-                    <label v-for="c in availablePackages" class="cursor-pointer" :disabled="c.forced || undefined">
+                    <label v-for="c in availablePackages" class="cursor-pointer">
                         <Card :pressed="c.selected">
-                            <div class="flex justify-between gap-2">
+                            <div class="flex gap-2 items-center">
+                                <Checkbox :id="c.url" v-model="c.selected" :locked="c.forced" />
                                 <div class="flex flex-col">
-                                    <span>{{ c.label }}</span>
-                                    <em>{{ c.url }}</em>
+                                    <small
+                                        >{{ c.label }} <span class="muted">{{ c.url }}</span></small
+                                    >
                                 </div>
-                                <Checkbox :id="c.url" v-model="c.selected" />
                             </div>
                         </Card>
                     </label>

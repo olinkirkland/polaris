@@ -140,7 +140,10 @@ onMounted(() => {
 .panel {
     background-color: rgba(0, 0, 0, 0.4);
     background-image: url('/assets/images/tiles.png');
-    color: white;
+}
+
+.card {
+    background-color: black;
 }
 
 .choices {

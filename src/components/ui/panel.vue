@@ -5,3 +5,9 @@
 </template>
 
 <script lang="ts" setup></script>
+
+<style lang="scss" scoped>
+.panel {
+    // background: linear-gradient(to bottom, black, rgba(0, 0, 0, 0.8));
+}
+</style>

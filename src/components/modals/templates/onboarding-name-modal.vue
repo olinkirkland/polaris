@@ -60,6 +60,7 @@ function onClickSubmit() {
     const playerCharacter = new Character();
     playerCharacter.id = 'player';
     playerCharacter.name = characterName.value;
+
     gameState.setCharacter(playerCharacter);
 
     gameState.setActiveNodeId('onboarding', 'heritage');

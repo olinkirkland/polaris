@@ -2,7 +2,7 @@
     <Card>
         <template #header>
             <div class="w-full flex flex-col justify-center items-center">
-                <strong>{{ summary.name }}</strong>
+                <span class="accent">{{ summary.name }}</span>
             </div>
         </template>
 
@@ -15,12 +15,11 @@
             </small>
             <div class="flex gap-2 justify-center">
                 <Button @click="onClickLoad()">
-                    <i class="fas fa-folder-open"></i>
-                    <span>Manage ({{ manifestGroup.manifests.length }})</span>
+                    <i class="fas fa-archive"></i>
+                    <span>View</span>
                 </Button>
                 <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
                     <span>Continue</span>
-                    <i class="fas fa-chevron-right"></i>
                 </Button>
             </div>
         </div>

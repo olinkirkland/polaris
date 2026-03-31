@@ -19,6 +19,7 @@ SaveOverlayController.getInstance().addEventListener(({ visible: v, message: m }
 
 <style scoped>
 .overlay {
-    background: white;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
 }
 </style>

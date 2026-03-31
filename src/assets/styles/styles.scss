@@ -17,7 +17,7 @@
         font-family: var(--font);
         font-size: 1rem;
         line-height: 1.5;
-        color: var(--color-text);
+        color: white;
     }
 
     // Headings
@@ -28,12 +28,14 @@
     h4,
     h5,
     h6 {
-        color: var(--color-text);
+        color: white;
     }
 
     h1 {
-        font-size: 3rem;
+        font-size: 8rem;
+        opacity: 0.2;
         text-transform: uppercase;
+        letter-spacing: 2px;
         color: var(--color-theme);
     }
 
@@ -116,7 +118,7 @@ label.input-box {
         align-items: center;
         padding: 0 0.625rem;
         height: 100%;
-        color: var(--color-text-weak);
+        color: black;
         background-color: var(--color-theme-faint);
     }
 
@@ -132,4 +134,8 @@ label.input-box {
 
 .muted {
     opacity: 0.5;
+}
+
+.accent {
+    color: var(--color-accent);
 }

@@ -6,7 +6,7 @@
 
 <style lang="scss" scoped>
 .chip {
-    background-color: var(--color-base-faint);
-    color: var(--color-base);
+    background-color: var(--color-transparent-faint-white);
+    color: white;
 }
 </style>

@@ -20,8 +20,8 @@
                                 @click="characterPath = path"
                             >
                                 <i v-if="characterPath?.id === path.id" class="fas fa-check"></i>
-                                <span>{{ characterPath?.id === path.id ? 'Selected' : 'Select' }}</span></Button
-                            >
+                                <span>{{ characterPath?.id === path.id ? 'Selected' : 'Select' }}</span>
+                            </Button>
                         </template>
                         <em>{{ path.description }}</em>
                         <template #footer>

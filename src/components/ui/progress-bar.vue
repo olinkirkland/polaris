@@ -1,6 +1,6 @@
 <template>
-    <div class="track h-4 p-1 w-40 rounded-4xl">
-        <div class="fill min-w-3 rounded-4xl h-full bg-white" :style="{ width: value * 100 + '%' }"></div>
+    <div class="track h-1.5 w-40">
+        <div class="fill min-w-3 h-full bg-white" :style="{ width: value * 100 + '%' }"></div>
     </div>
 </template>
 

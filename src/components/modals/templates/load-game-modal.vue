@@ -3,7 +3,6 @@
         <template v-slot:header>
             <ModalHeader closeButton>
                 <div class="flex w-full gap-2 items-center">
-                    <i class="fas fa-folder-open"></i>
                     <p>{{ name }}</p>
                 </div>
             </ModalHeader>
@@ -18,9 +17,8 @@
                                 <!-- <small>Level 99, Lorem Ipsum</small> -->
                                 <small>{{ new Date(m.date).toLocaleString() }}</small>
                             </div>
-                            <Button class="ml-auto" @click="onClickLoad(m.path)">
+                            <Button @click="onClickLoad(m.path)" class="ml-auto">
                                 <span>Load</span>
-                                <i class="fas fa-chevron-right"></i>
                             </Button>
                         </div>
                         <template #footer v-if="!arePackagesLoaded(m)">
@@ -34,7 +32,7 @@
                                     </li>
                                 </ul>
                                 <small>
-                                    <strong>Caution!</strong> Not all content expected by this save are loaded. You can
+                                    <strong>Caution!</strong>Not all content expected by this save is loaded. You can
                                     load anyway, but there may be unintended consequences.
                                 </small>
                             </div>
@@ -43,10 +41,9 @@
                 </li>
             </ul>
             <Card pressed>
-                <div class="flex flex-col gap-1">
+                <div class="flex flex-col gap-1 items-start">
                     <span>Permanently delete this character?</span>
                     <Button @click="onClickRemove()">
-                        <i class="fas fa-trash"></i>
                         <span>Delete this Character</span>
                     </Button>
                 </div>

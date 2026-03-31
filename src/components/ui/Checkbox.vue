@@ -1,14 +1,16 @@
 <template>
-    <label :for="id" class="checkbox flex gap-1 w-fit cursor-pointer rounded-sm has-focus">
+    <label :for="id" class="checkbox flex gap-1 w-fit rounded-sm has-focus" :class="{ 'cursor-pointer': !locked }">
         <input
             type="checkbox"
             class="absolute opacity-0 h-0 w-0"
             :id="id"
             :checked="modelValue"
             @change="handleChange"
+            :disabled="locked"
         />
         <div class="box w-5 h-5 rounded-sm flex justify-center items-center leading-0" :class="{ checked: modelValue }">
-            <i v-if="modelValue" class="text-xs fas fa-check"></i>
+            <i v-if="locked" class="text-xs fas fa-lock"></i>
+            <i v-else-if="modelValue" class="text-xs fas fa-check"></i>
         </div>
     </label>
 </template>
@@ -22,6 +24,10 @@ const props = defineProps({
     id: {
         type: String,
         required: true
+    },
+    locked: {
+        type: Boolean,
+        required: false
     }
 });
 
