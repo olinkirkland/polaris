@@ -120,20 +120,12 @@ function mergePackageData(a: GameData, b: GameDataPackage): GameData {
     });
 
     // These lists are concatenated; the arrays are combined end to end with no overlap
-    const listsToConcatenate = ['nameSuggestions'];
+    const listsToConcatenate = ['nameSuggestions', 'experienceRequiredPerLevel'];
     listsToConcatenate.forEach((k) => {
         const key = k as keyof BaseGameData;
         const listA = a[key] as any[];
         const listB = b[key] as any[];
         a[key] = listA.concat(listB);
-    });
-
-    // These lists are replaced
-    const listsToReplace = ['experienceRequiredPerLevel'];
-    listsToReplace.forEach((k) => {
-        const key = k as keyof BaseGameData;
-        const listB = b[key] as any[];
-        a[key] = listB;
     });
 
     // Package Descriptions

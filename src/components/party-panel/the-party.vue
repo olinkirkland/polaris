@@ -7,7 +7,11 @@
                 </Button>
             </div>
             <Card>
-                <template #header>Stats</template>
+                <template #header>
+                    <div class="flex gap-2">
+                        <ExperienceBar />
+                    </div>
+                </template>
                 <div class="grid grid-cols-7 gap-2">
                     <Card
                         v-for="k in [
@@ -95,6 +99,8 @@ import Button from '../ui/button.vue';
 import Card from '../ui/card.vue';
 import ModifierFlag from '../ui/modifier-flag.vue';
 import Panel from '../ui/panel.vue';
+import ExperienceBar from '../experience-bar.vue';
+import { getExperienceToNextLevel } from '@/game-data/level';
 
 const gameState = useGameStateStore();
 

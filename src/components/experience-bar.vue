@@ -1,6 +1,9 @@
 <template>
     <i v-if="isLevelUpAvailable" class="fa-solid fa-angles-up fa-fade"></i>
-    <span class="flex items-center">
+    <span
+        class="flex items-center"
+        v-tippy="gameState.state.experience + ' ' + getExperienceToNextLevel(gameState.state.level)"
+    >
         <span class="mr-2">Level {{ level }}</span>
         <ProgressBar :value="animatedExperience / experienceToNextLevel" />
         <!-- <span class="min-w-28">{{ Math.round(animatedExperience) }} / {{ experienceToNextLevel }} XP</span> -->

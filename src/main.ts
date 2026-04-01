@@ -1,5 +1,6 @@
 import { createPinia } from 'pinia';
 import { createApp } from 'vue';
+import VueTippy from 'vue-tippy';
 import App from './App.vue';
 import ActionDescription from './components/ui/action-description.vue';
 import Button from './components/ui/button.vue';
@@ -10,6 +11,7 @@ import ActionController from './controllers/action-controller';
 import i18n from './i18n/locale';
 import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
+import 'tippy.js/dist/tippy.css';
 
 // Log environment variables
 console.log(JSON.stringify(import.meta.env, null, 2));
@@ -21,6 +23,7 @@ const pinia = createPinia();
 // Plugins
 app.use(i18n);
 app.use(pinia);
+app.use(VueTippy);
 
 // Components
 app.component('Button', Button);
@@ -28,6 +31,8 @@ app.component('ActionDescription', ActionDescription);
 app.component('Checkbox', Checkbox);
 app.component('Card', Card);
 app.component('Flag', Flag);
+
+// Directives
 
 // Stores
 const storage = useStorageStore();

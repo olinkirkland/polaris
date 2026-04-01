@@ -6,6 +6,7 @@
                 v-if="recentSave"
                 @click="gameState.load(recentSave!.path)"
                 :disabled="!arePackagesLoaded(recentSave!)"
+                v-tippy="'Hello world'"
             >
                 <span>{{ t(`home.continue_game_button`, { name: recentSave.summary.name! }) }}</span>
             </Button>

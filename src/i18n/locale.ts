@@ -8,7 +8,6 @@ import en from './locales/en/translations.json';
 type MessageSchema = typeof en;
 
 const i18n = createI18n<[MessageSchema], 'en'>({
-    // Add languages here
     legacy: false, // you must set `false`, to use Composition API
     locale: localStorage.getItem('language') || 'en',
     // fallbackLocale: 'en',

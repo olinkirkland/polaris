@@ -145,7 +145,7 @@ function addCameraControls() {
     const height = el.clientHeight;
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
 
-    console.log(props.cameraSplines);
+    // console.log(props.cameraSplines);
 
     const cameraSpline = new THREE.CatmullRomCurve3(
         props.cameraSplines.map((p) => p.cameraPosition),

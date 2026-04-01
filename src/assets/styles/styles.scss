@@ -139,3 +139,10 @@ label.input-box {
 .accent {
     color: var(--color-accent);
 }
+
+// Tooltip Theme
+.tippy-box {
+    .tippy-arrow {
+        display: none;
+    }
+}
