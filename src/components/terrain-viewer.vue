@@ -7,16 +7,16 @@
 <script lang="ts" setup>
 import ModalController from '@/controllers/modal-controller';
 import { Pin } from '@/game-data/pin/pin';
+import { usePauseStore } from '@/store/pause-store';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
-import { usePauseStore } from '@/store/pause-store';
 
 const props = defineProps({
     zoneId: {
@@ -37,7 +37,6 @@ const props = defineProps({
     }
 });
 
-const hideTerrain = false;
 const isLoaded = ref(false);
 
 const container = ref<HTMLDivElement>();
@@ -51,6 +50,10 @@ let controls: OrbitControls;
 let water: Water;
 
 const pinPoints: THREE.Vector3[] = [];
+
+// Debug camera
+const moveSpeed = 0.01;
+const keysHeld = new Set<string>();
 
 onMounted(async () => {
     scene = new THREE.Scene();
@@ -66,16 +69,16 @@ onMounted(async () => {
     el.appendChild(renderer.domElement);
 
     await loadAndAddTerrain();
-    if (hideTerrain) terrain.visible = false;
+    if (import.meta.env.VITE_HIDE_TERRAIN) terrain.visible = false;
 
-    if ((window as any).debug) addDebugCameraControls();
+    if (import.meta.env.VITE_SHOW_TERRAIN) addDebugCameraControls();
     else addCameraControls();
 
-    if ((window as any).debug) addMouseTarget();
+    if (import.meta.env.VITE_SHOW_TERRAIN) addMouseTarget();
 
     addLights();
-    if (!hideTerrain) addWaterPlane();
-    if (!hideTerrain) addSkybox();
+    if (!import.meta.env.VITE_HIDE_TERRAIN) addWaterPlane();
+    if (!import.meta.env.VITE_HIDE_TERRAIN) addSkybox();
     addPins();
 
     window.addEventListener('resize', onResize);
@@ -132,33 +135,8 @@ function addDebugCameraControls() {
     controls.maxDistance = 500;
     controls.maxPolarAngle = Math.PI / 2;
 
-    const moveSpeed = 0.01;
-    const keysHeld = new Set<string>();
-
     window.addEventListener('keydown', (e: KeyboardEvent) => keysHeld.add(e.key));
     window.addEventListener('keyup', (e: KeyboardEvent) => keysHeld.delete(e.key));
-
-    // Use debugUpdate function later in the animate function
-    (window as any).debugUpdate = () => {
-        if (keysHeld.size === 0) return;
-
-        const forward = new THREE.Vector3();
-        camera.getWorldDirection(forward);
-        forward.y = 0;
-        forward.normalize();
-
-        const right = new THREE.Vector3();
-        right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
-
-        const delta = new THREE.Vector3();
-        if (keysHeld.has('ArrowUp')) delta.addScaledVector(forward, moveSpeed);
-        if (keysHeld.has('ArrowDown')) delta.addScaledVector(forward, -moveSpeed);
-        if (keysHeld.has('ArrowLeft')) delta.addScaledVector(right, -moveSpeed);
-        if (keysHeld.has('ArrowRight')) delta.addScaledVector(right, moveSpeed);
-
-        camera.position.add(delta);
-        controls.target.add(delta);
-    };
 }
 
 function addCameraControls() {
@@ -331,7 +309,26 @@ function animate() {
         pin.labelPoint = getViewportPoint(p, camera, renderer);
     });
 
-    if ((window as any).debugUpdate) (window as any).debugUpdate();
+    if (import.meta.env.VITE_DEBUG) {
+        if (keysHeld.size === 0) return;
+
+        const forward = new THREE.Vector3();
+        camera.getWorldDirection(forward);
+        forward.y = 0;
+        forward.normalize();
+
+        const right = new THREE.Vector3();
+        right.crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+
+        const delta = new THREE.Vector3();
+        if (keysHeld.has('ArrowUp')) delta.addScaledVector(forward, moveSpeed);
+        if (keysHeld.has('ArrowDown')) delta.addScaledVector(forward, -moveSpeed);
+        if (keysHeld.has('ArrowLeft')) delta.addScaledVector(right, -moveSpeed);
+        if (keysHeld.has('ArrowRight')) delta.addScaledVector(right, moveSpeed);
+
+        camera.position.add(delta);
+        controls.target.add(delta);
+    }
     controls?.update();
 }
 

@@ -52,7 +52,7 @@ function onClickManage() {
 async function loadPackageManifests() {
     const response = await fetch('assets/game-data/package-manifests.json');
     if (!response.ok) throw new Error(`@loadPackageManifests: ${response.status}`);
-    const data: PackageManifest[] = await response.json();
+    const data: PackageManifest[] = ((await response.json()) as PackageManifest[]).sort((a, b) => (a.forced && !b.forced ? -1 : 0));
     availablePackages.value = data;
 
     // Initial load if nothing is loaded yet

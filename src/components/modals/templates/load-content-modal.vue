@@ -10,7 +10,7 @@
         </template>
         <template v-slot:content>
             <div class="flex flex-col gap-2">
-                <div class="flex flex-col gap-2 max-h-50 overflow-y-auto pr-1">
+                <div class="flex flex-col gap-2 max-h-full overflow-y-auto pr-1">
                     <label v-for="c in availablePackages" class="cursor-pointer">
                         <Card :pressed="c.selected">
                             <div class="flex gap-2 items-center">

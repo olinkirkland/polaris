@@ -11,6 +11,9 @@ import i18n from './i18n/locale';
 import { useGameStateStore } from './store/game-state-store';
 import { useStorageStore } from './store/storage-store';
 
+// Log environment variables
+console.log(JSON.stringify(import.meta.env, null, 2));
+
 // Create the app
 const app = createApp(App);
 const pinia = createPinia();
