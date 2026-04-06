@@ -41,7 +41,7 @@ loadPackageManifests(); // Load by default
 
 function onClickManage() {
     ModalController.open(LoadContentModal, {
-        availablePackages: [...availablePackages.value],
+        availablePackages: availablePackages.value.map((p) => ({ ...p })),
         onConfirm: (selectedUrls: string[]) => {
             availablePackages.value.forEach((p) => (p.selected = selectedUrls.includes(p.url)));
             loadContent(selectedUrls);
@@ -52,15 +52,20 @@ function onClickManage() {
 async function loadPackageManifests() {
     const response = await fetch('assets/game-data/package-manifests.json');
     if (!response.ok) throw new Error(`@loadPackageManifests: ${response.status}`);
-    const data: PackageManifest[] = ((await response.json()) as PackageManifest[]).sort((a, b) => (a.forced && !b.forced ? -1 : 0));
+    const data: PackageManifest[] = ((await response.json()) as PackageManifest[]).sort((a, b) =>
+        a.forced && !b.forced ? -1 : 0
+    );
     availablePackages.value = data;
 
     // Initial load if nothing is loaded yet
     if (!gameData.data?.packageDescriptions.length) {
         const previouslySelectedPackageUrlsStr = localStorage.getItem('selectedPackages');
+
+        // If there are previously selected package URLs in localStorage, use them
+        // Otherwise, use the currently selected packages from the available packages
         const urls = previouslySelectedPackageUrlsStr
             ? JSON.parse(previouslySelectedPackageUrlsStr)
-            : availablePackages.value.filter((p) => p.forced).map((p) => p.url);
+            : availablePackages.value.filter((p) => p.forced || p.selected).map((p) => p.url);
 
         // Map the available packages to set the selected property based on the previously selected URLs
         availablePackages.value.forEach((p) => {

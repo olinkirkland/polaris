@@ -16,9 +16,10 @@
                             <div class="flex gap-2 items-center">
                                 <Checkbox :id="c.url" v-model="c.selected" :locked="c.forced" />
                                 <div class="flex flex-col">
-                                    <small
-                                        >{{ c.label }} <span class="muted">{{ c.url }}</span></small
-                                    >
+                                    <small>
+                                        {{ c.label }}
+                                        <span class="muted">{{ c.url }}</span>
+                                    </small>
                                 </div>
                             </div>
                         </Card>
@@ -40,11 +41,18 @@ import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
 import { t } from '@/i18n/locale';
 import { PackageManifest } from '@/package-manifest';
+import { onMounted, ref } from 'vue';
+
+const availablePackages = ref<PackageManifest[]>([]);
 
 const props = defineProps<{
     availablePackages: PackageManifest[];
     onConfirm: (selectedUrls: string[]) => void;
 }>();
+
+onMounted(() => {
+    availablePackages.value = props.availablePackages;
+});
 
 function onClickConfirm() {
     const selectedContent = props.availablePackages.filter((c) => c.selected).map((p) => p.url);
