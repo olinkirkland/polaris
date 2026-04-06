@@ -41,7 +41,7 @@ export function getLanguage() {
     return i18nInstance.locale.value;
 }
 
-export function t(key: string, data?: Record<string, string>) {
+export function t(key: string, data?: Record<string, string | number>) {
     return i18nInstance.t(key, data);
 }
 

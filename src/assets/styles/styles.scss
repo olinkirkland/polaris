@@ -140,9 +140,14 @@ label.input-box {
     color: var(--color-accent);
 }
 
-// Tooltip Theme
-.tippy-box {
-    .tippy-arrow {
-        display: none;
+.tippy-box[data-theme~='custom'] {
+    background-color: rgba(0, 0, 0, 0.75);
+    color: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border-radius: 0 !important;
+    .tippy-content {
+        padding: 0.5rem 0.75rem;
     }
 }

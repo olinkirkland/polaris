@@ -1,24 +1,29 @@
 <template>
-    <Card>
+    <Card class="max-w-72">
         <template #header>
             <div class="w-full flex flex-col justify-center items-center">
-                <span class="accent">{{ summary.name }}</span>
+                <p>{{ recentSave.summary.name }}</p>
             </div>
         </template>
 
         <div class="w-full flex flex-col gap-2">
-            <em class="text-center">{{ summary.path }}</em>
-            <small class="text-center">
-                {{ manifestGroup.manifests[0].label }}
-                &nbsp;•&nbsp;
-                {{ date.toLocaleString() }}
-            </small>
             <div class="flex gap-2 justify-center">
-                <Button @click="onClickLoad()">
+                <Button
+                    @click="onClickLoad()"
+                    v-tippy="{
+                        content: t('stored_game.view_game_button_tooltip', {
+                            count: manifestGroup.manifests.length
+                        })
+                    }"
+                >
                     <i class="fas fa-archive"></i>
                     <span>{{ t('stored_game.view_game_button') }}</span>
                 </Button>
-                <Button @click="onClickContinue()" :disabled="!arePackagesLoaded()">
+                <Button
+                    @click="onClickContinue()"
+                    :disabled="!arePackagesLoaded()"
+                    v-tippy="{ content: recentSaveTooltip }"
+                >
                     <span>{{ t('stored_game.continue_game_button') }}</span>
                 </Button>
             </div>
@@ -59,8 +64,21 @@ const props = defineProps({
     }
 });
 
-const date = computed(() => new Date(props.manifestGroup.manifests[0].date));
-const summary = computed(() => props.manifestGroup.manifests[0].summary);
+const recentSave = computed(() => props.manifestGroup.manifests[0]);
+const recentSaveTooltip = computed(() => {
+    if (!recentSave.value) return 'No recent save found';
+    return `
+    <div class="w-full flex flex-col justify-center items-center">
+        <p>${recentSave.value.summary.name}</p>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+        <small class="text-center">
+            ${recentSave.value.label}
+            &nbsp;•&nbsp;
+            ${new Date(recentSave.value.date).toLocaleString()}
+        </small>
+    </div>`;
+});
 
 function onClickLoad() {
     ModalController.open(LoadGameModal, { manifestGroup: props.manifestGroup });

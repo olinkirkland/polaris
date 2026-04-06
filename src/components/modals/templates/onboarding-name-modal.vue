@@ -4,22 +4,29 @@
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
                     <i class="fas fa-person"></i>
-                    <p>By what name are you known?</p>
+                    <p>{{ t('modals.onboarding_name.heading') }}</p>
                 </div>
             </ModalHeader>
         </template>
         <template v-slot:content>
             <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia nobis eaque ducimus. Lorem, ipsum dolor.
+                {{ t('modals.onboarding_name.description') }}
             </p>
             <label class="input-box mb-2">
-                <span>Name</span>
-                <input type="text" placeholder="e.g., Helda Brighyin" v-model="characterName" />
+                <span>{{ t('modals.onboarding_name.name_label') }}</span>
+                <input
+                    type="text"
+                    :placeholder="t('modals.onboarding_name.name_placeholder')"
+                    v-model="characterName"
+                />
             </label>
-            <small class="muted text-center"><i class="fas fa-wand-magic-sparkles mr-1"></i>Name Suggestions</small>
+            <small class="muted text-center"
+                ><i class="fas fa-wand-magic-sparkles mr-1"></i
+                >{{ t('modals.onboarding_name.name_suggestions') }}</small
+            >
             <Card>
                 <ul class="grid grid-cols-3 gap-1 text-center muted">
-                    <li v-for="m in gameData.data?.nameSuggestions">
+                    <li v-for="m in gameData.data?.nameSuggestions" @click="characterName = m" class="cursor-pointer">
                         <em>{{ m }}</em>
                     </li>
                 </ul>
@@ -27,10 +34,10 @@
         </template>
         <template #footer>
             <Button @click="onClickCancel()" class="ml-auto">
-                <span>Cancel</span>
+                <span>{{ t('common.cancel') }}</span>
             </Button>
             <Button @click="onClickSubmit()" :disabled="characterName.length === 0">
-                <span>Continue</span>
+                <span>{{ t('common.continue') }}</span>
             </Button>
         </template>
     </ModalFrame>
@@ -41,6 +48,7 @@ import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
 import { Character } from '@/game-data/character/character';
+import { t } from '@/i18n/locale';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';

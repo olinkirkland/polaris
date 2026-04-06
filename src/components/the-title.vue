@@ -6,7 +6,9 @@
                 v-if="recentSave"
                 @click="gameState.load(recentSave!.path)"
                 :disabled="!arePackagesLoaded(recentSave!)"
-                v-tippy="'Hello world'"
+                v-tippy="{
+                    content: recentSaveTooltip
+                }"
             >
                 <span>{{ t(`home.continue_game_button`, { name: recentSave.summary.name! }) }}</span>
             </Button>
@@ -14,42 +16,45 @@
                 <Button @click="gameState.startNewGame()">
                     <span>{{ t('home.new_game_button') }}</span>
                 </Button>
-                <Button v-if="storage.manifestGroups.length > 0" @click="showLoadGamePanel = !showLoadGamePanel">
+                <Button v-if="storage.manifestGroups.length > 0" @click="ModalController.open(ChooseLoadGameModal)">
                     <span>{{ t('home.load_game_button') }}</span>
                 </Button>
             </div>
         </Card>
-        <div class="w-full p-5 flex justify-center">
-            <div v-if="storage.manifestGroups.length > 0 && showLoadGamePanel" class="overflow-x-auto pb-2">
-                <!-- List of Save Games to be loaded -->
-                <ul class="flex gap-2">
-                    <li v-for="g in storage.manifestGroups">
-                        <StoredGameCard :manifestGroup="g" />
-                    </li>
-                </ul>
-            </div>
-        </div>
         <TheLoader class="absolute! bottom-2 right-2" />
     </div>
 </template>
 
 <script setup lang="ts">
+import ModalController from '@/controllers/modal-controller';
+import { t } from '@/i18n/locale';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifest, useStorageStore } from '@/store/storage-store';
-import { computed, ref } from 'vue';
-import StoredGameCard from './stored-game-card.vue';
+import { computed } from 'vue';
+import ChooseLoadGameModal from './modals/templates/choose-load-game-modal.vue';
 import TheLoader from './the-content-loader.vue';
 import Card from './ui/card.vue';
-import { t } from '@/i18n/locale';
 
 const gameState = useGameStateStore();
 const gameData = useGameDataStore();
 const storage = useStorageStore();
 
 const recentSave = computed(() => gameState.getMostRecentSave());
-
-const showLoadGamePanel = ref(false);
+const recentSaveTooltip = computed(() => {
+    if (!recentSave.value) return 'No recent save found';
+    return `
+    <div class="w-full flex flex-col justify-center items-center">
+        <p>${recentSave.value.summary.name}</p>
+    </div>
+    <div class="w-full flex flex-col gap-2">
+        <small class="text-center">
+            ${recentSave.value.label}
+            &nbsp;•&nbsp;
+            ${new Date(recentSave.value.date).toLocaleString()}
+        </small>
+    </div>`;
+});
 
 function arePackagesLoaded(manifest: StoredGameManifest) {
     const gamePackageIds = manifest.packageIds;

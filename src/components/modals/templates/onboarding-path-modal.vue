@@ -4,23 +4,28 @@
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
                     <i class="fas fa-person"></i>
-                    <p>Choose your Path</p>
+                    <p>{{ t('modals.onboarding_path.heading') }}</p>
                 </div>
             </ModalHeader>
         </template>
         <template v-slot:content>
+            <p>
+                {{ t('modals.onboarding_path.description') }}
+            </p>
             <ul class="grid grid-cols-2 gap-3">
                 <li v-for="path in gameData.data?.characterPaths">
                     <Card class="h-full" :pressed="characterPath?.id === path.id">
                         <template #header>
-                            <p>{{ path.label }}</p>
+                            <p>{{ t('modals.onboarding_path.path_of_the', { path: path.label }) }}</p>
                             <Button
                                 class="ml-auto"
                                 :disabled="characterPath?.id === path.id"
                                 @click="characterPath = path"
                             >
                                 <i v-if="characterPath?.id === path.id" class="fas fa-check"></i>
-                                <span>{{ characterPath?.id === path.id ? 'Selected' : 'Select' }}</span>
+                                <span>{{
+                                    characterPath?.id === path.id ? t('common.selected') : t('common.select')
+                                }}</span>
                             </Button>
                         </template>
                         <em>{{ path.description }}</em>
@@ -37,10 +42,10 @@
         </template>
         <template #footer>
             <Button @click="onClickCancel()" class="ml-auto">
-                <span>Cancel</span>
+                <span>{{ t('common.cancel') }}</span>
             </Button>
             <Button @click="onClickSubmit()" :disabled="!characterPath">
-                <span>Continue</span>
+                <span>{{ t('common.continue') }}</span>
             </Button>
         </template>
     </ModalFrame>
@@ -52,6 +57,7 @@ import ModalHeader from '@/components/modals/modal-header.vue';
 import ModifierFlag from '@/components/ui/modifier-flag.vue';
 import ModalController from '@/controllers/modal-controller';
 import { CharacterPath } from '@/game-data/character/character-path';
+import { t } from '@/i18n/locale';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';

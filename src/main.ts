@@ -23,7 +23,14 @@ const pinia = createPinia();
 // Plugins
 app.use(i18n);
 app.use(pinia);
-app.use(VueTippy);
+app.use(VueTippy, {
+    defaultProps: {
+        theme: 'custom',
+        allowHTML: true,
+        animation: 'fade',
+        arrow: false
+    }
+});
 
 // Components
 app.component('Button', Button);

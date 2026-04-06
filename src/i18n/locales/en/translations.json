@@ -1,1 +1,54 @@
-{}
+{
+  "common": {
+    "autosave": "Autosave",
+    "autosaving": "Autosaving...",
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "saving": "Saving...",
+    "select": "Select",
+    "selected": "Selected"
+  },
+  "content_loader": {
+    "manage_button": "Manage Content"
+  },
+  "home": {
+    "continue_game_button": "Resume",
+    "load_game_button": "Load Game",
+    "new_game_button": "New Game",
+    "title": "Polaris"
+  },
+  "modals": {
+    "load_content": {
+      "heading": "Load Content",
+      "load_selected_content_button": "Load Selected Content"
+    },
+    "load_game": {
+      "heading": "Load Game",
+      "load_button": "Load",
+      "permanently_delete_character_button": "Delete",
+      "permanently_delete_character_label": "Delete this Character permanently? This action is irreversible."
+    },
+    "onboarding_heritage": {
+      "description": "The road that brought you here.",
+      "heading": "Your Origin",
+      "selected": "Selected"
+    },
+    "onboarding_name": {
+      "description": "What do they call you out here?",
+      "heading": "Your Name",
+      "name_label": "Name",
+      "name_placeholder": "e.g., Helda Brighyin",
+      "name_suggestions": "Name Suggestions"
+    },
+    "onboarding_path": {
+      "description": "Your path determines the talents and abilities you'll have access to as you progress.",
+      "heading": "Your Path",
+      "path_of_the": "Path of the {path}"
+    }
+  },
+  "stored_game": {
+    "continue_game_button": "Resume",
+    "view_game_button": "View Game",
+    "view_game_button_tooltip": "{count} File | {count} Files"
+  }
+}

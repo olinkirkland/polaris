@@ -12,6 +12,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
+import { t } from '@/i18n/locale';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -117,7 +118,7 @@ export const useGameStateStore = defineStore('game', () => {
         if (!id.value) throw new Error('Missing gameId');
         if (!gameData.data) throw new Error('Missing game data');
 
-        const savingMessage = label === 'Autosave' ? 'Autosaving...' : 'Saving...';
+        const savingMessage = saveId === 'autosave' ? t('common.autosaving') : t('common.saving');
         SaveOverlayController.open(savingMessage);
 
         const path = id.value + '/' + saveId;

@@ -4,14 +4,13 @@
             <ModalHeader>
                 <div class="flex w-full gap-2 items-center">
                     <i class="fas fa-person"></i>
-                    <p>What is your origin?</p>
+                    <p>{{ t('modals.onboarding_heritage.heading') }}</p>
                 </div>
             </ModalHeader>
         </template>
         <template v-slot:content>
             <p>
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Adipisci in autem deleniti eum! Nulla sed
-                voluptatum a harum officiis consequatur.
+                {{ t('modals.onboarding_heritage.description') }}
             </p>
             <ul class="grid grid-cols-2 gap-3">
                 <li v-for="h in gameData.data?.characterHeritages">
@@ -20,7 +19,11 @@
                             <p>{{ h.label }}</p>
                             <Button class="ml-auto" :disabled="heritage?.id === h.id" @click="heritage = h">
                                 <i v-if="heritage?.id === h.id" class="fas fa-check"></i>
-                                <span>{{ heritage?.id === h.id ? 'Selected' : 'Select' }}</span></Button
+                                <span>{{
+                                    heritage?.id === h.id
+                                        ? t('common.selected')
+                                        : t('common.select')
+                                }}</span></Button
                             >
                         </template>
                         <em>{{ h.description }}</em>
@@ -30,21 +33,21 @@
         </template>
         <template #footer>
             <Button @click="onClickCancel()" class="ml-auto">
-                <span>Cancel</span>
+                <span>{{ t('common.cancel') }}</span>
             </Button>
             <Button @click="onClickSubmit()" :disabled="!heritage">
-                <span>Continue</span>
+                <span>{{ t('common.continue') }}</span>
             </Button>
         </template>
     </ModalFrame>
 </template>
 
 <script setup lang="ts">
-import { Character } from '@/game-data/character/character';
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
 import ModalController from '@/controllers/modal-controller';
 import { Heritage } from '@/game-data/character/heritage';
+import { t } from '@/i18n/locale';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';

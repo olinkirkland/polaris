@@ -1,5 +1,6 @@
 import { useGameStateStore } from '@/store/game-state-store';
 import { ActionType, BaseAction } from './base-action';
+import { t } from '@/i18n/locale';
 
 export class SaveAction extends BaseAction {
     type = ActionType.SAVE;
@@ -11,7 +12,7 @@ export class SaveAction extends BaseAction {
     }
 
     override act() {
-        useGameStateStore().save('autosave', 'Autosave');
+        useGameStateStore().save('autosave', t('common.autosave'));
         super.act();
     }
 }

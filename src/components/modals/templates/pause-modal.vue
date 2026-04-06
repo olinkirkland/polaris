@@ -39,5 +39,6 @@ function onClickSave() {
 
 function onClickExit() {
     gameState.reset();
+    ModalController.close();
 }
 </script>
