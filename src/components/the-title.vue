@@ -6,6 +6,7 @@
                 v-if="recentSave"
                 @click="gameState.load(recentSave!.path)"
                 :disabled="!arePackagesLoaded(recentSave!)"
+                class="w-full"
                 v-tippy="{
                     content: recentSaveTooltip
                 }"
@@ -21,7 +22,7 @@
                 </Button>
             </div>
         </Card>
-        <TheLoader class="absolute! bottom-2 right-2" />
+        <TheLoader class="absolute! bottom-2 left-2" />
     </div>
 </template>
 

@@ -1,10 +1,14 @@
 <template>
-    <Card class="max-w-80">
+    <Card class="max-w-3xl">
         <div class="flex items-center">
             <div v-if="isLoadingContent">
                 <i class="fas fa-circle-notch fa-spin"></i>
             </div>
             <div v-else class="flex flex-col gap-2 items-start">
+                <Button @click="onClickManage">
+                    <i class="fa-solid fa-tools"></i>
+                    <span>{{ t('content_loader.manage_button') }}</span>
+                </Button>
                 <!-- Packages -->
                 <ul class="flex items-center gap-2 flex-wrap">
                     <li v-for="d in gameData.data?.packageDescriptions">
@@ -14,10 +18,6 @@
                         </Chip>
                     </li>
                 </ul>
-                <Button @click="onClickManage">
-                    <i class="fa-solid fa-tools"></i>
-                    <span>{{ t('content_loader.manage_button') }}</span>
-                </Button>
             </div>
         </div>
     </Card>

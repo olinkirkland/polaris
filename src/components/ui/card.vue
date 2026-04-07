@@ -1,10 +1,10 @@
 <template>
-    <div class="card relative z-1 flex flex-col" :class="{ pressed: props.pressed }">
+    <div class="card relative z-1 flex flex-col" :class="{ 'pressed-style': props.pressed }">
         <div class="background"></div>
         <header v-if="hasHeader" class="p-3 pb-2 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
-        <div class="flex flex-col p-3 gap-2 flex-1" v-if="$slots.default">
+        <div class="flex flex-col p-3 gap-2 flex-1 items-start" v-if="$slots.default">
             <slot></slot>
         </div>
         <slot name="floor"></slot>
@@ -29,11 +29,16 @@ const hasFooter = computed(() => !!slots.footer);
 <style lang="scss" scoped>
 .card {
     position: relative;
-    &.pressed {
-        .background {
-            border-image: url('assets/images/ui-textures/default/transparent-center/panel-transparent-center-005.png')
-                15 fill stretch;
-        }
+    &.pressed-style .background {
+        border-image: url('assets/images/ui-textures/default/transparent-center/panel-transparent-center-005.png') 15
+            fill stretch;
+    }
+
+    &.border-style .background {
+        border-image: url('assets/images/ui-textures/default/transparent-center/panel-transparent-center-000.png') 15
+            fill stretch;
+        filter: unset;
+        opacity: 0.2;
     }
 
     header {

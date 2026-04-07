@@ -23,8 +23,52 @@
                 </ul>
 
                 <!-- Selected Save Game -->
-                <Card class="w-2/3">
-                    <p>{{ selectedManifestGroup?.manifests[0]?.summary.name }}</p>
+                <Card class="w-2/3" v-if="selectedManifestGroup">
+                    <div>
+                        <p>{{ selectedManifestGroup.manifests[0]?.summary.name }}</p>
+                        <small>{{ selectedManifestGroup.manifests[0]?.summary.path }}</small>
+                    </div>
+
+                    <ul class="flex flex-col gap-2 w-full overflow-y-auto">
+                        <li v-for="m in selectedManifestGroup.manifests">
+                            <Card class="border-style">
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex flex-col">
+                                        <span>{{ m.label }}</span>
+                                        <!-- <small>Level 99, Lorem Ipsu</small> -->
+                                        <small>{{ new Date(m.date).toLocaleString() }}</small>
+                                    </div>
+                                    <Button @click="onClickLoad(m.path)" class="ml-auto">
+                                        <span>{{ t('modals.load_game.load_button') }}</span>
+                                    </Button>
+                                </div>
+                                <template #footer v-if="false">
+                                    <div class="flex flex-col gap-2">
+                                        <ul class="flex flex-wrap gap-2">
+                                            <li v-for="p in m.packageIds">
+                                                <Chip>
+                                                    <i class="text-sm fas fa-cube"></i>
+                                                    <span>{{ p }}</span>
+                                                </Chip>
+                                            </li>
+                                        </ul>
+                                        <small>
+                                            Caution! Not all content expected by this save is loaded. You can load
+                                            anyway, but there may be unintended consequences.
+                                        </small>
+                                    </div>
+                                </template>
+                            </Card>
+                            <!-- {{ t('modals.load_game.package_mismatch_warning') }} -->
+                        </li>
+                    </ul>
+
+                    <Card class="border-style">
+                        <span>{{ t('modals.load_game.permanently_delete_character_label') }}</span>
+                        <Button @click="selectedManifestGroup?.manifests.forEach((m) => storage.remove(m.path))">
+                            <span>{{ t('modals.load_game.permanently_delete_character_button') }}</span>
+                        </Button>
+                    </Card>
                 </Card>
             </div>
         </template>
@@ -34,12 +78,20 @@
 <script setup lang="ts">
 import ModalFrame from '@/components/modals/modal-frame.vue';
 import ModalHeader from '@/components/modals/modal-header.vue';
+import Chip from '@/components/ui/chip.vue';
+import ModalController from '@/controllers/modal-controller';
 import { t } from '@/i18n/locale';
+import { useGameStateStore } from '@/store/game-state-store';
 import { useStorageStore } from '@/store/storage-store';
 import { ref } from 'vue';
 
 const storage = useStorageStore();
-const selectedManifestGroup = ref(storage.manifestGroups.length > 0 ? storage.manifestGroups[0] : null);
-</script>
+const gameState = useGameStateStore();
 
-<style scoped lang="scss"></style>
+const selectedManifestGroup = ref(storage.manifestGroups.length > 0 ? storage.manifestGroups[0] : null);
+
+function onClickLoad(path: string) {
+    gameState.load(path);
+    ModalController.close();
+}
+</script>
