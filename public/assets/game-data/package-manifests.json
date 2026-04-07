@@ -18,12 +18,6 @@
         "forced": false
     },
     {
-        "url": "assets/game-data/packages/paths/artificer.json",
-        "label": "Artificer Path",
-        "selected": true,
-        "forced": false
-    },
-    {
         "url": "assets/game-data/packages/paths/whisper.json",
         "label": "Whisper Path",
         "selected": true,

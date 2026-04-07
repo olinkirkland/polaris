@@ -40,11 +40,11 @@
 
 <script lang="ts" setup>
 import { useGameStateStore } from '@/store/game-state-store';
+import { usePauseStore } from '@/store/pause-store';
 import { computed } from 'vue';
 import TerrainViewer from '../terrain-viewer.vue';
 import ActionDescription from '../ui/action-description.vue';
 import Card from '../ui/card.vue';
-import { usePauseStore } from '@/store/pause-store';
 
 const gameState = useGameStateStore();
 const zone = computed(() => gameState.zone);

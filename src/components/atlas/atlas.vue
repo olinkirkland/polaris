@@ -1,4 +1,11 @@
 <template>
+    <div class="h-full flex relative">
+        <div class="relative flex-1">
+            <AtlasTerrainViewer />
+            <div class="overlay" v-if="!usePauseStore().isGamePaused"></div>
+        </div>
+    </div>
+
     <Card class="m-3">
         <template #header>Atlas (World Map)</template>
         <p>
@@ -6,29 +13,17 @@
             explore, and many secrets to uncover.<br />Pick a location to travel to.
         </p>
         <p v-if="coordinates">
-            Your coordinates: <mark>{{ coordinates.x }}, {{ coordinates.y }}</mark>
+            <mark>{{ coordinates.x }}, {{ coordinates.y }}</mark>
         </p>
-        <ul class="grid grid-cols-3 gap-2">
-            <li v-for="pin in gameState.getPinsInZone('atlas')">
-                <Card>
-                    <Button @click="pin.actions.forEach((a) => a.act())" class="w-full justify-center">
-                        <span>{{ pin.label }}</span>
-                    </Button>
-                    <Card v-if="pin.actions.length">
-                        <ul class="mt-1 flex flex-wrap gap-1">
-                            <li v-for="action in pin.actions"><ActionDescription :action="action" /></li>
-                        </ul>
-                    </Card>
-                </Card>
-            </li>
-        </ul>
     </Card>
 </template>
 
 <script lang="ts" setup>
 import { useGameStateStore } from '@/store/game-state-store';
-import Card from '../ui/card.vue';
 import { computed } from 'vue';
+import Card from '../ui/card.vue';
+import { usePauseStore } from '@/store/pause-store';
+import AtlasTerrainViewer from '../atlas-terrain-viewer.vue';
 
 const gameState = useGameStateStore();
 

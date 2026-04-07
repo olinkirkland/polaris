@@ -17,7 +17,6 @@
             <Button @click="onClickQuickSave">
                 <span>Quicksave</span>
             </Button>
-            <!-- TODO: Disable when there's no quickload -->
             <Button
                 @click="onClickQuickLoad"
                 :disabled="!relativeQuickSave"
