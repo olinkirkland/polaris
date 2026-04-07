@@ -1,58 +1,76 @@
 <template>
-    <ModalFrame class="w-100">
+    <ModalFrame class="w-3xl">
         <template v-slot:header>
             <ModalHeader closeButton>
                 <div class="flex w-full gap-2 items-center">
-                    <p>{{ name }}</p>
+                    <p>{{ t('modals.load_game.heading') }}</p>
                 </div>
             </ModalHeader>
         </template>
         <template v-slot:content>
-            <ul class="flex flex-col gap-2">
-                <li v-for="m in manifestGroup.manifests">
-                    <Card>
-                        <div class="flex gap-2">
-                            <div class="flex flex-col">
-                                <span>{{ m.label }}</span>
-                                <!-- <small>Level 99, Lorem Ipsum</small> -->
-                                <small>{{ new Date(m.date).toLocaleString() }}</small>
-                            </div>
-                            <Button @click="onClickLoad(m.path)" class="ml-auto">
-                                <span>{{ t('modals.load_game.load_button') }}</span>
-                            </Button>
-                        </div>
-                        <template #footer v-if="!arePackagesLoaded(m)">
-                            <div class="flex flex-col gap-2">
-                                <ul class="flex flex-wrap gap-2">
-                                    <li v-for="p in m.packageIds">
-                                        <Chip>
-                                            <i class="text-sm fas fa-cube"></i>
-                                            <span>{{ p }}</span>
-                                        </Chip>
-                                    </li>
-                                </ul>
-                                <small>
-                                    {{ t('modals.load_game.package_mismatch_warning') }}
-                                    <!-- <strong>Caution!</strong>Not all content expected by this save is loaded. You can
-                                    load anyway, but there may be unintended consequences. -->
-                                </small>
-                            </div>
-                        </template>
+            <div v-if="storage.manifestGroups.length > 0" class="max-h-2xl w-full flex gap-2">
+                <!-- List of Save Games to be loaded -->
+                <ul class="flex flex-col gap-2 overflow-y-auto w-1/3">
+                    <li v-for="g in storage.manifestGroups">
+                        <Button
+                            :disabled="selectedManifestGroup?.id === g.id"
+                            @click="selectedManifestGroup = g"
+                            class="w-full"
+                        >
+                            <span>{{ g.manifests[0]?.summary.name }}</span>
+                        </Button>
+                    </li>
+                </ul>
+
+                <!-- Selected Save Game -->
+                <Card class="w-2/3" v-if="selectedManifestGroup">
+                    <div>
+                        <p>{{ selectedManifestGroup.manifests[0]?.summary.name }}</p>
+                        <small>{{ selectedManifestGroup.manifests[0]?.summary.path }}</small>
+                    </div>
+
+                    <ul class="flex flex-col gap-2 w-full overflow-y-auto">
+                        <li v-for="m in selectedManifestGroup.manifests">
+                            <Card class="border-style">
+                                <div class="flex gap-2 w-full">
+                                    <div class="flex flex-col">
+                                        <span>{{ m.label }}</span>
+                                        <!-- <small>Level 99, Lorem Ipsu</small> -->
+                                        <small>{{ new Date(m.date).toLocaleString() }}</small>
+                                    </div>
+                                    <Button @click="onClickLoad(m.path)" class="ml-auto">
+                                        <span>{{ t('modals.load_game.load_button') }}</span>
+                                    </Button>
+                                </div>
+                                <template #footer v-if="false">
+                                    <div class="flex flex-col gap-2">
+                                        <ul class="flex flex-wrap gap-2">
+                                            <li v-for="p in m.packageIds">
+                                                <Chip>
+                                                    <i class="text-sm fas fa-cube"></i>
+                                                    <span>{{ p }}</span>
+                                                </Chip>
+                                            </li>
+                                        </ul>
+                                        <small>
+                                            Caution! Not all content expected by this save is loaded. You can load
+                                            anyway, but there may be unintended consequences.
+                                        </small>
+                                    </div>
+                                </template>
+                            </Card>
+                            <!-- {{ t('modals.load_game.package_mismatch_warning') }} -->
+                        </li>
+                    </ul>
+
+                    <Card class="border-style">
+                        <span>{{ t('modals.load_game.permanently_delete_character_label') }}</span>
+                        <Button @click="selectedManifestGroup?.manifests.forEach((m) => storage.remove(m.path))">
+                            <span>{{ t('modals.load_game.permanently_delete_character_button') }}</span>
+                        </Button>
                     </Card>
-                </li>
-            </ul>
-            <Card pressed>
-                <div class="flex flex-col gap-1 items-start">
-                    <span>{{ t('modals.load_game.permanently_delete_character_label') }}</span>
-                    <!-- Permanently delete this character? -->
-                    <Button @click="onClickRemove()">
-                        <span>{{ t('modals.load_game.permanently_delete_character_button') }}</span>
-                    </Button>
-                </div>
-            </Card>
-        </template>
-        <template #footer>
-            <small class="w-full text-center">{{ props.manifestGroup.id }}</small>
+                </Card>
+            </div>
         </template>
     </ModalFrame>
 </template>
@@ -63,37 +81,17 @@ import ModalHeader from '@/components/modals/modal-header.vue';
 import Chip from '@/components/ui/chip.vue';
 import ModalController from '@/controllers/modal-controller';
 import { t } from '@/i18n/locale';
-import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
-import { StoredGameManifest, StoredGameManifestGroup, useStorageStore } from '@/store/storage-store';
-import { computed } from 'vue';
+import { useStorageStore } from '@/store/storage-store';
+import { ref } from 'vue';
 
-const gameState = useGameStateStore();
-const gameData = useGameDataStore();
 const storage = useStorageStore();
+const gameState = useGameStateStore();
 
-const props = defineProps<{
-    manifestGroup: StoredGameManifestGroup;
-}>();
-
-const name = computed(() => {
-    const m = props.manifestGroup.manifests[0];
-    return m.summary.name || 'Unnamed';
-});
-
-function onClickRemove() {
-    props.manifestGroup.manifests.forEach((m) => storage.remove(m.path));
-    ModalController.close();
-}
+const selectedManifestGroup = ref(storage.manifestGroups.length > 0 ? storage.manifestGroups[0] : null);
 
 function onClickLoad(path: string) {
     gameState.load(path);
     ModalController.close();
-}
-
-function arePackagesLoaded(manifest: StoredGameManifest) {
-    const gamePackageIds = manifest.packageIds;
-    const loadedPackageIds = gameData.data?.packageDescriptions.map((p) => p.id);
-    return gamePackageIds.every((p) => loadedPackageIds?.includes(p));
 }
 </script>

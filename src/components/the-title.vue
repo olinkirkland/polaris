@@ -33,7 +33,7 @@ import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifest, useStorageStore } from '@/store/storage-store';
 import { computed } from 'vue';
-import ChooseLoadGameModal from './modals/templates/choose-load-game-modal.vue';
+import ChooseLoadGameModal from './modals/templates/load-game-modal.vue';
 import TheLoader from './the-content-loader.vue';
 import Card from './ui/card.vue';
 
