@@ -9,12 +9,12 @@
         </template>
         <template v-slot:content>
             <div v-if="storage.manifestGroups.length > 0" class="max-h-2xl w-full flex gap-2">
-                <!-- List of Save Games to be loaded -->
+                <!-- List of Save Games (Groups) to be loaded -->
                 <ul class="flex flex-col gap-2 overflow-y-auto w-1/3">
                     <li v-for="g in storage.manifestGroups">
                         <Button
                             :disabled="selectedManifestGroup?.id === g.id"
-                            @click="selectedManifestGroup = g"
+                            @click="selectedManifestGroupId = g.id"
                             class="w-full"
                         >
                             <span>{{ g.manifests[0]?.summary.name }}</span>
@@ -38,10 +38,16 @@
                                         <!-- <small>Level 99, Lorem Ipsu</small> -->
                                         <small>{{ new Date(m.date).toLocaleString() }}</small>
                                     </div>
-                                    <Button @click="onClickLoad(m.path)" class="ml-auto">
-                                        <span>{{ t('modals.load_game.load_button') }}</span>
-                                    </Button>
+                                    <div class="flex gap-2 ml-auto">
+                                        <Button @click="storage.remove(m.path)">
+                                            <span>{{ t('modals.load_game.delete_button') }}</span>
+                                        </Button>
+                                        <Button @click="onClickLoad(m.path)">
+                                            <span>{{ t('modals.load_game.load_button') }}</span>
+                                        </Button>
+                                    </div>
                                 </div>
+                                <!-- TODO: Highlight the chips of packageIds that are missing -->
                                 <template #footer v-if="false">
                                     <div class="flex flex-col gap-2">
                                         <ul class="flex flex-wrap gap-2">
@@ -56,10 +62,10 @@
                                             Caution! Not all content expected by this save is loaded. You can load
                                             anyway, but there may be unintended consequences.
                                         </small>
+                                        <!-- {{ t('modals.load_game.package_mismatch_warning') }} -->
                                     </div>
                                 </template>
                             </Card>
-                            <!-- {{ t('modals.load_game.package_mismatch_warning') }} -->
                         </li>
                     </ul>
 
@@ -70,6 +76,9 @@
                         </Button>
                     </Card>
                 </Card>
+            </div>
+            <div v-else>
+                <em>{{ t('modals.load_game.no_results') }}</em>
             </div>
         </template>
     </ModalFrame>
@@ -83,12 +92,21 @@ import ModalController from '@/controllers/modal-controller';
 import { t } from '@/i18n/locale';
 import { useGameStateStore } from '@/store/game-state-store';
 import { useStorageStore } from '@/store/storage-store';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 const storage = useStorageStore();
 const gameState = useGameStateStore();
 
-const selectedManifestGroup = ref(storage.manifestGroups.length > 0 ? storage.manifestGroups[0] : null);
+const props = defineProps<{
+    selectedManifestGroupId?: string;
+}>();
+
+const selectedManifestGroupId = ref(props.selectedManifestGroupId || null);
+
+const selectedManifestGroup = computed(() => {
+    if (!selectedManifestGroupId.value) return null;
+    return storage.manifestGroups.find((m) => m.id === selectedManifestGroupId.value);
+});
 
 function onClickLoad(path: string) {
     gameState.load(path);

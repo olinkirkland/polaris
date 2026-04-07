@@ -209,7 +209,7 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function removeCharacter(id: string) {
-        // TODO
+        // TODO: Remove character from party
         throw new Error('Function not implemented!');
     }
 

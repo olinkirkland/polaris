@@ -4,14 +4,10 @@ Through spectaclte, through the meaning of a spectacle "An administration of spe
 A message, showing what they could do "Liberation day"
 --> Leader of Polaris wants to make a big show of defeating an enemy for political reasons, and while they have initial victories, a huge sacrifice gets made
 
-Blight as a metaphor for corruption?
-
 Contempt for institutions
 
 Assassination attempt photo propaganda
 
-NO: Day/night cycle like gaelenvale? for travel and events?
-NO: Dynamic politics and geopolitical change?
 Radio updates quests?
 
 Wrangel Island
@@ -24,7 +20,7 @@ Iceland: Landdisir spirits (hiding from giants?)
 
 Scholar
 
-Unreal tournament: in the year ____ ... no-holds-barred death matches
+Unreal tournament: in the year \_\_\_\_ ... no-holds-barred death matches
 --> Quest name: Death Match
 
 Darkest Dungeon inspiration for region areas
@@ -72,4 +68,3 @@ Shaman and ayuhuasca type drug ritual
 Skipping rocks
 
 The mysterious cassette tape, holds answers to where the demons came from. Callback to Sonny "how do I know that there's even aynthing on this" - disappointment but we have a real reveal in this game
-

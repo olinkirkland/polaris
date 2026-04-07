@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import ModalController from '@/controllers/modal-controller';
 import { ComponentOptions, ref, shallowRef } from 'vue';
+import _ from 'lodash';
 
 const modalRef = ref();
 const currentModal = shallowRef<ComponentOptions | null>(null);
@@ -42,8 +43,8 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
         // If a matching modalConfig is already in the queue, don't add it again
         const queueIncludingCurrent = [...queue, { modal: currentModal.value, modalConfig: currentModalConfig.value }];
 
-        const isModalAlreadyInQueue = queueIncludingCurrent.find(
-            (queued) => JSON.stringify(queued.modalConfig) === JSON.stringify(modalConfig)
+        const isModalAlreadyInQueue = queueIncludingCurrent.find((queued) =>
+            _.isEqual(queued.modalConfig, modalConfig)
         );
 
         if (isModalAlreadyInQueue) return;
