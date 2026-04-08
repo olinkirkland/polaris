@@ -50,7 +50,7 @@
                     </template>
                     <ActionDescription v-for="action in focusedPin.actions" :action="action" />
                     <Button @click="focusedPin.actions.forEach((a) => a.act())">
-                        <span>Act</span>
+                        <span>Action</span>
                     </Button>
                 </Card>
             </div>

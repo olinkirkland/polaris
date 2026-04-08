@@ -180,7 +180,7 @@ function addCameraControls() {
     // Modifiers
     const friction = 0.95;
     const scrollSpeed = 0.00002;
-    const tiltIntensity = 0.07;
+    const tiltIntensity = 0.02;
     const tiltSpeed = 0.02;
 
     // Vars
@@ -209,7 +209,7 @@ function addCameraControls() {
             // Get the closest point on the spline to the pinPoint
             const tValue = getClosestTValueOnSpline(cameraSpline, focusedPinPoint);
             const closestCameraPositionOnSpline = cameraSpline.getPoint(tValue);
-            const partwayPoint = closestCameraPositionOnSpline.clone().lerp(focusedPinPoint, 0.5); // "Zoom in" from the spline
+            const partwayPoint = closestCameraPositionOnSpline.clone().lerp(focusedPinPoint, 0.2); // "Zoom in" from the spline
             targetCameraPosition = partwayPoint;
             targetLookAtPosition = focusedPinPoint;
         }

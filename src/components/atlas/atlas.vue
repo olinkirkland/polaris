@@ -1,7 +1,7 @@
 <template>
     <div class="h-full flex relative">
         <div class="relative flex-1">
-            <AtlasTerrainViewer :pins="[]" />
+            <TerrainViewer zone-id="atlas" :pins="[]" />
             <div class="overlay" v-if="!usePauseStore().isGamePaused"></div>
         </div>
     </div>
@@ -20,10 +20,10 @@
 
 <script lang="ts" setup>
 import { useGameStateStore } from '@/store/game-state-store';
-import { computed } from 'vue';
-import Card from '../ui/card.vue';
 import { usePauseStore } from '@/store/pause-store';
-import AtlasTerrainViewer from '../atlas-terrain-viewer.vue';
+import { computed } from 'vue';
+import TerrainViewer from '../terrain-viewer.vue';
+import Card from '../ui/card.vue';
 
 const gameState = useGameStateStore();
 
