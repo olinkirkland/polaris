@@ -15,7 +15,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+import { onBeforeUnmount, onMounted, PropType, ref } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
@@ -35,6 +35,10 @@ const props = defineProps({
     cameraSplines: {
         type: Array<{ cameraPosition: THREE.Vector3; targetPosition: THREE.Vector3 }>,
         required: true
+    },
+    focusedPin: {
+        type: Object as PropType<Pin | null>,
+        default: null
     }
 });
 
@@ -51,7 +55,7 @@ let pins: THREE.Sprite[];
 let controls: OrbitControls;
 let water: Water;
 
-const pinPoints: THREE.Vector3[] = [];
+const pinPoints: { id: string; point: THREE.Vector3 }[] = [];
 
 // Debug camera
 const moveSpeed = 0.01;
@@ -86,10 +90,17 @@ onMounted(async () => {
         addCameraControls();
     }
 
-    addPins();
+    // Determine pinPoints (calculate height for each)
+    props.pins.forEach((p) => {
+        const point = p.address.point;
+        const height = getHeightAtPoint(terrain, point);
+        const pointWithHeight: THREE.Vector3 = new THREE.Vector3(point.x, height + 0.02, point.y);
+        pinPoints.push({ id: p.id, point: pointWithHeight });
+    });
 
     window.addEventListener('resize', onResize);
 
+    // Start the animation loop
     animate();
 
     isLoaded.value = true;
@@ -152,8 +163,6 @@ function addCameraControls() {
     const height = el.clientHeight;
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
 
-    // console.log(props.cameraSplines);
-
     const cameraSpline = new THREE.CatmullRomCurve3(
         props.cameraSplines.map((p) => p.cameraPosition),
         false,
@@ -161,7 +170,7 @@ function addCameraControls() {
         0.5
     );
 
-    const targetSpline = new THREE.CatmullRomCurve3(
+    const lookAtSpline = new THREE.CatmullRomCurve3(
         props.cameraSplines.map((p) => p.targetPosition),
         false,
         'catmullrom',
@@ -171,15 +180,91 @@ function addCameraControls() {
     // Modifiers
     const friction = 0.95;
     const scrollSpeed = 0.00002;
-    const tiltIntensity = 0.1;
+    const tiltIntensity = 0.07;
     const tiltSpeed = 0.02;
 
     // Vars
     const mouse = { x: 0, y: 0 };
     const targetTilt = { x: 0, y: 0 };
     const currentTilt = { x: 0, y: 0 };
-    let t = 0;
+
+    // Spline Mode vars
+    let distanceAlongSpline = 0;
     let velocity = 0;
+
+    // Focus Mode vars
+    let targetPinId: string | null = null;
+    let targetCameraPosition: THREE.Vector3 | null = null;
+    let targetLookAtPosition: THREE.Vector3 | null = null;
+    let lookAtPosition: THREE.Vector3 | null = null;
+
+    function update() {
+        if (props.focusedPin && props.focusedPin.id !== targetPinId) {
+            // A pin has been focused, process this action
+            targetPinId = props.focusedPin.id;
+            const pin = props.focusedPin;
+            const focusedPinPoint = pinPoints.find((p) => pin.id === p.id)?.point;
+            if (!focusedPinPoint) throw new Error('Focused Point not found');
+
+            // Get the closest point on the spline to the pinPoint
+            const tValue = getClosestTValueOnSpline(cameraSpline, focusedPinPoint);
+            const closestCameraPositionOnSpline = cameraSpline.getPoint(tValue);
+            const partwayPoint = closestCameraPositionOnSpline.clone().lerp(focusedPinPoint, 0.5); // "Zoom in" from the spline
+            targetCameraPosition = partwayPoint;
+            targetLookAtPosition = focusedPinPoint;
+        }
+
+        if (!props.focusedPin && targetPinId) {
+            // A pin has been unfocused, process this action
+            // Return to the spline from wherever the camera is
+            const tValue = getClosestTValueOnSpline(cameraSpline, camera.position);
+            targetCameraPosition = cameraSpline.getPoint(tValue);
+            targetLookAtPosition = lookAtSpline.getPoint(tValue);
+            distanceAlongSpline = tValue;
+            targetPinId = null;
+        }
+
+        // Focus Mode
+        if (targetCameraPosition) {
+            console.log('focus-mode');
+            velocity = 0;
+
+            camera.position.lerp(targetCameraPosition, 0.1);
+
+            if (camera.position.distanceTo(targetCameraPosition) < 0.0001) {
+                // Destination reached!
+                camera.position.copy(targetCameraPosition);
+                if (!targetPinId) targetCameraPosition = null;
+            }
+        }
+
+        // Scroll Mode
+        if (!targetCameraPosition) {
+            console.log('scroll-mode:', distanceAlongSpline, velocity);
+            distanceAlongSpline += velocity;
+            if (distanceAlongSpline <= 0 || distanceAlongSpline >= 1) {
+                distanceAlongSpline = Math.max(0, Math.min(1, distanceAlongSpline));
+                velocity = 0;
+            }
+
+            if (Math.abs(velocity) < 0.00002) velocity = 0;
+            velocity *= friction;
+
+            updateCameraFromT(distanceAlongSpline);
+        }
+
+        if (targetLookAtPosition) lookAtPosition?.lerp(targetLookAtPosition, 0.1);
+        camera.lookAt(lookAtPosition!);
+
+        // Calculate Tilt
+        currentTilt.x += (targetTilt.x - currentTilt.x) * tiltSpeed;
+        currentTilt.y += (targetTilt.y - currentTilt.y) * tiltSpeed;
+
+        const tiltQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(currentTilt.x, currentTilt.y, 0));
+        // if (!targetCameraPosition) camera.quaternion.multiply(tiltQuaternion);
+
+        requestAnimationFrame(update);
+    }
 
     function onMouseMove(event: MouseEvent) {
         if (usePauseStore().isGamePaused) return;
@@ -189,40 +274,23 @@ function addCameraControls() {
         targetTilt.y = -mouse.x * tiltIntensity;
     }
 
-    function update() {
-        t += velocity;
-        if (t <= 0 || t >= 1) {
-            t = Math.max(0, Math.min(1, t));
-            velocity = 0;
-        }
-        velocity *= friction;
-
-        currentTilt.x += (targetTilt.x - currentTilt.x) * tiltSpeed;
-        currentTilt.y += (targetTilt.y - currentTilt.y) * tiltSpeed;
-
-        updateCameraFromT(t);
-
-        const tiltQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(currentTilt.x, currentTilt.y, 0));
-        camera.quaternion.multiply(tiltQuaternion);
-
-        requestAnimationFrame(update);
-    }
-
     function updateCameraFromT(tVal: number) {
         tVal = Math.max(0, Math.min(1, tVal));
-        const currentPos = cameraSpline.getPoint(tVal);
-        const currentTarget = targetSpline.getPoint(tVal);
+        const currentPosition = cameraSpline.getPoint(tVal);
+        camera.position.copy(currentPosition);
 
-        camera.position.copy(currentPos);
-        camera.lookAt(currentTarget);
+        lookAtPosition = lookAtSpline.getPoint(tVal);
     }
 
     // Set initial camera position
-    updateCameraFromT(t);
+    updateCameraFromT(distanceAlongSpline);
 
-    // Scroll handler — move forwards/backwards along the spline
+    // Scroll handler: move forwards/backwards along the spline
     function onWheel(event: WheelEvent) {
         event.preventDefault();
+
+        if (targetCameraPosition) return;
+
         velocity += event.deltaY * scrollSpeed;
     }
 
@@ -285,24 +353,6 @@ function addSkybox() {
     });
 }
 
-function addPins() {
-    pins = [];
-    const pinScale = 0.03;
-    props.pins.forEach((p) => {
-        const point = p.address.point;
-        const map = new THREE.TextureLoader().load('assets/images/pin.png');
-        const material = new THREE.SpriteMaterial({ map });
-        const pin = new THREE.Sprite(material);
-        const height = getHeightAtPoint(terrain, point);
-        pin.position.set(point.x, height + 0.02, point.y);
-
-        pin.scale.set(pinScale, pinScale, pinScale);
-        pinPoints.push(pin.position);
-        pins.push(pin);
-        // scene.add(pin);
-    });
-}
-
 function animate() {
     // Animate water
     if (water) water.material.uniforms['time'].value += 0.1 / 60;
@@ -310,10 +360,11 @@ function animate() {
     animationId = requestAnimationFrame(animate);
     renderer.render(scene, camera);
 
-    // Update the pin's labelPoints
+    // TODO don't use the index
+    // Update the pin's labelPoints based on index
     props.pins.forEach((pin, index) => {
-        const p = pinPoints[index];
-        pin.labelPoint = getViewportPoint(p, camera, renderer);
+        const pinPoint = pinPoints[index];
+        pin.labelPoint = getViewportPoint(pinPoint.point, camera, renderer);
     });
 
     if (env.DEBUG) {
@@ -336,6 +387,7 @@ function animate() {
         camera.position.add(delta);
         controls.target.add(delta);
     }
+
     controls?.update();
 }
 
@@ -408,6 +460,26 @@ function addMouseTarget() {
                 break;
         }
     }
+}
+
+function getClosestTValueOnSpline(spline: THREE.CatmullRomCurve3, point: THREE.Vector3): number {
+    const steps = 100;
+    let minDistance = Infinity;
+    let closestT = 0;
+
+    const pointsAlongSpline = spline.getSpacedPoints(100);
+
+    for (let i = 0; i < pointsAlongSpline.length; i++) {
+        const p = pointsAlongSpline[i];
+        const distance = p.distanceTo(point);
+
+        if (distance < minDistance) {
+            minDistance = distance;
+            closestT = i / steps;
+        }
+    }
+
+    return closestT;
 }
 
 onBeforeUnmount(() => {
