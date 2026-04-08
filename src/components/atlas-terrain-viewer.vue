@@ -6,6 +6,8 @@
 
 <script lang="ts" setup>
 import ModalController from '@/controllers/modal-controller';
+import { Pin } from '@/game-data/pin/pin';
+import { useGameStateStore } from '@/store/game-state-store';
 import { usePauseStore } from '@/store/pause-store';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -16,9 +18,17 @@ import { Water } from 'three/examples/jsm/objects/Water.js';
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
-import { useGameStateStore } from '@/store/game-state-store';
 
-const WATER_LEVEL = 0.08; // Hardcoded for Atlas
+const props = defineProps({
+    pins: {
+        type: Array<Pin>,
+        required: true
+    },
+    waterLevel: {
+        type: Number,
+        default: 0.008
+    }
+});
 
 //  {
 //             "id": "grima",
@@ -221,7 +231,7 @@ function addWaterPlane() {
     });
 
     water.rotation.x = -Math.PI / 2;
-    water.position.y = terrainBounds.min.y + WATER_LEVEL;
+    water.position.y = terrainBounds.min.y + props.waterLevel;
 
     water.material.uniforms['size'].value = 100;
     water.material.depthWrite = true;
@@ -242,7 +252,7 @@ function addSkybox() {
 
 function addPins() {
     pins = [];
-    const atlasPins = useGameStateStore().getPinsInZone();
+    const atlasPins = useGameStateStore().getPinsInZone('atlas');
     const pinScale = 0.03;
     props.pins.forEach((p) => {
         const point = p.address.point;
