@@ -226,7 +226,6 @@ function addCameraControls() {
 
         // Focus Mode
         if (targetCameraPosition) {
-            console.log('focus-mode');
             velocity = 0;
 
             camera.position.lerp(targetCameraPosition, 0.1);
@@ -240,7 +239,6 @@ function addCameraControls() {
 
         // Scroll Mode
         if (!targetCameraPosition) {
-            console.log('scroll-mode:', distanceAlongSpline, velocity);
             distanceAlongSpline += velocity;
             if (distanceAlongSpline <= 0 || distanceAlongSpline >= 1) {
                 distanceAlongSpline = Math.max(0, Math.min(1, distanceAlongSpline));
@@ -278,7 +276,6 @@ function addCameraControls() {
         tVal = Math.max(0, Math.min(1, tVal));
         const currentPosition = cameraSpline.getPoint(tVal);
         camera.position.copy(currentPosition);
-
         lookAtPosition = lookAtSpline.getPoint(tVal);
     }
 
