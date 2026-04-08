@@ -261,7 +261,7 @@ function addCameraControls() {
         currentTilt.y += (targetTilt.y - currentTilt.y) * tiltSpeed;
 
         const tiltQuaternion = new THREE.Quaternion().setFromEuler(new THREE.Euler(currentTilt.x, currentTilt.y, 0));
-        // if (!targetCameraPosition) camera.quaternion.multiply(tiltQuaternion);
+        camera.quaternion.multiply(tiltQuaternion);
 
         requestAnimationFrame(update);
     }
