@@ -1,6 +1,6 @@
 <template>
     <div class="relative h-dvh flex flex-col gap-2 p-2 items-center justify-center">
-        <h1>{{ t('home.title') }}</h1>
+        <h1 v-if="!env.STEALTH">{{ t('home.title') }}</h1>
         <Card>
             <Button
                 v-if="recentSave"
@@ -29,6 +29,7 @@
 <script setup lang="ts">
 import ModalController from '@/controllers/modal-controller';
 import { t } from '@/i18n/locale';
+import { useEnvStore } from '@/store/env-store';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import { StoredGameManifest, useStorageStore } from '@/store/storage-store';
@@ -37,6 +38,7 @@ import LoadGameModal from './modals/templates/load-game-modal.vue';
 import TheLoader from './the-content-loader.vue';
 import Card from './ui/card.vue';
 
+const env = useEnvStore();
 const gameState = useGameStateStore();
 const gameData = useGameDataStore();
 const storage = useStorageStore();

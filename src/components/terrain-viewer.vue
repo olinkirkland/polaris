@@ -7,6 +7,7 @@
 <script lang="ts" setup>
 import ModalController from '@/controllers/modal-controller';
 import { Pin } from '@/game-data/pin/pin';
+import { useEnvStore } from '@/store/env-store';
 import { usePauseStore } from '@/store/pause-store';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -37,6 +38,7 @@ const props = defineProps({
     }
 });
 
+const env = useEnvStore();
 const isLoaded = ref(false);
 
 const container = ref<HTMLDivElement>();
@@ -69,16 +71,21 @@ onMounted(async () => {
     el.appendChild(renderer.domElement);
 
     await loadAndAddTerrain();
-    if (import.meta.env.VITE_HIDE_TERRAIN) terrain.visible = false;
+    if (env.STEALTH) {
+        terrain.visible = false;
+    } else {
+        addWaterPlane();
+        addSkybox();
+    }
 
-    if (import.meta.env.VITE_SHOW_TERRAIN) addDebugCameraControls();
-    else addCameraControls();
+    if (env.DEBUG) {
+        addDebugCameraControls();
+        addMouseTarget();
+        addLights();
+    } else {
+        addCameraControls();
+    }
 
-    if (import.meta.env.VITE_SHOW_TERRAIN) addMouseTarget();
-
-    addLights();
-    if (!import.meta.env.VITE_HIDE_TERRAIN) addWaterPlane();
-    if (!import.meta.env.VITE_HIDE_TERRAIN) addSkybox();
     addPins();
 
     window.addEventListener('resize', onResize);
@@ -309,7 +316,7 @@ function animate() {
         pin.labelPoint = getViewportPoint(p, camera, renderer);
     });
 
-    if (import.meta.env.VITE_DEBUG) {
+    if (env.DEBUG) {
         if (keysHeld.size === 0) return;
 
         const forward = new THREE.Vector3();

@@ -28,5 +28,6 @@ initializeI18nInstance();
 
 <style lang="scss">
 @use '@/assets/styles/styles.scss';
+@use '@/assets/styles/transitions.scss';
 @use '@/assets/styles/variables.scss';
 </style>

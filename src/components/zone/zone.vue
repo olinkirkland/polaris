@@ -1,10 +1,11 @@
 <template>
-    <div v-if="zone" class="h-full flex relative">
+    <div v-if="zone" class="h-full flex relative overflow-hidden">
         <div class="relative flex-1">
             <TerrainViewer
                 :zoneId="zone.id"
                 :pins="gameState.getPinsInZone(zone.id)"
                 :cameraSplines="zone.cameraSplines"
+                :focusedPin="focusedPin"
             />
             <div class="overlay" v-if="!usePauseStore().isGamePaused">
                 <div class="relative w-full h-full">
@@ -19,35 +20,56 @@
                             top: `calc(${pin.labelPoint?.y + 'px'} - 1.5rem)`,
                             'z-index': index
                         }"
-                        @click="pin.actions.forEach((a) => a.act())"
+                        @click="focusedPin = pin"
                     >
                         <div class="flex flex-col items-start gap-2">
                             <span v-html="pin.label"></span>
-                            <ActionDescription v-for="action in pin.actions" :action="action" />
                         </div>
                     </Card>
                 </div>
             </div>
         </div>
+
         <div v-if="!usePauseStore().isGamePaused" class="zone-description m-2 p-3 max-w-2/3 absolute bottom-0">
             <h2 class="opacity-30 mb-1">{{ zone.label }}</h2>
             <p>
                 {{ zone.description }}
             </p>
         </div>
+
+        <transition name="slide-right">
+            <div v-if="focusedPin" class="absolute w-sm right-0 pt-15 pr-5">
+                <Card>
+                    <template #header>
+                        <div class="px-0.5 flex gap-2 w-full">
+                            <span>{{ focusedPin.label }}</span>
+                            <Button icon @click="focusedPin = null" class="ml-auto">
+                                <i class="fas fa-times"></i>
+                            </Button>
+                        </div>
+                    </template>
+                    <ActionDescription v-for="action in focusedPin.actions" :action="action" />
+                    <Button @click="focusedPin.actions.forEach((a) => a.act())">
+                        <span>Act</span>
+                    </Button>
+                </Card>
+            </div>
+        </transition>
     </div>
 </template>
 
 <script lang="ts" setup>
+import { Pin } from '@/game-data/pin/pin';
 import { useGameStateStore } from '@/store/game-state-store';
 import { usePauseStore } from '@/store/pause-store';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import TerrainViewer from '../terrain-viewer.vue';
 import ActionDescription from '../ui/action-description.vue';
 import Card from '../ui/card.vue';
 
 const gameState = useGameStateStore();
 const zone = computed(() => gameState.zone);
+const focusedPin = ref<Pin | null>(null);
 </script>
 
 <style lang="scss" scoped>
