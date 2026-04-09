@@ -82,6 +82,5 @@ function onClickSubmit() {
     gameState.setCharacter(playerCharacter);
 
     gameState.setActiveQuestNodeId('onboarding', 'complete');
-    ModalController.close();
 }
 </script>

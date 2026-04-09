@@ -128,7 +128,7 @@ function mergePackageData(a: GameData, b: GameDataPackage): GameData {
     });
 
     // These lists are concatenated; the arrays are combined end to end with no overlap
-    const listsToConcatenate = ['nameSuggestions', 'experienceRequiredPerLevel'];
+    const listsToConcatenate = ['nameSuggestions', 'experienceRequiredPerLevel', 'items', 'recipes'];
     listsToConcatenate.forEach((k) => {
         const key = k as keyof BaseGameData;
         const listA = a[key] as any[];

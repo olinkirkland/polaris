@@ -262,26 +262,35 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     // Returns an array of inventory entries
-    function getInventory() {}
+    function getInventory() {
+        return getValue('inventory');
+    }
 
     // Add an item to the inventory
-    function addItem(item: Item, quantity: number = 1) {
-        if (item.tags.find((t) => t === 'stackable')) {
-            // Stackable
-            // If there's an existing entry with this id, increment its quantity
-
-            // Otherwise, create a new entry
-            
-
-        } else {
-            // Unique
+    function addItem(newItem: Item) {
+        const item = { ...newItem };
+        if (!item.tags.some((t) => t === 'stackable')) {
+            // Not stackable
             // Change the item's id to a uuid so it can't stack
-            // Create a new entry
+            item.id = uuidv4();
         }
+
+        // If there's an existing entry with this id, increment its quantity
+        // Otherwise, create a new entry
+        patchValue('inventory', (items) => {
+            const existingEntry = items.find((t: Item) => t.id === item.id);
+            if (existingEntry) existingEntry.quantity++;
+            else items.push(item);
+            return [...items];
+        });
     }
 
     // Remove an item from the inventory
-    function removeItem(item: Item, quantity: number) {}
+    function removeItem(item: Item, quantity: number) {
+        // TODO
+        console.error('Not implemented yet!');
+        patchValue('inventory', (items) => {});
+    }
 
     return {
         startNewGame,
@@ -309,6 +318,9 @@ export const useGameStateStore = defineStore('game', () => {
         setFlag,
         getQuest,
         validateQuestConditions,
-        addExperience
+        addExperience,
+        getInventory,
+        addItem,
+        removeItem
     };
 });

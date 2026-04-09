@@ -68,6 +68,5 @@ function onClickSubmit() {
     gameState.setValue('flags.heritage', heritage.value.id);
 
     gameState.setActiveQuestNodeId('onboarding', 'path');
-    ModalController.close();
 }
 </script>

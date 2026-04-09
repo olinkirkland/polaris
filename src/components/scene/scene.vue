@@ -179,21 +179,6 @@ onMounted(() => {
     }
 }
 
-.fade-enter-active,
-.fade-leave-active {
-    transition:
-        opacity 0.5s ease,
-        transform 0.5s ease;
-}
-
-.fade-enter-from {
-    opacity: 0;
-}
-
-.fade-enter-to {
-    opacity: 1;
-}
-
 .dialogue-scroll {
     overflow-y: auto;
     min-height: 0;

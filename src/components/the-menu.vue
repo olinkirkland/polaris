@@ -2,14 +2,14 @@
     <div class="the-menu flex items-center p-3 w-full justify-center">
         <div class="flex items-center mr-2">
             <div class="flex items-center gap-2">
-                <Button @click="$emit('clickPanel', 'journal')">
+                <Button @click="$emit('click-panel', 'journal')">
                     <i class="fas fa-book"></i>
                     <span>Journal</span>
                 </Button>
-                <Button @click="$emit('clickPanel', 'party')">
+                <Button @click="$emit('click-panel', 'party')">
                     <ExperienceBar />
                 </Button>
-                <Button @click="$emit('clickPanel', 'inventory')">
+                <Button @click="$emit('click-panel', 'inventory')">
                     <i class="fas fa-box-open"></i>
                     <span>Inventory</span>
                 </Button>

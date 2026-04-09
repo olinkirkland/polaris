@@ -1,6 +1,14 @@
 <template>
     <Panel class="p-3">
         <Card class="h-full">
+            <template #header>
+                <div class="flex justify-between items-center w-full">
+                    <span>Journal</span>
+                    <Button icon @click="$emit('on-close')">
+                        <i class="fas fa-times"></i>
+                    </Button>
+                </div>
+            </template>
             <Card>
                 <ul class="flex flex-wrap gap-2">
                     <li v-for="(flagValue, flagName) in gameState.getValue('flags')">

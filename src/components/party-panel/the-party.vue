@@ -1,6 +1,14 @@
 <template>
     <Panel class="h-full p-3">
         <Card class="h-full">
+            <template #header>
+                <div class="flex justify-between items-center w-full">
+                    <span>Party</span>
+                    <Button icon @click="$emit('on-close')">
+                        <i class="fas fa-times"></i>
+                    </Button>
+                </div>
+            </template>
             <div class="flex gap-2">
                 <Button v-for="character in party" :key="character.id" @click="selectedCharacter = character">
                     <span>{{ character.name }}</span>
@@ -95,12 +103,11 @@
 import { Character } from '@/game-data/character/character';
 import { useGameStateStore } from '@/store/game-state-store';
 import { ref } from 'vue';
+import ExperienceBar from '../experience-bar.vue';
 import Button from '../ui/button.vue';
 import Card from '../ui/card.vue';
 import ModifierFlag from '../ui/modifier-flag.vue';
 import Panel from '../ui/panel.vue';
-import ExperienceBar from '../experience-bar.vue';
-import { getExperienceToNextLevel } from '@/game-data/level';
 
 const gameState = useGameStateStore();
 

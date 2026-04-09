@@ -25,7 +25,7 @@
                 >{{ t('modals.onboarding_name.name_suggestions') }}</small
             >
             <Card>
-                <ul class="grid grid-cols-3 gap-1 text-center muted">
+                <ul class="grid grid-cols-3 gap-1 text-center muted w-full">
                     <li v-for="m in gameData.data?.nameSuggestions" @click="characterName = m" class="cursor-pointer">
                         <em>{{ m }}</em>
                     </li>
@@ -72,6 +72,5 @@ function onClickSubmit() {
     gameState.setCharacter(playerCharacter);
 
     gameState.setActiveQuestNodeId('onboarding', 'heritage');
-    ModalController.close();
 }
 </script>

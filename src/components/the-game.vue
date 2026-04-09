@@ -6,13 +6,15 @@
             <Atlas v-else />
 
             <!-- Panels -->
-            <Journal v-if="currentPanel === 'journal'" @on-close="currentPanel = null" />
-            <Scene v-if="currentPanel === 'scene'" :id="sceneId" @on-close="currentPanel = null" />
-            <TheInventory v-if="currentPanel === 'inventory'" @on-close="currentPanel = null" />
-            <TheParty v-if="currentPanel === 'party'" @on-close="currentPanel = null" />
+            <transition-group name="fade">
+                <Journal v-if="currentPanel === 'journal'" @on-close="currentPanel = null" />
+                <Scene v-if="currentPanel === 'scene'" :id="sceneId" @on-close="currentPanel = null" />
+                <TheInventory v-if="currentPanel === 'inventory'" @on-close="currentPanel = null" />
+                <TheParty v-if="currentPanel === 'party'" @on-close="currentPanel = null" />
+            </transition-group>
         </div>
         <transition name="slide-top">
-            <TheMenu v-if="!usePauseStore().isPaused" />
+            <TheMenu v-if="!usePauseStore().isPaused" @click-panel="currentPanel = $event" />
         </transition>
     </div>
 </template>
@@ -23,7 +25,7 @@ import { StartSceneAction } from '@/actions/start-scene-action';
 import ActionController from '@/controllers/action-controller';
 import { useGameStateStore } from '@/store/game-state-store';
 import { usePauseStore } from '@/store/pause-store';
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import Atlas from './atlas/atlas.vue';
 import TheInventory from './inventory-panel/the-inventory.vue';
 import Journal from './journal.vue';
@@ -40,6 +42,11 @@ onMounted(() => {
     // Start listening to the action-controller
     const actionController = ActionController.getInstance();
     actionController.addEventListener(ActionType.SCENE, onSceneAction);
+});
+
+watch(currentPanel, (newPanel, oldPanel) => {
+    if (newPanel === null) usePauseStore().resume();
+    else usePauseStore().pause();
 });
 
 const sceneId = ref();

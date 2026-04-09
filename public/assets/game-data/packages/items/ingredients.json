@@ -76,6 +76,114 @@
             "price": 10,
             "modifiers": [],
             "ability": null
+        },
+        {
+            "id": "coal",
+            "name": "Coal",
+            "description": "A chunk of black rock, burned to provide heat or energy",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/coal.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "bone",
+            "name": "Bone",
+            "description": "White and brittle, something died so you could have this",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/bone.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "scrap",
+            "name": "Scrap",
+            "description": "Crude but strong metal, could be melted down and reshaped",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/scrap.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "leather",
+            "name": "Leather",
+            "description": "Useful for textiles that can withstand weather and angry animals",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/leather.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "fur-scrap",
+            "name": "Fur Scrap",
+            "description": "Useful for making textiles that can withstand cold",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/fur-scrap.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "wood",
+            "name": "Wood",
+            "description": "Burns bright, and can be whittled into different shapes",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/wood.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "sapphire",
+            "name": "Sapphire",
+            "description": "A rare, teal gemstone. Probably worth a pretty penny",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/sapphire.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "quartz",
+            "name": "Quartz",
+            "description": "This gemstone is pretty to look at",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/quartz.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "iron",
+            "name": "Iron",
+            "description": "A common, silver-gray ore",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
         }
     ]
 }
