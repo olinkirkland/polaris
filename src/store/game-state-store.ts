@@ -14,6 +14,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
+import { Recipe } from '@/game-data/items/recipe';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -66,7 +67,8 @@ export const useGameStateStore = defineStore('game', () => {
             flags: {},
             level: 0,
             experience: -1,
-            inventory: []
+            inventory: [],
+            recipes: []
         };
 
         validateQuestConditions();
@@ -261,12 +263,10 @@ export const useGameStateStore = defineStore('game', () => {
         return getValue('quests').find((q: QuestState) => q.id === questId);
     }
 
-    // Returns an array of inventory entries
     function getInventory() {
         return getValue('inventory');
     }
 
-    // Add an item to the inventory
     function addItem(newItem: Item) {
         const item = { ...newItem };
         if (!item.tags.some((t) => t === 'stackable')) {
@@ -277,19 +277,50 @@ export const useGameStateStore = defineStore('game', () => {
 
         // If there's an existing entry with this id, increment its quantity
         // Otherwise, create a new entry
-        patchValue('inventory', (items) => {
-            const existingEntry = items.find((t: Item) => t.id === item.id);
-            if (existingEntry) existingEntry.quantity++;
+        patchValue('inventory', (items: Item[]) => {
+            const existingEntry = items.find((t) => t.id === item.id);
+            if (existingEntry) existingEntry.quantity += newItem.quantity;
             else items.push(item);
             return [...items];
         });
     }
 
-    // Remove an item from the inventory
-    function removeItem(item: Item, quantity: number) {
+    function removeItem(itemId: string, quantityToRemove: number) {
+        patchValue('inventory', (items: { id: string; quantity: number }[]) => {
+            // Find and update the item
+            const updatedItems = items.map((item) => {
+                if (item.id === itemId) {
+                    return { ...item, quantity: item.quantity - quantityToRemove };
+                }
+                return item;
+            });
+
+            // Filter out items with 0 or negative quantity
+            return updatedItems.filter((item) => item.quantity > 0);
+        });
+    }
+
+    function hasItems(items: { id: string; quantity: number }[]): boolean {
         // TODO
-        console.error('Not implemented yet!');
-        patchValue('inventory', (items) => {});
+        return true;
+    }
+
+    function getRecipes(): Recipe[] {
+        return getValue('recipes').map((id: string) => {
+            return gameData.data?.recipes.find((r) => r.id === id) || null;
+        });
+    }
+
+    function addRecipe(recipeId: string) {
+        patchValue('recipes', (recipes: string[]) => {
+            if (recipes.find((recipeId) => recipeId === recipeId)) return recipes;
+            recipes.push(recipeId);
+            return recipes;
+        });
+    }
+
+    function craftRecipe(recipe: Recipe) {
+        // TODO
     }
 
     return {
@@ -321,6 +352,10 @@ export const useGameStateStore = defineStore('game', () => {
         addExperience,
         getInventory,
         addItem,
-        removeItem
+        removeItem,
+        hasItems,
+        getRecipes,
+        addRecipe,
+        craftRecipe
     };
 });

@@ -1,0 +1,57 @@
+{
+    "packageDescription": {
+        "id": "consumable-items",
+        "label": "Consumables (Items)",
+        "summary": "Consuamble items like poultices, etc."
+    },
+    "items": [
+        {
+            "id": "poultice",
+            "name": "Poultice",
+            "description": "A soothing paste of crushed medicinal herbs",
+            "category": "consumable",
+            "tags": ["stackable"],
+            "icon": "consumables/poultice.png",
+            "slots": null,
+            "price": 8,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "tonic",
+            "name": "Tonic",
+            "description": "A vial of bitter-tasting but invigorating stimulant",
+            "category": "consumable",
+            "tags": ["stackable"],
+            "icon": "consumables/tonic.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "poison",
+            "name": "Poison",
+            "description": "A vial of toxic liquid",
+            "category": "consumable",
+            "tags": ["stackable"],
+            "icon": "consumables/poison.png",
+            "slots": null,
+            "price": 12,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "scrap-plates",
+            "name": "Scrap Plates",
+            "description": "Temporary armor strapped in half-plate fashion, good for one encounter",
+            "category": "consumable",
+            "tags": ["stackable"],
+            "icon": "consumables/scrap-plates.png",
+            "slots": null,
+            "price": 15,
+            "modifiers": [],
+            "ability": null
+        }
+    ]
+}

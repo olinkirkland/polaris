@@ -4,5 +4,47 @@
         "label": "Crafting Recipes",
         "summary": "Crafting recipe definitions"
     },
-    "recipes": []
+    "recipes": [
+        {
+            "id": "poultice-recipe",
+            "name": "Poultice",
+            "description": "Lorem ipsum",
+            "inputs": [
+                { "id": "plant-fiber", "quantity": 1 },
+                { "id": "bell-blossom", "quantity": 2 }
+            ],
+            "outputs": [{ "id": "poultice", "quantity": 1 }]
+        },
+        {
+            "id": "tonic-recipe",
+            "name": "Tonic",
+            "description": "Lorem ipsum",
+            "inputs": [
+                { "id": "meltwater", "quantity": 1 },
+                { "id": "mugwort", "quantity": 2 }
+            ],
+            "outputs": [{ "id": "tonic", "quantity": 1 }]
+        },
+        {
+            "id": "poison-recipe",
+            "name": "Poison",
+            "description": "Lorem ipsum",
+            "inputs": [
+                { "id": "meltwater", "quantity": 1 },
+                { "id": "redcap", "quantity": 2 }
+            ],
+            "outputs": [{ "id": "poison", "quantity": 1 }]
+        },
+        {
+            "id": "scrap-plates-recipe",
+            "name": "Scrap Plates",
+            "description": "Lorem ipsum",
+            "inputs": [
+                { "id": "scrap", "quantity": 1 },
+                { "id": "leather", "quantity": 1 },
+                { "id": "plant-fiber", "quantity": 2 }
+            ],
+            "outputs": [{ "id": "scrap-plates", "quantity": 1 }]
+        }
+    ]
 }

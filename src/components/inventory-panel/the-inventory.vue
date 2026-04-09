@@ -37,12 +37,42 @@
                     </Card>
                 </li>
             </ul>
+            <p>Recipes</p>
+            <ul class="grid grid-cols-3 w-full">
+                <li v-for="recipe of state.getRecipes()">
+                    <Card class="border-style">
+                        <template #header>
+                            <p>{{ recipe.name }}</p>
+                        </template>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <p>Inputs</p>
+                                <ul>
+                                    <li v-for="t in recipe.inputs">{{ t.quantity }}x {{ t.id }}</li>
+                                </ul>
+                            </div>
+
+                            <div>
+                                <p>Outputs</p>
+                                <ul>
+                                    <li v-for="t in recipe.outputs">{{ t.quantity }}x {{ t.id }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <Button @click="onClickCraft(recipe)" :disabled="!state.hasItems(recipe.inputs)">
+                            <i class="fas fa-play"></i>
+                            <span>Craft</span>
+                        </Button>
+                    </Card>
+                </li>
+            </ul>
         </Card>
     </Panel>
 </template>
 
 <script lang="ts" setup>
 import { Item } from '@/game-data/items/item';
+import { Recipe } from '@/game-data/items/recipe';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import Panel from '../ui/panel.vue';
@@ -51,5 +81,9 @@ const state = useGameStateStore();
 
 function onClickAddItem(item: Item) {
     state.addItem(item);
+}
+
+function onClickCraft(recipe: Recipe) {
+    state.craftRecipe(recipe);
 }
 </script>
