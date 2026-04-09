@@ -15,6 +15,7 @@
                             .slice()
                             .sort((a, b) => (a.labelPoint?.y || 0) - (b.labelPoint?.y || 0))"
                         class="pin-label"
+                        :class="{ disabled: !!focusedPin }"
                         :style="{
                             left: pin.labelPoint?.x + 'px',
                             top: `calc(${pin.labelPoint?.y + 'px'} - 1.5rem)`,
@@ -90,6 +91,11 @@ const focusedPin = ref<Pin | null>(null);
     width: max-content;
     max-width: 20rem;
     text-align: center;
+
+    &.disabled {
+        opacity: 0.2;
+        pointer-events: none;
+    }
 
     > div {
         border: 1px solid transparent;
