@@ -28,5 +28,17 @@
         "label": "Origin Quests",
         "selected": true,
         "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/items/ingredients.json",
+        "label": "Ingredients",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/items/recipes.json",
+        "label": "Recipes",
+        "selected": true,
+        "forced": true
     }
 ]

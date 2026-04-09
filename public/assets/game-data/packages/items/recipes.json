@@ -1,0 +1,8 @@
+{
+    "packageDescription": {
+        "id": "recipes",
+        "label": "Crafting Recipes",
+        "summary": "Crafting recipe definitions"
+    },
+    "recipes": []
+}

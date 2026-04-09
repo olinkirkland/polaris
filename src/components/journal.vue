@@ -10,7 +10,7 @@
             </Card>
             <ul class="flex flex-col gap-2">
                 <li v-for="q in gameData?.data?.quests">
-                    <Card v-if="gameState.getActiveNodeId(q.id)">
+                    <Card v-if="gameState.getActiveQuestNodeId(q.id)">
                         <template #header>
                             <div class="flex flex-col">
                                 <h2 class="w-fit mb-1">{{ q.label }}</h2>

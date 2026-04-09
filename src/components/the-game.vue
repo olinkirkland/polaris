@@ -6,12 +6,14 @@
             <Atlas v-else />
 
             <!-- Panels -->
-            <Journal v-if="currentPanel === 'journal'" />
-            <Scene v-if="currentPanel === 'scene'" :id="sceneId" />
-            <TheInventory v-if="currentPanel === 'inventory'" />
-            <TheParty v-if="currentPanel === 'party'" />
+            <Journal v-if="currentPanel === 'journal'" @on-close="currentPanel = null" />
+            <Scene v-if="currentPanel === 'scene'" :id="sceneId" @on-close="currentPanel = null" />
+            <TheInventory v-if="currentPanel === 'inventory'" @on-close="currentPanel = null" />
+            <TheParty v-if="currentPanel === 'party'" @on-close="currentPanel = null" />
         </div>
-        <TheMenu v-if="!usePauseStore().isPaused" @clickPanel="setPanel" />
+        <transition name="slide-top">
+            <TheMenu v-if="!usePauseStore().isPaused" />
+        </transition>
     </div>
 </template>
 
@@ -32,7 +34,7 @@ import Zone from './zone/zone.vue';
 
 const gameState = useGameStateStore();
 
-const currentPanel = ref<string>();
+const currentPanel = ref<string | null>(null);
 
 onMounted(() => {
     // Start listening to the action-controller
@@ -46,14 +48,7 @@ function onSceneAction(action: BaseAction) {
     console.log('@onSceneAction:', action);
     const sceneAction = action as StartSceneAction;
     sceneId.value = sceneAction.id;
-    setPanel('scene');
-}
-
-function setPanel(panel: string) {
-    currentPanel.value = panel;
-
-    if (currentPanel.value) usePauseStore().pause();
-    else usePauseStore().resume();
+    currentPanel.value = 'scene';
 }
 </script>
 

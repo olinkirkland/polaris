@@ -2,7 +2,7 @@
     "packageDescription": {
         "id": "core",
         "label": "Core",
-        "summary": "Core story file."
+        "summary": "Core data file"
     },
     "pins": [
         {

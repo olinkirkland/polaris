@@ -81,7 +81,7 @@ function onClickSubmit() {
     if (modifiers) playerCharacter.stats.applyModifiers(modifiers);
     gameState.setCharacter(playerCharacter);
 
-    gameState.setActiveNodeId('onboarding', 'complete');
+    gameState.setActiveQuestNodeId('onboarding', 'complete');
     ModalController.close();
 }
 </script>

@@ -2,9 +2,11 @@ import InfoModal from '@/components/modals/templates/info-modal.vue';
 import ModalController from '@/controllers/modal-controller';
 import SaveOverlayController from '@/controllers/save-overlay-controller';
 import { Character } from '@/game-data/character/character';
+import { Item } from '@/game-data/items/item';
 import { getExperienceToNextLevel } from '@/game-data/level';
 import { Pin } from '@/game-data/pin/pin';
 import { QuestState } from '@/game-data/quest/quest';
+import { t } from '@/i18n/locale';
 import { getNestedValue, setNestedValue } from '@/util/object-util';
 import { wait } from '@/util/wait-util';
 import { defineStore } from 'pinia';
@@ -12,7 +14,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { computed, ref } from 'vue';
 import { useGameDataStore } from './game-data-store';
 import { StoredGame, StoredGameManifest, useStorageStore } from './storage-store';
-import { t } from '@/i18n/locale';
 
 export const useGameStateStore = defineStore('game', () => {
     const gameData = useGameDataStore();
@@ -64,7 +65,8 @@ export const useGameStateStore = defineStore('game', () => {
             pins: [],
             flags: {},
             level: 0,
-            experience: -1
+            experience: -1,
+            inventory: []
         };
 
         validateQuestConditions();
@@ -213,13 +215,13 @@ export const useGameStateStore = defineStore('game', () => {
         throw new Error('Function not implemented!');
     }
 
-    function getActiveNodeId(questId: string): string | undefined {
+    function getActiveQuestNodeId(questId: string): string | undefined {
         const quests: QuestState[] = getValue('quests');
         const questState = quests.find((q: QuestState) => q.id === questId);
         return questState?.activeNodeId;
     }
 
-    function setActiveNodeId(questId: string, nodeId: string) {
+    function setActiveQuestNodeId(questId: string, nodeId: string) {
         patchValue('quests', (quests: QuestState[]) => {
             const existingQuestIndex = quests.findIndex((q) => q.id === questId);
 
@@ -259,6 +261,28 @@ export const useGameStateStore = defineStore('game', () => {
         return getValue('quests').find((q: QuestState) => q.id === questId);
     }
 
+    // Returns an array of inventory entries
+    function getInventory() {}
+
+    // Add an item to the inventory
+    function addItem(item: Item, quantity: number = 1) {
+        if (item.tags.find((t) => t === 'stackable')) {
+            // Stackable
+            // If there's an existing entry with this id, increment its quantity
+
+            // Otherwise, create a new entry
+            
+
+        } else {
+            // Unique
+            // Change the item's id to a uuid so it can't stack
+            // Create a new entry
+        }
+    }
+
+    // Remove an item from the inventory
+    function removeItem(item: Item, quantity: number) {}
+
     return {
         startNewGame,
         getMostRecentSave,
@@ -279,8 +303,8 @@ export const useGameStateStore = defineStore('game', () => {
         setCharacter,
         removeCharacter,
         getParty,
-        getActiveNodeId,
-        setActiveNodeId,
+        getActiveQuestNodeId,
+        setActiveQuestNodeId,
         getFlag,
         setFlag,
         getQuest,

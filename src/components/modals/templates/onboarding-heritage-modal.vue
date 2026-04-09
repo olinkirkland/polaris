@@ -67,7 +67,7 @@ function onClickSubmit() {
     if (!heritage.value) return;
     gameState.setValue('flags.heritage', heritage.value.id);
 
-    gameState.setActiveNodeId('onboarding', 'path');
+    gameState.setActiveQuestNodeId('onboarding', 'path');
     ModalController.close();
 }
 </script>

@@ -1,5 +1,7 @@
 import { CharacterPath } from '@/game-data/character/character-path';
 import { Heritage } from '@/game-data/character/heritage';
+import { Item } from '@/game-data/items/item';
+import { Recipe } from '@/game-data/items/recipe';
 import { Pin } from '@/game-data/pin/pin';
 import { Quest } from '@/game-data/quest/quest';
 import { Scene } from '@/game-data/scene/scene';
@@ -19,6 +21,8 @@ export interface BaseGameData {
     zones: Zone[];
     quests: Quest[];
     scenes: Scene[];
+    items: Item[];
+    recipes: Recipe[];
 
     characterPaths: CharacterPath[];
     characterHeritages: Heritage[];
@@ -86,6 +90,8 @@ async function unpackGameDataPackage(data: any): Promise<GameDataPackage> {
         quests: [],
         zones: [],
         scenes: [],
+        items: [],
+        recipes: [],
         characterPaths: [],
         characterHeritages: [],
         nameSuggestions: [],
@@ -96,6 +102,8 @@ async function unpackGameDataPackage(data: any): Promise<GameDataPackage> {
     g.quests = (data.quests || []).map((q: any) => Quest.unpack(q));
     g.scenes = await Promise.all((data.scenes || []).map((s: any) => Scene.unpack(s)));
     g.zones = (data.zones || []).map((z: any) => Zone.unpack(z));
+    g.items = (data.items || []).map((t: any) => Item.unpack(t));
+    g.recipes = (data.recipes || []).map((r: any) => Recipe.unpack(r));
     g.characterPaths = (data.characterPaths || []).map((p: any) => CharacterPath.unpack(p));
     g.characterHeritages = data.characterHeritages || [];
     g.nameSuggestions = data.nameSuggestions || [];
@@ -141,6 +149,8 @@ function makeEmptyGameData(): GameData {
         zones: [],
         quests: [],
         scenes: [],
+        items: [],
+        recipes: [],
         characterPaths: [],
         characterHeritages: [],
         nameSuggestions: [],

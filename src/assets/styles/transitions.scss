@@ -1,14 +1,19 @@
-.slide-right-enter-active,
-.slide-right-leave-active {
+// From right
+.slide-right-enter-active {
     transition: all 0.2s ease-out;
 }
 
-.slide-right-enter-from,
-.slide-right-leave-to {
+.slide-right-enter-from {
     transform: translateX(1rem);
     opacity: 0;
 }
 
-.slide-right-leave-active {
-    position: absolute;
+// From top
+.slide-top-enter-active {
+    transition: all 0.2s ease-out;
+}
+
+.slide-top-enter-from {
+    transform: translateY(-1rem);
+    opacity: 0;
 }

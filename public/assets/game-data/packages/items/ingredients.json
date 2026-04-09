@@ -1,0 +1,81 @@
+{
+    "packageDescription": {
+        "id": "ingredients",
+        "label": "Ingredients (Items)",
+        "summary": "Ingredient definitions"
+    },
+    "items": [
+        {
+            "id": "redcap",
+            "name": "Redcap",
+            "description": "A poisonous mushroom",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/redcap.png",
+            "slots": null,
+            "price": 4,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "plant-fiber",
+            "name": "Plant Fiber",
+            "description": "Sturdy fibers, good for textiles or rope",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/plant-fiber.png",
+            "slots": null,
+            "price": 1,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "bell-blossom",
+            "name": "Bell Blossom",
+            "description": "A flower known for its healing properties",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/bell-blossom.png",
+            "slots": null,
+            "price": 3,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "mugwort",
+            "name": "Mugwort",
+            "description": "A flower known for it’s arcane properties",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/mugwort.png",
+            "slots": null,
+            "price": 3,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "meltwater",
+            "name": "Meltwater",
+            "description": "A vial of purified glacier water for making chemical solutions",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/meltwater.png",
+            "slots": null,
+            "price": 1,
+            "modifiers": [],
+            "ability": null
+        },
+        {
+            "id": "machine-part",
+            "name": "Machine Part",
+            "description": "A component from a machine, not easily reproduced",
+            "category": "ingredient",
+            "tags": ["stackable"],
+            "icon": "ingredients/machine-part.png",
+            "slots": null,
+            "price": 10,
+            "modifiers": [],
+            "ability": null
+        }
+    ]
+}

@@ -71,7 +71,7 @@ function onClickSubmit() {
 
     gameState.setCharacter(playerCharacter);
 
-    gameState.setActiveNodeId('onboarding', 'heritage');
+    gameState.setActiveQuestNodeId('onboarding', 'heritage');
     ModalController.close();
 }
 </script>
