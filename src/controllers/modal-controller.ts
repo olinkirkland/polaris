@@ -11,7 +11,9 @@ export default class ModalController {
     private subject: Subject<ModalDispatch> = new Subject<ModalDispatch>();
 
     public static open(modal: ComponentOptions<any>, modalConfig?: any): void {
-        this.getInstance().dispatch({ modal, modalConfig });
+        requestAnimationFrame(() => {
+            this.getInstance().dispatch({ modal, modalConfig });
+        });
     }
 
     public static close(callback?: Function): void {
