@@ -154,11 +154,11 @@ label.input-box {
 
 code.keybinding {
     padding: 0rem 0.35rem;
-    background-color: white;
-    color: black;
+    background-color: rgba(255, 255, 255, 0.15);
+    color: white;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 3px;
     font-weight: bold;
-    opacity: 0.5;
     font-size: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
 }
