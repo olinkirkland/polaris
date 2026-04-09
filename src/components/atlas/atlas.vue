@@ -2,7 +2,7 @@
     <div class="h-full flex relative">
         <div class="relative flex-1">
             <!-- <TerrainViewer zone-id="atlas" :pins="[]" /> -->
-            <div class="overlay" v-if="!usePauseStore().isGamePaused"></div>
+            <div class="overlay" v-if="!usePauseStore().isPaused"></div>
         </div>
     </div>
 

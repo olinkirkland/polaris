@@ -82,7 +82,7 @@ onMounted(async () => {
         addSkybox();
     }
 
-    if (env.DEBUG) {
+    if (env.NOCLIP) {
         addDebugCameraControls();
         addMouseTarget();
         addLights();
@@ -265,7 +265,7 @@ function addCameraControls() {
     }
 
     function onMouseMove(event: MouseEvent) {
-        if (usePauseStore().isGamePaused) return;
+        if (usePauseStore().isPaused) return;
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
         targetTilt.x = mouse.y * tiltIntensity;
@@ -292,7 +292,7 @@ function addCameraControls() {
     }
 
     window.addEventListener('mousemove', onMouseMove);
-    el.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('wheel', onWheel, { passive: false });
 
     update();
 }
@@ -364,7 +364,7 @@ function animate() {
         pin.labelPoint = getViewportPoint(pinPoint.point, camera, renderer);
     });
 
-    if (env.DEBUG) {
+    if (env.NOCLIP) {
         if (keysHeld.size === 0) return;
 
         const forward = new THREE.Vector3();

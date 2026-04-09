@@ -8,13 +8,21 @@
             @click="onClickBackground()"
         ></div>
         <component :is="currentModal" v-bind="currentModalConfig" ref="modalRef" />
+        <span
+            v-if="useEnvStore().DEBUG && usePauseStore().isPaused"
+            class="absolute top-0 right-0 p-5 text-red-500 flex gap-2 items-center"
+        >
+            <i class="fas fa-pause"></i>
+        </span>
     </div>
 </template>
 
 <script setup lang="ts">
 import ModalController from '@/controllers/modal-controller';
-import { ComponentOptions, ref, shallowRef } from 'vue';
+import { useEnvStore } from '@/store/env-store';
+import { usePauseStore } from '@/store/pause-store';
 import _ from 'lodash';
+import { ComponentOptions, ref, shallowRef } from 'vue';
 
 const modalRef = ref();
 const currentModal = shallowRef<ComponentOptions | null>(null);
@@ -30,15 +38,19 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
     // If no modal was passed, close the current one
     if (!modal) {
         currentModal.value = null;
-        if (!queue.length) return;
+        if (!queue.length) {
+            usePauseStore().resume();
+            return;
+        }
 
         // If there are modals in the queue, open the next one
         const { modal, modalConfig } = queue.shift()!;
         ModalController.open(modal, modalConfig);
+        usePauseStore().pause();
         return;
     }
 
-    // Open
+    // Is there already a modal open?
     if (currentModal.value) {
         // If a matching modalConfig is already in the queue, don't add it again
         const queueIncludingCurrent = [...queue, { modal: currentModal.value, modalConfig: currentModalConfig.value }];
@@ -49,14 +61,16 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
 
         if (isModalAlreadyInQueue) return;
 
-        // Add the modal to the queue
+        // Add the modal to the queue and close the current one to trigger the queue
         queue.push({ modal, modalConfig });
+        ModalController.close();
         return;
     }
 
     if (modal) {
         currentModal.value = { ...modal! } as any;
         currentModalConfig.value = { ...modalConfig };
+        usePauseStore().pause();
     }
 
     // Wait for the modal to be mounted before fading in

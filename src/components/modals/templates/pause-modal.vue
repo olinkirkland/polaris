@@ -66,12 +66,10 @@ const relativeQuickSaveTooltip = computed(() => {
 
 function onClickSave() {
     ModalController.open(SaveModal);
-    ModalController.close();
 }
 
 function onClickLoad() {
     ModalController.open(LoadGameModal, { selectedManifestGroupId: gameStateId.value });
-    ModalController.close();
 }
 
 function onClickQuickSave() {

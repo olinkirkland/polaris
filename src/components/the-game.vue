@@ -11,7 +11,7 @@
             <TheInventory v-if="currentPanel === 'inventory'" />
             <TheParty v-if="currentPanel === 'party'" />
         </div>
-        <TheMenu v-if="!usePauseStore().isGamePaused" @clickPanel="setPanel" />
+        <TheMenu v-if="!usePauseStore().isPaused" @clickPanel="setPanel" />
     </div>
 </template>
 

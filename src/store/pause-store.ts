@@ -2,15 +2,17 @@ import { defineStore } from 'pinia';
 import { ref } from 'vue';
 
 export const usePauseStore = defineStore('pause', () => {
-    const isGamePaused = ref<boolean>(true);
+    const isPaused = ref<boolean>(true);
 
     function pause() {
-        isGamePaused.value = true;
+        console.log('-- pause');
+        isPaused.value = true;
     }
 
     function resume() {
-        isGamePaused.value = false;
+        console.log('-- resume');
+        isPaused.value = false;
     }
 
-    return { isGamePaused, pause, resume };
+    return { isPaused, pause, resume };
 });
