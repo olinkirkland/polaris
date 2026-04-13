@@ -325,7 +325,7 @@ function addWaterPlane() {
         }),
         sunDirection: new THREE.Vector3(),
         sunColor: 0xffffff,
-        waterColor: 0x095859,
+        waterColor: 0x017b92,
         distortionScale: 0.5,
         fog: scene.fog !== undefined
     });
@@ -430,11 +430,13 @@ function addMouseTarget() {
         cursor.visible = true;
     }, 250);
 
+    console.log('NOCLIP MODE ENABLED');
+    console.log('Press C to log cursor position, V to log camera position and lookAt target');
     window.addEventListener('keydown', onPressKey);
     function onPressKey(event: KeyboardEvent) {
         switch (event.key) {
             case 'c':
-                console.log('cursor:', cursor.position.x, cursor.position.z);
+                console.log(`{ "x": ${cursor.position.x.toFixed(6)}, "y": ${cursor.position.y.toFixed(6)} }`);
                 break;
 
             case 'v':

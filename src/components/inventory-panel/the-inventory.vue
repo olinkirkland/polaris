@@ -17,7 +17,7 @@
                             <strong>{{ item.quantity }}</strong>
                             {{ item.name }}
                         </p>
-                        <!-- <img :src="item.icon" class="w-10" /> -->
+                        <img :src="item.icon" class="w-10" />
                         <Button @click="onClickAddItem(item)">
                             <i class="fas fa-hand"></i>
                             <span>Give</span>
@@ -33,7 +33,7 @@
                             <strong>{{ item.quantity }}</strong>
                             {{ item.name }}
                         </p>
-                        <!-- <img :src="item.icon" class="w-10" /> -->
+                        <img :src="item.icon" class="w-10" />
                     </Card>
                 </li>
             </ul>

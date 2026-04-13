@@ -40,6 +40,7 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function patchValue(key: string, f: (oldValue: any) => any) {
+        console.log(key);
         const currentValue = getValue(key);
         const newValue = f(currentValue);
         setValue(key, newValue);
@@ -188,9 +189,12 @@ export const useGameStateStore = defineStore('game', () => {
 
     function listPins() {
         const allPins = gameData.data?.pins.map((p) => p.id);
-        const active = getValue('pins');
+        const active = getValue('pins') as string[];
         const inactive = allPins?.filter((p) => (getValue('pins') as string[]).every((q) => q !== p));
-        return { active, inactive };
+        console.log('Active Pins', `(${active?.length || 0}/${allPins?.length || 0})`);
+        console.log(active?.join('\n'));
+        console.log('Inactive Pins', `(${inactive?.length || 0}/${allPins?.length || 0})`);
+        console.log(inactive?.join('\n'));
     }
 
     function getParty(): Character[] {
@@ -205,6 +209,7 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function setCharacter(newCharacter: Character) {
+        console.log(newCharacter);
         patchValue('party', (party: Character[]) => {
             const exists = party.some((c: Character) => c.id === newCharacter.id);
             if (exists) return party.map((c: Character) => (c.id === newCharacter.id ? newCharacter : c));

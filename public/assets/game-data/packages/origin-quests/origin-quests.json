@@ -113,6 +113,12 @@
             "address": { "zone": "grima", "point": { "x": 0.04107138585101422, "y": -0.09981612829311337 } },
             "label": "Bar",
             "actions": []
+        },
+        {
+            "id": "grima.return-to-atlas",
+            "address": { "zone": "grima", "point": { "x": -0.098888, "y": -0.003228 } },
+            "label": "Return to Atlas",
+            "actions": [{ "type": "go-to-atlas", "point": { "x": 0.5, "y": 0.5 } }]
         }
     ],
     "scenes": [{ "id": "isolde-intro", "url": "assets/game-data/packages/origin-quests/scenes/isolde-intro.ink" }]

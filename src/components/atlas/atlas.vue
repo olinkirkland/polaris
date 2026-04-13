@@ -1,7 +1,13 @@
 <template>
     <div class="h-full flex relative">
         <div class="relative flex-1">
-            <!-- <TerrainViewer zone-id="atlas" :pins="[]" /> -->
+            <TerrainViewer
+                v-if="atlas"
+                :zoneId="atlas.id"
+                :pins="gameState.getPinsInZone(atlas.id)"
+                :cameraSplines="atlas.cameraSplines"
+                :focusedPin="null"
+            />
             <div class="overlay" v-if="!usePauseStore().isPaused"></div>
         </div>
     </div>
@@ -26,6 +32,7 @@ import TerrainViewer from '../terrain-viewer.vue';
 import Card from '../ui/card.vue';
 
 const gameState = useGameStateStore();
+const atlas = computed(() => gameState.zone!);
 
 const coordinates = computed(() => {
     return gameState.getValue('atlas-coordinates');
