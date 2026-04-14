@@ -40,7 +40,6 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function patchValue(key: string, f: (oldValue: any) => any) {
-        console.log(key);
         const currentValue = getValue(key);
         const newValue = f(currentValue);
         setValue(key, newValue);

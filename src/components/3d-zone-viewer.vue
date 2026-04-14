@@ -15,7 +15,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { computed, onBeforeUnmount, onMounted, PropType, ref, watch, watchEffect } from 'vue';
+import { onBeforeUnmount, onMounted, PropType, ref, watch } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
@@ -74,17 +74,18 @@ onMounted(async () => {
     el.appendChild(renderer.domElement);
 
     await loadAndAddTerrain();
+    
     if (env.STEALTH) {
         terrain.visible = false;
     } else {
         addWaterPlane();
         addSkybox();
+        addLights();
     }
 
     if (env.NOCLIP) {
         addDebugCameraControls();
         addMouseTarget();
-        addLights();
     } else {
         addCameraControls();
     }
@@ -128,8 +129,6 @@ async function loadAndAddTerrain(): Promise<THREE.Group> {
     return new Promise((resolve, reject) => {
         const loader = new GLTFLoader();
         const dracoLoader = new DRACOLoader();
-
-        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
         loader.setDRACOLoader(dracoLoader);
 
         loader.load(
@@ -268,6 +267,7 @@ function addCameraControls() {
             }
 
             if (Math.abs(velocity) < 0.00002) velocity = 0;
+
             velocity *= friction;
 
             updateCameraFromT(distanceAlongSpline);
