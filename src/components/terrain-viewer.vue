@@ -15,7 +15,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { onBeforeUnmount, onMounted, PropType, ref } from 'vue';
+import { computed, onBeforeUnmount, onMounted, PropType, ref, watchEffect } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
@@ -54,7 +54,16 @@ let terrain: THREE.Group;
 let controls: OrbitControls;
 let water: Water;
 
-const pinPoints: { id: string; point: THREE.Vector3 }[] = [];
+const pinPoints = computed<{ id: string; point: THREE.Vector3 }[]>(() => {
+    const arr: { id: string; point: THREE.Vector3 }[] = [];
+    props.pins.forEach((p) => {
+        const point = p.address.point;
+        const height = getHeightAtPoint(terrain, point);
+        const pointWithHeight: THREE.Vector3 = new THREE.Vector3(point.x, height + 0.02, point.y);
+        arr.push({ id: p.id, point: pointWithHeight });
+    });
+    return arr;
+});
 
 // Debug camera
 const moveSpeed = 0.01;
@@ -88,14 +97,6 @@ onMounted(async () => {
     } else {
         addCameraControls();
     }
-
-    // Determine pinPoints (calculate height for each)
-    props.pins.forEach((p) => {
-        const point = p.address.point;
-        const height = getHeightAtPoint(terrain, point);
-        const pointWithHeight: THREE.Vector3 = new THREE.Vector3(point.x, height + 0.02, point.y);
-        pinPoints.push({ id: p.id, point: pointWithHeight });
-    });
 
     window.addEventListener('resize', onResize);
 
@@ -202,7 +203,7 @@ function addCameraControls() {
             // A pin has been focused, process this action
             targetPinId = props.focusedPin.id;
             const pin = props.focusedPin;
-            const focusedPinPoint = pinPoints.find((p) => pin.id === p.id)?.point;
+            const focusedPinPoint = pinPoints.value.find((p) => pin.id === p.id)?.point;
             if (!focusedPinPoint) throw new Error('Focused Point not found');
 
             // Get the closest point on the spline to the pinPoint
@@ -366,7 +367,7 @@ function animate() {
     // TODO don't use the index
     // Update the pin's labelPoints based on index
     props.pins.forEach((pin, index) => {
-        const pinPoint = pinPoints[index];
+        const pinPoint = pinPoints.value[index];
         pin.labelPoint = getViewportPoint(pinPoint.point, camera, renderer);
     });
 
