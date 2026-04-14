@@ -3,31 +3,20 @@
         <Card class="h-full">
             <template #header>
                 <div class="flex justify-between items-center w-full">
-                    <span>Inventory</span>
+                    <div class="flex gap-2">
+                        <span>Inventory</span>
+                        <Button icon @click="ModalController.open(CheatItemsModal)">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        </Button>
+                    </div>
                     <Button icon @click="$emit('on-close')">
                         <i class="fas fa-times"></i>
                     </Button>
                 </div>
             </template>
-            <p>Available</p>
-            <ul class="grid grid-cols-7 w-full">
-                <li v-for="item of gameData.data?.items">
-                    <Card pressed>
-                        <p>
-                            <strong>{{ item.quantity }}</strong>
-                            {{ item.name }}
-                        </p>
-                        <img :src="item.icon" class="w-10" />
-                        <Button @click="onClickAddItem(item)">
-                            <i class="fas fa-hand"></i>
-                            <span>Give</span>
-                        </Button>
-                    </Card>
-                </li>
-            </ul>
             <p>Owned</p>
             <ul class="grid grid-cols-7 w-full">
-                <li v-for="item of state.getInventory()">
+                <li v-for="item of gameState.getInventory()">
                     <Card pressed>
                         <p>
                             <strong>{{ item.quantity }}</strong>
@@ -39,7 +28,7 @@
             </ul>
             <p>Recipes</p>
             <ul class="grid grid-cols-3 w-full">
-                <li v-for="recipe of state.getRecipes()">
+                <li v-for="recipe of gameState.getRecipes()">
                     <Card class="border-style">
                         <template #header>
                             <p>{{ recipe.name }}</p>
@@ -59,7 +48,7 @@
                                 </ul>
                             </div>
                         </div>
-                        <Button @click="onClickCraft(recipe)" :disabled="!state.hasItems(recipe.inputs)">
+                        <Button @click="onClickCraft(recipe)" :disabled="!gameState.hasItems(recipe.inputs)">
                             <i class="fas fa-play"></i>
                             <span>Craft</span>
                         </Button>
@@ -71,19 +60,16 @@
 </template>
 
 <script lang="ts" setup>
-import { Item } from '@/game-data/items/item';
+import ModalController from '@/controllers/modal-controller';
 import { Recipe } from '@/game-data/items/recipe';
 import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
+import CheatItemsModal from '../modals/templates/cheat-items-modal.vue';
 import Panel from '../ui/panel.vue';
 const gameData = useGameDataStore();
-const state = useGameStateStore();
-
-function onClickAddItem(item: Item) {
-    state.addItem(item);
-}
+const gameState = useGameStateStore();
 
 function onClickCraft(recipe: Recipe) {
-    state.craftRecipe(recipe);
+    gameState.craftRecipe(recipe);
 }
 </script>
