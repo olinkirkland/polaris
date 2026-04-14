@@ -99,7 +99,10 @@ function addCameraControls() {
     const el = container.value!;
     const width = el.clientWidth;
     const height = el.clientHeight;
+
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
+    camera.position.set(0, 5, 0);
+    camera.lookAt(0, 0, 0);
 }
 
 function calculatePinPoints() {
@@ -113,6 +116,7 @@ function calculatePinPoints() {
 }
 
 async function loadAndAddTerrain(): Promise<THREE.Group> {
+    console.log('@3d-atlas-viewer.loadAndAddTerrain');
     return new Promise((resolve, reject) => {
         const loader = new GLTFLoader();
         const dracoLoader = new DRACOLoader();

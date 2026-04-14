@@ -74,7 +74,7 @@ onMounted(async () => {
     el.appendChild(renderer.domElement);
 
     await loadAndAddTerrain();
-    
+
     if (env.STEALTH) {
         terrain.visible = false;
     } else {
@@ -126,13 +126,15 @@ function calculatePinPoints() {
 }
 
 async function loadAndAddTerrain(): Promise<THREE.Group> {
+    const url = 'assets/terrain/' + props.zoneId + '/' + props.zoneId + '.glb';
+    console.log('@3d-zone-viewer.loadAndAddTerrain:', url);
     return new Promise((resolve, reject) => {
         const loader = new GLTFLoader();
         const dracoLoader = new DRACOLoader();
         loader.setDRACOLoader(dracoLoader);
 
         loader.load(
-            'assets/terrain/' + props.zoneId + '/' + props.zoneId + '.glb',
+            url,
             (gltf) => {
                 terrain = gltf.scene;
                 scene.add(terrain);
