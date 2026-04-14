@@ -68,3 +68,16 @@ Shaman and ayuhuasca type drug ritual
 Skipping rocks
 
 The mysterious cassette tape, holds answers to where the demons came from. Callback to Sonny "how do I know that there's even aynthing on this" - disappointment but we have a real reveal in this game
+
+Market, multiple buttons (Actions) on pin, - action sequences to choose from? or not? Talk to Sam, quest iterated or items received or flags? Or is this handled by dialogue engine only
+
+Zoom in out when atlas to zone or vice versa to communicate the transition
+
+City in blender? Blender no textures. How city textures?
+Modular city, generated based on painted texture layer?
+
+Item and recipe cheat modal
+
+Prep all location terrain meshes
+
+Currency?
