@@ -104,7 +104,7 @@ label.input-box {
     overflow: hidden;
 
     &:has(:focus-within) {
-        border-radius: 5px;
+        border-radius: 2px;
         outline: 1px solid white;
         outline-offset: 0.2rem;
         > span {
