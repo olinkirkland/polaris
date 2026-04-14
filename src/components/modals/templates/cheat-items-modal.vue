@@ -15,7 +15,9 @@
                         <div class="flex gap-1">
                             <img :src="item.icon" class="w-6 h-6" />
                             <p>
-                                +{{ item.quantity }}
+                                +{{ item.quantity }} ({{
+                                    gameState.getInventory().find((t) => t.id === item.id)?.quantity || 0
+                                }})
                                 {{ item.name }}
                             </p>
                         </div>

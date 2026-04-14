@@ -272,7 +272,7 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function getInventory() {
-        return getValue('inventory');
+        return getValue('inventory') as Item[];
     }
 
     function addItem(newItem: Item) {
