@@ -55,6 +55,7 @@ let controls: OrbitControls;
 let water: Water;
 
 let pinPoints: { id: string; point: THREE.Vector3 }[] = [];
+let isEasing = false;
 
 // Debug camera
 const moveSpeed = 0.01;
@@ -102,6 +103,8 @@ onMounted(async () => {
     requestAnimationFrame(() => {
         ModalController.close();
     });
+
+    isEasing = true;
 });
 
 watch(
@@ -215,6 +218,14 @@ function addCameraControls() {
     let lookAtPosition: THREE.Vector3 | null = null;
 
     function update() {
+        if (isEasing) {
+            isEasing = false;
+            const direction = new THREE.Vector3();
+            camera.getWorldDirection(direction);
+            targetCameraPosition = new THREE.Vector3();
+            targetCameraPosition.copy(camera.position);
+            camera.position.copy(camera.position).addScaledVector(direction, -0.5);
+        }
         if (props.focusedPin && props.focusedPin.id !== targetPinId) {
             // A pin has been focused, process this action
             targetPinId = props.focusedPin.id;
@@ -320,12 +331,6 @@ function addCameraControls() {
 
     update();
 }
-
-// Todo: Zoom in on a pin, but center the pin on the left 2/3s of the screen
-function zoomToPin() {}
-
-// Todo: Zoom back to the original camera point
-function zoomOut() {}
 
 function addLights() {
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);

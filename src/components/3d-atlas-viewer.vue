@@ -290,12 +290,6 @@ async function loadAndAddTerrain(): Promise<THREE.Group> {
 //     update();
 // }
 
-// Todo: Zoom in on a pin, but center the pin on the left 2/3s of the screen
-function zoomToPin() {}
-
-// Todo: Zoom back to the original camera point
-function zoomOut() {}
-
 function addLights() {
     const ambient = new THREE.AmbientLight(0xffffff, 0.6);
     scene.add(ambient);
