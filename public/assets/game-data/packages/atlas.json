@@ -7,9 +7,15 @@
     "pins": [
         {
             "id": "atlas.polaris",
-            "address": { "zone": "atlas", "point": { "x": -0.04334874738788064, "y": -0.08656008557641037 } },
+            "address": { "zone": null, "point": { "x": 0.00, "y": 0.00 } },
             "label": "Polaris",
             "actions": []
+        },
+        {
+            "id": "atlas.grima",
+            "address": { "zone": null, "point": { "x": 1.00, "y": 1.00 } },
+            "label": "Grima",
+            "actions": [{ "type": "go-to-zone", "id": "grima" }]
         }
     ]
 }

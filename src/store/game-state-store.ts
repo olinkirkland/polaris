@@ -50,7 +50,7 @@ export const useGameStateStore = defineStore('game', () => {
         return gameData.data.pins.filter((p) => (getValue('pins') as string[]).indexOf(p.id) > -1);
     }
 
-    function getPinsInZone(zone: string): Pin[] {
+    function getPinsInZone(zone: string | null): Pin[] {
         return getPins().filter((p) => p.address.zone === zone);
     }
 
@@ -193,6 +193,7 @@ export const useGameStateStore = defineStore('game', () => {
         const allPins = gameData.data?.pins.map((p) => p.id);
         const active = getValue('pins') as string[];
         const inactive = allPins?.filter((p) => (getValue('pins') as string[]).every((q) => q !== p));
+        console.log('===', zone.value, '===');
         console.log('Active Pins', `(${active?.length || 0}/${allPins?.length || 0})`);
         console.log(active?.join('\n'));
         console.log('Inactive Pins', `(${inactive?.length || 0}/${allPins?.length || 0})`);
