@@ -55,7 +55,10 @@
                     </div>
 
                     <!-- Zone description -->
-                    <div v-if="!usePauseStore().isPaused && !useEnvStore().STEALTH" class="m-2 p-3 max-w-2/3 absolute bottom-0">
+                    <div
+                        v-if="!usePauseStore().isPaused && !useEnvStore().STEALTH"
+                        class="m-2 p-3 max-w-2/3 absolute bottom-0"
+                    >
                         <h2 class="opacity-20 mb-1 text-6xl tracking-wide">{{ zone.label }}</h2>
                         <p>
                             {{ zone.description }}

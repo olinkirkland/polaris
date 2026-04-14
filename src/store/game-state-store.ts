@@ -160,7 +160,10 @@ export const useGameStateStore = defineStore('game', () => {
     }
 
     function load(path: string) {
+        console.log('@load:', path);
         const g: StoredGame = JSON.parse(localStorage.getItem(path)!);
+
+        console.log(g);
 
         // Unpack the values from the loaded file
         id.value = g.manifest.id;

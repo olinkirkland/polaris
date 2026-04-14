@@ -51,7 +51,6 @@ let scene: THREE.Scene;
 let camera: THREE.PerspectiveCamera;
 let renderer: THREE.WebGLRenderer;
 let terrain: THREE.Group;
-let pins: THREE.Sprite[];
 let controls: OrbitControls;
 let water: Water;
 
@@ -209,7 +208,14 @@ function addCameraControls() {
             // Get the closest point on the spline to the pinPoint
             const tValue = getClosestTValueOnSpline(cameraSpline, focusedPinPoint);
             const closestCameraPositionOnSpline = cameraSpline.getPoint(tValue);
-            const partwayPoint = closestCameraPositionOnSpline.clone().lerp(focusedPinPoint, 0.2); // "Zoom in" from the spline
+            const partwayPoint = closestCameraPositionOnSpline.clone().lerp(focusedPinPoint, 0.5); // "Zoom in" from the spline
+
+            // If the partwayPoint is higher, the camera needs to be higher too to avoid looking out over terrain that isn't actually in the scene. So we raise the camera by the same amount that the partwayPoint is raised from the spline.
+            const splineHeightAtPoint = closestCameraPositionOnSpline.y;
+            const partwayPointHeight = partwayPoint.y;
+            const heightDifference = splineHeightAtPoint - partwayPointHeight;
+            partwayPoint.y += heightDifference / 3;
+
             targetCameraPosition = partwayPoint;
             targetLookAtPosition = focusedPinPoint;
         }

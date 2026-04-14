@@ -78,7 +78,7 @@ function onClickQuickSave() {
 }
 
 function onClickQuickLoad() {
-    gameState.load(gameStateId + '/' + 'quicksave');
+    gameState.load(gameStateId.value + '/' + 'quicksave');
     ModalController.close();
 }
 

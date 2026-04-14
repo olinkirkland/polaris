@@ -9,6 +9,7 @@ export interface ModalDispatch {
 export default class ModalController {
     private static instance: ModalController | null = null;
     private subject: Subject<ModalDispatch> = new Subject<ModalDispatch>();
+    private currentModal: ComponentOptions | null = null;
 
     public static open(modal: ComponentOptions<any>, modalConfig?: any): void {
         requestAnimationFrame(() => {
@@ -21,6 +22,10 @@ export default class ModalController {
         if (callback) callback();
     }
 
+    public static isOpen(component: ComponentOptions<any>): boolean {
+        return this.getInstance().currentModal === component;
+    }
+
     private constructor() {}
 
     public static getInstance(): ModalController {
@@ -29,6 +34,7 @@ export default class ModalController {
 
     private dispatch(d: ModalDispatch): void {
         this.subject.next(d);
+        this.currentModal = d.modal;
     }
 
     public addEventListener(callback: (d: ModalDispatch) => void): void {

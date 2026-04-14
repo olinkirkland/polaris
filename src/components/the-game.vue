@@ -71,6 +71,10 @@ function onKeyPress(event: KeyboardEvent) {
     event.stopPropagation();
     switch (event.key) {
         case KeyBinding.MENU:
+            if (ModalController.isOpen(PauseModal)) {
+                ModalController.close();
+                return;
+            }
             currentPanel.value = null; // Close any panels first
             ModalController.open(PauseModal);
             break;
