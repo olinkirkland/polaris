@@ -101,7 +101,7 @@ function addCameraControls() {
     const height = el.clientHeight;
 
     camera = new THREE.PerspectiveCamera(45, width / height, 0.01, 1000);
-    camera.position.set(0, 5, 0);
+    camera.position.set(0, 4, 0);
     camera.lookAt(0, 0, 0);
 }
 

@@ -40,5 +40,11 @@
         "label": "Recipes",
         "selected": true,
         "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/atlas.json",
+        "label": "Atlas",
+        "selected": true,
+        "forced": true
     }
 ]

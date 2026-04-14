@@ -1,0 +1,15 @@
+{
+    "packageDescription": {
+        "id": "atlas",
+        "label": "Atlas Pins",
+        "summary": "Define pins that appear only in the Atlas"
+    },
+    "pins": [
+        {
+            "id": "atlas.polaris",
+            "address": { "zone": "atlas", "point": { "x": -0.04334874738788064, "y": -0.08656008557641037 } },
+            "label": "Polaris",
+            "actions": []
+        }
+    ]
+}
