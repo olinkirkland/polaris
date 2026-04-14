@@ -15,7 +15,7 @@ import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js';
 import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { Water } from 'three/examples/jsm/objects/Water.js';
-import { computed, onBeforeUnmount, onMounted, PropType, ref, watchEffect } from 'vue';
+import { computed, onBeforeUnmount, onMounted, PropType, ref, watch, watchEffect } from 'vue';
 import BusyModal from './modals/templates/busy-modal.vue';
 import { getHeightAtPoint, getViewportPoint } from './zone/terrain-util';
 
@@ -54,16 +54,7 @@ let terrain: THREE.Group;
 let controls: OrbitControls;
 let water: Water;
 
-const pinPoints = computed<{ id: string; point: THREE.Vector3 }[]>(() => {
-    const arr: { id: string; point: THREE.Vector3 }[] = [];
-    props.pins.forEach((p) => {
-        const point = p.address.point;
-        const height = getHeightAtPoint(terrain, point);
-        const pointWithHeight: THREE.Vector3 = new THREE.Vector3(point.x, height + 0.02, point.y);
-        arr.push({ id: p.id, point: pointWithHeight });
-    });
-    return arr;
-});
+let pinPoints: { id: string; point: THREE.Vector3 }[] = [];
 
 // Debug camera
 const moveSpeed = 0.01;
@@ -98,6 +89,9 @@ onMounted(async () => {
         addCameraControls();
     }
 
+    // Determine pinPoints (calculate height for each)
+    calculatePinPoints();
+
     window.addEventListener('resize', onResize);
 
     // Start the animation loop
@@ -108,6 +102,27 @@ onMounted(async () => {
         ModalController.close();
     });
 });
+
+watch(
+    () => props.pins.map((pin) => pin.id), // Only track pin ids
+    (newIds, oldIds) => {
+        // Check if the number of pins changed or an ID changed
+        if (newIds.length !== oldIds.length || !newIds.every((id, i) => id === oldIds[i])) {
+            calculatePinPoints();
+        }
+    },
+    { deep: false }
+);
+
+function calculatePinPoints() {
+    pinPoints = [];
+    props.pins.forEach((p) => {
+        const point = p.address.point;
+        const height = getHeightAtPoint(terrain, point);
+        const pointWithHeight: THREE.Vector3 = new THREE.Vector3(point.x, height + 0.02, point.y);
+        pinPoints.push({ id: p.id, point: pointWithHeight });
+    });
+}
 
 async function loadAndAddTerrain(): Promise<THREE.Group> {
     return new Promise((resolve, reject) => {
@@ -203,7 +218,7 @@ function addCameraControls() {
             // A pin has been focused, process this action
             targetPinId = props.focusedPin.id;
             const pin = props.focusedPin;
-            const focusedPinPoint = pinPoints.value.find((p) => pin.id === p.id)?.point;
+            const focusedPinPoint = pinPoints.find((p) => pin.id === p.id)?.point;
             if (!focusedPinPoint) throw new Error('Focused Point not found');
 
             // Get the closest point on the spline to the pinPoint
@@ -364,11 +379,9 @@ function animate() {
     animationId = requestAnimationFrame(animate);
     renderer.render(scene, camera);
 
-    // TODO don't use the index
-    // Update the pin's labelPoints based on index
-    props.pins.forEach((pin, index) => {
-        const pinPoint = pinPoints.value[index];
-        pin.labelPoint = getViewportPoint(pinPoint.point, camera, renderer);
+    props.pins.forEach((pin) => {
+        const pinPoint = pinPoints.find((p) => p.id === pin.id);
+        if (pinPoint) pin.labelPoint = getViewportPoint(pinPoint.point, camera, renderer);
     });
 
     if (env.NOCLIP) {
