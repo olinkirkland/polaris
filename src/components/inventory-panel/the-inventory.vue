@@ -15,14 +15,18 @@
                 </div>
             </template>
             <p>Owned</p>
-            <ul class="grid grid-cols-7 w-full">
+            <ul class="grid grid-cols-5 w-full">
                 <li v-for="item of gameState.getInventory()">
                     <Card pressed>
-                        <p>
-                            <strong>{{ item.quantity }}</strong>
-                            {{ item.name }}
-                        </p>
-                        <img :src="item.icon" class="w-10" />
+                        <div class="flex gap-2">
+                            <img :src="item.icon" class="w-6 h-6" />
+                            <p>
+                                <strong>{{ item.quantity }}</strong>
+                                {{ item.name }}
+                            </p>
+                        </div>
+                        <small>${{ item.price }} ea.</small>
+                        <small>{{ item.description }}</small>
                     </Card>
                 </li>
             </ul>

@@ -275,6 +275,10 @@ export const useGameStateStore = defineStore('game', () => {
         return getValue('inventory') as Item[];
     }
 
+    function getItem(itemId: string): Item | undefined {
+        return getInventory().find((t) => t.id === itemId);
+    }
+
     function addItem(newItem: Item) {
         const item = { ...newItem };
         if (!item.tags.some((t) => t === 'stackable')) {
@@ -360,6 +364,7 @@ export const useGameStateStore = defineStore('game', () => {
         addExperience,
         getInventory,
         addItem,
+        getItem,
         removeItem,
         hasItems,
         getRecipes,
