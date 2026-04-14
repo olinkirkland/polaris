@@ -1,6 +1,6 @@
 <template>
-    <div v-if="visible" class="overlay fixed top-0 left-0 z-99 flex justify-center items-center w-full h-full">
-        <span>{{ message }}</span>
+    <div v-if="visible" class="overlay fixed top-0 left-0 z-99 flex justify-end items-end w-full h-full">
+        <span class="p-5">{{ message }}</span>
     </div>
 </template>
 

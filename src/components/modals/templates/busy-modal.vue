@@ -2,7 +2,7 @@
     <ModalFrame>
         <template v-slot:content>
             <div class="flex flex-col p-5 gap-2 content-center items-center">
-                <i class="fa-regular fa-compass fa-spin text-3xl"></i>
+                <i class="fa-regular fa-compass fa-spin text-2xl"></i>
                 <p>{{ message }}</p>
             </div>
         </template>
