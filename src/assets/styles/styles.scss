@@ -71,7 +71,7 @@
     :focus-visible,
     .has-focus:has(:focus-visible) {
         outline-offset: 0.2rem;
-        outline: 2px solid var(--color-theme);
+        outline: 1px wavy white;
     }
 
     [disabled] {
@@ -104,8 +104,9 @@ label.input-box {
     overflow: hidden;
 
     &:has(:focus-within) {
-        outline: 2px solid var(--color-theme);
-        outline-offset: 0.125rem;
+        border-radius: 5px;
+        outline: 1px solid white;
+        outline-offset: 0.2rem;
         > span {
             color: var(--color-theme);
         }

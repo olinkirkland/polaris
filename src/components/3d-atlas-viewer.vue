@@ -60,13 +60,13 @@ onMounted(async () => {
 
     await loadAndAddTerrain();
 
-    // if (env.STEALTH) {
-    // terrain.visible = false;
-    // } else {
-    addWaterPlane();
-    addSkybox();
-    addLights();
-    // }
+    if (env.STEALTH) {
+        terrain.visible = false;
+    } else {
+        addWaterPlane();
+        addSkybox();
+        addLights();
+    }
 
     addCameraControls();
 
