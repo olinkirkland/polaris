@@ -4,9 +4,9 @@ VAR asked_about_objective = false
 VAR asked_about_artifact = false
 VAR asked_about_father = false
 
-The midday sun hangs high in a gray polar sky when Isolde's Skyship <em>the Intrepid</em> makes its landing near the edge of town with a soft <em>thunk</em>.
+The skyship <em>the Intrepid</em> lands near the edge of town, the whirring landing rotors, flattening grass around the ship in a wide arc.
 
-The land around the blighted township of Grima looks just like what you expected: a desolate, gray wasteland, just like the rest of the Sundered Lands. Time to get to work.
+The land around the blighted township of Grima looks just like what you expected: a desolate, gray wasteland, just like the rest of the Sundered Lands.
 
 * [Head to the gangway.]
     -> gangway

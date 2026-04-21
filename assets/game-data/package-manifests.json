@@ -6,14 +6,44 @@
         "forced": true
     },
     {
-        "url": "assets/game-data/packages/paths.json",
-        "label": "Paths",
+        "url": "assets/game-data/packages/paths/vanguard.json",
+        "label": "Vanguard Path",
         "selected": true,
-        "forced": true
+        "forced": false
+    },
+    {
+        "url": "assets/game-data/packages/paths/prowler.json",
+        "label": "Prowler Path",
+        "selected": true,
+        "forced": false
+    },
+    {
+        "url": "assets/game-data/packages/paths/whisper.json",
+        "label": "Whisper Path",
+        "selected": true,
+        "forced": false
     },
     {
         "url": "assets/game-data/packages/origin-quests/origin-quests.json",
         "label": "Origin Quests",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/items/ingredients.json",
+        "label": "Ingredients",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/items/recipes.json",
+        "label": "Recipes",
+        "selected": true,
+        "forced": true
+    },
+    {
+        "url": "assets/game-data/packages/atlas.json",
+        "label": "Atlas",
         "selected": true,
         "forced": true
     }
