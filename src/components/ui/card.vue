@@ -4,7 +4,7 @@
         <header v-if="hasHeader" class="p-3 pb-2 w-full flex items-center gap-2">
             <slot name="header"></slot>
         </header>
-        <div class="flex flex-col p-3 gap-2 flex-1 items-start" v-if="$slots.default">
+        <div class="flex flex-col p-3 gap-2 flex-1 items-start overflow-y-auto" v-if="$slots.default">
             <slot></slot>
         </div>
         <slot name="floor"></slot>

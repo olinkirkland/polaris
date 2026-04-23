@@ -1,6 +1,6 @@
 <template>
     <Panel class="p-3 h-full">
-        <Card class="h-full">
+        <Card class="h-full overflow-hidden">
             <template #header>
                 <div class="flex justify-between items-center w-full">
                     <div class="flex gap-2">
@@ -14,18 +14,24 @@
                     </Button>
                 </div>
             </template>
-            <h2>Owned</h2>
-            <ul class="flex flex-col gap-1">
-                <li v-for="item of gameState.getInventory()" class="flex items-center gap-2">
-                    ({{ item.quantity }}) <ItemBlock :id="item.id" />
-                </li>
-            </ul>
-            <h2>Recipes</h2>
-            <ul class="grid grid-cols-3 w-full gap-1">
-                <li v-for="recipe of gameState.getRecipes()">
-                    <RecipeBlock :id="recipe.id" />
-                </li>
-            </ul>
+            <div class="w-full flex gap-2">
+                <div class="flex flex-col gap-2">
+                    <h2>Owned</h2>
+                    <ul class="flex flex-col gap-1">
+                        <li v-for="item of gameState.getInventory()" class="flex items-center gap-2">
+                            ({{ item.quantity }}) <ItemBlock :id="item.id" />
+                        </li>
+                    </ul>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <h2>Recipes</h2>
+                    <ul class="grid grid-cols-3 w-full gap-1">
+                        <li v-for="recipe of gameState.getRecipes()">
+                            <RecipeBlock :id="recipe.id" />
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </Card>
     </Panel>
 </template>

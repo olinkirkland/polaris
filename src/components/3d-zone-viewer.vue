@@ -319,6 +319,7 @@ function addCameraControls() {
 
     // Scroll handler: move forwards/backwards along the spline
     function onWheel(event: WheelEvent) {
+        if (usePauseStore().isPaused) return;
         event.preventDefault();
 
         if (targetCameraPosition) return;
