@@ -38,15 +38,11 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
     // If no modal was passed, close the current one
     if (!modal) {
         currentModal.value = null;
-        if (!queue.length) {
-            usePauseStore().resume();
-            return;
-        }
+        if (!queue.length) return;
 
         // If there are modals in the queue, open the next one
         const { modal, modalConfig } = queue.shift()!;
         ModalController.open(modal, modalConfig);
-        usePauseStore().pause();
         return;
     }
 
@@ -70,7 +66,6 @@ ModalController.getInstance().addEventListener(({ modal, modalConfig }) => {
     if (modal) {
         currentModal.value = { ...modal! } as any;
         currentModalConfig.value = { ...modalConfig };
-        usePauseStore().pause();
     }
 
     // Wait for the modal to be mounted before fading in
