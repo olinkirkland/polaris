@@ -279,8 +279,10 @@ export const useGameStateStore = defineStore('game', () => {
         return getInventory().find((t) => t.id === itemId);
     }
 
-    function addItem(newItem: Item) {
+    function addItem(newItem: Item, quantity?: number) {
         const item = { ...newItem };
+        if (quantity !== undefined) item.quantity = quantity;
+
         if (!item.tags.some((t) => t === 'stackable')) {
             // Not stackable
             // Change the item's id to a uuid so it can't stack
@@ -291,7 +293,7 @@ export const useGameStateStore = defineStore('game', () => {
         // Otherwise, create a new entry
         patchValue('inventory', (items: Item[]) => {
             const existingEntry = items.find((t) => t.id === item.id);
-            if (existingEntry) existingEntry.quantity += newItem.quantity;
+            if (existingEntry) existingEntry.quantity += item.quantity;
             else items.push(item);
             return [...items];
         });

@@ -9,23 +9,28 @@
         </template>
         <template v-slot:content>
             <p>{{ t('modals.cheat_items.description') }}</p>
-            <ul class="grid grid-cols-3 w-full gap-2">
+            <ul class="grid grid-cols-2 w-full gap-2">
                 <li v-for="item of gameData.data?.items" class="h-full cursor-pointer">
-                    <Card pressed @click="gameState.addItem(item)">
+                    <div class="flex justify-between">
                         <div class="flex gap-2">
                             <img :src="item.icon" class="w-6 h-6" />
                             <p>
-                                +{{ item.quantity }} ({{ gameState.getItem(item.id)?.quantity || 0 }})
                                 {{ item.name }}
+                                ({{ gameState.getItem(item.id)?.quantity || 0 }})
                             </p>
                         </div>
-                    </Card>
+                        <div class="flex gap-2">
+                            <Button @click="gameState.addItem(item)">+1</Button>
+                            <Button @click="gameState.addItem(item, 5)">+5</Button>
+                            <Button @click="gameState.addItem(item, 10)">+10</Button>
+                        </div>
+                    </div>
                 </li>
             </ul>
             <p>{{ t('modals.cheat_recipes.description') }}</p>
-            <ul class="grid grid-cols-3 w-full gap-2">
+            <ul class="grid grid-cols-2 w-full gap-2">
                 <li v-for="recipe of gameData.data?.recipes" class="h-full cursor-pointer">
-                    <Card pressed @click="gameState.addRecipe(recipe.id)">
+                    <div @click="gameState.addRecipe(recipe.id)">
                         <div class="flex gap-2">
                             <div class="relative">
                                 <img :src="gameData.getItem(recipe.outputs[0].id).icon" class="w-6 h-6 opacity-50" />
@@ -36,7 +41,7 @@
                             </div>
                             <p>{{ recipe.name }}</p>
                         </div>
-                    </Card>
+                    </div>
                 </li>
             </ul>
         </template>

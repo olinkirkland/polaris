@@ -47,10 +47,6 @@ button {
         .background {
             display: none;
         }
-
-        &:hover {
-            box-shadow: none;
-        }
     }
 
     &:hover {

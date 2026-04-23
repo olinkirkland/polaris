@@ -26,7 +26,6 @@
             </Card>
         </div>
         <Button @click="onClickCraft()" :disabled="!gameState.canCraftRecipe(recipe)">
-            <i class="fas fa-play"></i>
             <span>Craft</span>
         </Button>
     </Card>
