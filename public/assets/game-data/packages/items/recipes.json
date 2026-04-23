@@ -7,7 +7,7 @@
     "recipes": [
         {
             "id": "poultice-recipe",
-            "name": "Poultice",
+            "name": "Poultice Recipe",
             "description": "Lorem ipsum",
             "inputs": [
                 { "id": "plant-fiber", "quantity": 1 },
@@ -17,7 +17,7 @@
         },
         {
             "id": "tonic-recipe",
-            "name": "Tonic",
+            "name": "Tonic Recipe",
             "description": "Lorem ipsum",
             "inputs": [
                 { "id": "meltwater", "quantity": 1 },
@@ -27,7 +27,7 @@
         },
         {
             "id": "poison-recipe",
-            "name": "Poison",
+            "name": "Poison Recipe",
             "description": "Lorem ipsum",
             "inputs": [
                 { "id": "meltwater", "quantity": 1 },
@@ -37,11 +37,11 @@
         },
         {
             "id": "scrap-plates-recipe",
-            "name": "Scrap Plates",
+            "name": "Scrap Plates Recipe",
             "description": "Lorem ipsum",
             "inputs": [
                 { "id": "scrap", "quantity": 1 },
-                { "id": "leather", "quantity": 1 },
+                { "id": "hide", "quantity": 1 },
                 { "id": "plant-fiber", "quantity": 2 }
             ],
             "outputs": [{ "id": "scrap-plates", "quantity": 1 }]

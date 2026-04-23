@@ -80,7 +80,19 @@ export const useGameDataStore = defineStore('content', () => {
         return scene as Scene;
     }
 
-    return { loadGameDataPackages, resetGameData, data, getZone, getScene };
+    function getItem(id: string): Item {
+        const item = data.value?.items.find((t) => t.id === id);
+        if (!item) throw new Error(`@getItem: No such item, id: ${id}`);
+        return { ...item };
+    }
+
+    function getRecipe(id: string): Recipe {
+        const recipe = data.value?.recipes.find((r) => r.id === id);
+        if (!recipe) throw new Error(`@getRecipe: No such recipe, id: ${recipe}`);
+        return { ...recipe };
+    }
+
+    return { loadGameDataPackages, resetGameData, data, getZone, getScene, getItem, getRecipe };
 });
 
 async function unpackGameDataPackage(data: any): Promise<GameDataPackage> {

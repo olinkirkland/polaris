@@ -36,6 +36,12 @@
         "forced": true
     },
     {
+        "url": "assets/game-data/packages/items/items.json",
+        "label": "Items",
+        "selected": true,
+        "forced": true
+    },
+    {
         "url": "assets/game-data/packages/items/recipes.json",
         "label": "Recipes",
         "selected": true,

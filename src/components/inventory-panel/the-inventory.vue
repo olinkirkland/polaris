@@ -14,49 +14,16 @@
                     </Button>
                 </div>
             </template>
-            <p>Owned</p>
-            <ul class="grid grid-cols-5 w-full">
-                <li v-for="item of gameState.getInventory()">
-                    <Card pressed>
-                        <div class="flex gap-2">
-                            <img :src="item.icon" class="w-6 h-6" />
-                            <p>
-                                <strong>{{ item.quantity }}</strong>
-                                {{ item.name }}
-                            </p>
-                        </div>
-                        <small>${{ item.price }} ea.</small>
-                        <small>{{ item.description }}</small>
-                    </Card>
+            <h2>Owned</h2>
+            <ul class="flex flex-col gap-1">
+                <li v-for="item of gameState.getInventory()" class="flex items-center gap-2">
+                    ({{ item.quantity }}) <ItemBlock :id="item.id" />
                 </li>
             </ul>
-            <p>Recipes</p>
-            <ul class="grid grid-cols-3 w-full">
+            <h2>Recipes</h2>
+            <ul class="grid grid-cols-3 w-full gap-1">
                 <li v-for="recipe of gameState.getRecipes()">
-                    <Card class="border-style">
-                        <template #header>
-                            <p>{{ recipe.name }}</p>
-                        </template>
-                        <div class="grid grid-cols-2 gap-2">
-                            <div>
-                                <p>Inputs</p>
-                                <ul>
-                                    <li v-for="t in recipe.inputs">{{ t.quantity }}x {{ t.id }}</li>
-                                </ul>
-                            </div>
-
-                            <div>
-                                <p>Outputs</p>
-                                <ul>
-                                    <li v-for="t in recipe.outputs">{{ t.quantity }}x {{ t.id }}</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <Button @click="onClickCraft(recipe)" :disabled="!gameState.hasItems(recipe.inputs)">
-                            <i class="fas fa-play"></i>
-                            <span>Craft</span>
-                        </Button>
-                    </Card>
+                    <RecipeBlock :id="recipe.id" />
                 </li>
             </ul>
         </Card>
@@ -65,15 +32,10 @@
 
 <script lang="ts" setup>
 import ModalController from '@/controllers/modal-controller';
-import { Recipe } from '@/game-data/items/recipe';
-import { useGameDataStore } from '@/store/game-data-store';
 import { useGameStateStore } from '@/store/game-state-store';
 import CheatItemsModal from '../modals/templates/cheat-items-modal.vue';
 import Panel from '../ui/panel.vue';
-const gameData = useGameDataStore();
+import ItemBlock from './item-block.vue';
+import RecipeBlock from './recipe-block.vue';
 const gameState = useGameStateStore();
-
-function onClickCraft(recipe: Recipe) {
-    gameState.craftRecipe(recipe);
-}
 </script>

@@ -312,11 +312,6 @@ export const useGameStateStore = defineStore('game', () => {
         });
     }
 
-    function hasItems(items: { id: string; quantity: number }[]): boolean {
-        // TODO
-        return true;
-    }
-
     function getRecipes(): Recipe[] {
         return getValue('recipes').map((id: string) => {
             return gameData.data?.recipes.find((r) => r.id === id) || null;
@@ -325,14 +320,31 @@ export const useGameStateStore = defineStore('game', () => {
 
     function addRecipe(recipeId: string) {
         patchValue('recipes', (recipes: string[]) => {
-            if (recipes.find((recipeId) => recipeId === recipeId)) return recipes;
+            if (recipes.find((id) => id === recipeId)) return recipes;
             recipes.push(recipeId);
             return recipes;
         });
     }
 
+    function canCraftRecipe(recipe: Recipe) {
+        return recipe.inputs.every((input) => {
+            const quantity = getItem(input.id)?.quantity || 0;
+            return quantity >= input.quantity;
+        });
+    }
+
     function craftRecipe(recipe: Recipe) {
-        // TODO
+        if (!canCraftRecipe(recipe)) throw new Error('Missing inputs to craft recipe');
+
+        // Remove the inputs and add the outputs
+        recipe.inputs.forEach((input) => {
+            removeItem(input.id, input.quantity);
+        });
+        recipe.outputs.forEach((output) => {
+            const outputItem = gameData.getItem(output.id);
+            outputItem.quantity = output.quantity;
+            addItem(outputItem);
+        });
     }
 
     return {
@@ -366,7 +378,7 @@ export const useGameStateStore = defineStore('game', () => {
         addItem,
         getItem,
         removeItem,
-        hasItems,
+        canCraftRecipe,
         getRecipes,
         addRecipe,
         craftRecipe
