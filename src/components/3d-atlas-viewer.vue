@@ -80,7 +80,7 @@ onMounted(async () => {
 
     isLoaded.value = true;
     requestAnimationFrame(() => {
-        ModalController.close();
+        ModalController.close(undefined, BusyModal);
     });
 });
 

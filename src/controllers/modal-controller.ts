@@ -17,9 +17,11 @@ export default class ModalController {
         });
     }
 
-    public static close(callback?: Function): void {
-        this.getInstance().dispatch({ modal: null });
-        if (callback) callback();
+    public static close(callback?: Function, modalToClose?: ComponentOptions<any>): void {
+        if (!modalToClose || (modalToClose && this.getInstance().currentModal === modalToClose)) {
+            this.getInstance().dispatch({ modal: null });
+            if (callback) callback();
+        }
     }
 
     public static isOpen(component: ComponentOptions<any>): boolean {
